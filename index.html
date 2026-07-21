@@ -284,8 +284,8 @@
                         <select id="filter-proj-status" onchange="renderProjects()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-44 focus:ring-2 focus:ring-indigo-400 outline-none">
                             <option value="">Всі статуси</option>
                             <option value="none">Без оплати</option>
-                            <option value="advance">Є аванс</option>
-                            <option value="paid">Оплачено повністю</option>
+                            <option value="advance">Внесено аванс</option>
+                            <option value="paid">Оплачено</option>
                         </select>
                     </div>
                     <div>
@@ -788,9 +788,7 @@ function renderProjects() {
         list = list.filter(p => p.name.toLowerCase().includes(search) || (p.client?.name || '').toLowerCase().includes(search));
     }
     if (status) {
-        if (status === 'none') list = list.filter(p => calcAdvancesSum(p) === 0);
-        if (status === 'advance') list = list.filter(p => calcAdvancesSum(p) > 0 && calcDebt(p) > 0);
-        if (status === 'paid') list = list.filter(p => calcDebt(p) === 0);
+        list = list.filter(p => getProjectPaymentStatus(p).status === status);
     }
     if (year) {
         list = list.filter(p => new Date(p.date).getFullYear() == year);
@@ -863,10 +861,18 @@ function renderProjects() {
 }
 
 function getProjectPaymentStatus(p) {
-    const debt = calcDebt(p);
-    if (debt === 0) return { statusClass: 'status-paid', statusText: 'Оплачено' };
-    if (calcAdvancesSum(p) > 0) return { statusClass: 'status-advance', statusText: 'Є аванс' };
-    return { statusClass: 'status-none', statusText: 'Без оплати' };
+    const allowedStatuses = ['none', 'advance', 'paid'];
+    if (!allowedStatuses.includes(p.paymentStatus)) {
+        const paid = calcAdvancesSum(p);
+        const total = parseFloat(p.total || 0);
+        p.paymentStatus = total > 0 && paid >= total ? 'paid' : paid > 0 ? 'advance' : 'none';
+    }
+    const statuses = {
+        none: { status: 'none', statusClass: 'status-none', statusText: 'Без оплати' },
+        advance: { status: 'advance', statusClass: 'status-advance', statusText: 'Внесено аванс' },
+        paid: { status: 'paid', statusClass: 'status-paid', statusText: 'Оплачено' }
+    };
+    return statuses[p.paymentStatus];
 }
 
 function sortProjects(field) {
@@ -1242,6 +1248,7 @@ function createProjectDraft() {
         area: 0,
         price: 0,
         total: 0,
+        paymentStatus: 'none',
         client: { name: '', lastName: '', phone: '', social: '' },
         advances: [],
         team: [],
@@ -1294,6 +1301,8 @@ function syncProjectPageFields(project) {
         project.area = parseFloat(read('project-area')) || 0;
         project.price = parseFloat(read('project-price')) || 0;
         project.total = project.area * project.price;
+        const paymentStatus = read('project-payment-status');
+        if (paymentStatus) project.paymentStatus = paymentStatus;
         project.client = {
             name: read('project-client-name') || '',
             lastName: read('project-client-lastname') || '',
@@ -1311,6 +1320,15 @@ function updateProjectTotalFromPage() {
     if (totalField) totalField.value = total.toFixed(2);
     const project = getDetailProject();
     if (project) { project.area = area; project.price = price; project.total = total; }
+}
+
+function updateProjectPaymentStatus(value) {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    project.paymentStatus = value;
+    if (currentProjectId) saveData();
+    renderProjectDetail();
 }
 
 function saveProjectPage(event) {
@@ -1560,6 +1578,7 @@ function renderProjectDetail() {
                     </section>
                     <section class="project-panel" id="project-payments">
                         <div class="project-panel-title"><div><h3>Оплати від клієнта</h3><p class="text-xs text-gray-500 mt-1">Аванси та всі наступні платежі.</p></div><button type="button" onclick="addClientPayment()" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати платіж</button></div>
+                        <label class="block mb-4"><span class="project-field-label">Статус оплати</span><select id="project-payment-status" onchange="updateProjectPaymentStatus(this.value)" class="project-field"><option value="none" ${project.paymentStatus === 'none' ? 'selected' : ''}>Без оплати</option><option value="advance" ${project.paymentStatus === 'advance' ? 'selected' : ''}>Внесено аванс</option><option value="paid" ${project.paymentStatus === 'paid' ? 'selected' : ''}>Оплачено</option></select></label>
                         <div class="project-finance-summary mb-4"><div><span class="text-xs text-gray-400">Отримано</span><b class="block font-mono text-green-400 mt-1">$${fmt(received)}</b></div><div><span class="text-xs text-gray-400">Борг клієнта</span><b class="block font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'} mt-1">$${fmt(debt)}</b></div><div><span class="text-xs text-gray-400">Статус</span><b class="block mt-1">${statusText}</b></div></div>
                         <div class="space-y-2">${clientPayments}</div>
                     </section>
