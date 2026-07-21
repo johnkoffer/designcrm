@@ -100,6 +100,62 @@
         @media (min-width: 768px) {
             .filter-new-btn-desktop { display: inline-flex; }
         }
+
+        /* Project index: a table for wide monitors and focused cards for every other screen. */
+        .project-cards-list { display: none; }
+        .project-index-card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 18px; cursor: pointer; transition: transform .18s, border-color .18s, box-shadow .18s; }
+        .project-index-card:hover { transform: translateY(-2px); border-color: #4f46e5; box-shadow: 0 12px 28px rgba(0,0,0,.22); }
+        .project-index-card:focus-visible { outline: 2px solid #818cf8; outline-offset: 3px; }
+        .project-index-card .project-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+        .project-index-card .project-metric { padding: 10px; background: rgba(31,41,55,.72); border: 1px solid rgba(75,85,99,.36); border-radius: 10px; min-width: 0; }
+        .project-index-card .project-metric b { display: block; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; }
+
+        /* A project is edited on a dedicated page; no secondary dialogs are needed. */
+        .project-detail-page { max-width: 1600px; margin: 0 auto; }
+        .project-detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+        .project-detail-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(320px, .85fr); gap: 16px; align-items: start; }
+        .project-main-stack, .project-side-stack { display: grid; gap: 16px; }
+        .project-panel { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; min-width: 0; }
+        .project-panel-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+        .project-panel-title h3 { font-size: .95rem; font-weight: 700; color: #e5e7eb; }
+        .project-field-label { display: block; margin-bottom: 6px; font-size: .72rem; font-weight: 600; color: #9ca3af; }
+        .project-field { width: 100%; min-height: 42px; border: 1px solid #374151; border-radius: 10px; background: #1f2937; padding: 9px 11px; font-size: .875rem; color: #f3f4f6; outline: none; }
+        .project-field:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(129,140,248,.16); }
+        .project-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .project-form-grid.project-form-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .project-finance-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .project-finance-summary > div { padding: 11px; border-radius: 10px; background: rgba(30,41,59,.75); border: 1px solid rgba(75,85,99,.42); }
+        .project-transaction, .project-member, .project-expense { border: 1px solid #273449; border-radius: 12px; background: rgba(17,24,39,.72); padding: 12px; }
+        .project-transaction-grid { display: grid; grid-template-columns: 130px 120px minmax(0, 1fr) auto; gap: 8px; align-items: end; }
+        .project-member-header { display: grid; grid-template-columns: minmax(120px, .8fr) minmax(160px, 1fr) 120px auto; gap: 8px; align-items: end; }
+        .project-expense-grid { display: grid; grid-template-columns: 130px minmax(0, 1fr) 120px auto; gap: 8px; align-items: end; }
+        .project-member-payments { margin-top: 12px; padding-top: 12px; border-top: 1px solid #273449; }
+        .project-inline-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+        .project-danger-action { color: #fca5a5; border-color: rgba(127,29,29,.75); background: rgba(127,29,29,.16); }
+        .project-danger-action:hover { background: rgba(127,29,29,.34); }
+
+        @media (min-width: 1280px) {
+            .projects-table-wrap { display: block; }
+            .project-cards-list { display: none; }
+        }
+        @media (min-width: 768px) and (max-width: 1279px) {
+            .projects-table-wrap { display: none; }
+            .project-cards-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        }
+        @media (max-width: 767px) {
+            .projects-table-wrap { display: none; }
+            .project-cards-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
+            .project-index-card { padding: 14px; }
+            .project-index-card .project-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 12px; }
+            .project-index-card .project-metric:last-child { display: none; }
+            .project-detail-header { display: block; }
+            .project-detail-header .project-inline-actions { margin-top: 12px; }
+            .project-detail-layout { grid-template-columns: 1fr; gap: 12px; }
+            .project-panel { padding: 15px; border-radius: 14px; }
+            .project-form-grid, .project-form-grid.project-form-grid-3, .project-finance-summary { grid-template-columns: 1fr; gap: 10px; }
+            .project-transaction-grid, .project-member-header, .project-expense-grid { grid-template-columns: 1fr; gap: 9px; }
+            .project-transaction-grid .project-remove-button, .project-member-header .project-remove-button, .project-expense-grid .project-remove-button { width: 100%; }
+        }
     </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen">
@@ -145,10 +201,6 @@
             <button onclick="navigateTo('other')" data-nav="other" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span>Інші доходи</span>
-            </button>
-            <button onclick="navigateTo('share')" data-nav="share" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
-                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                <span>Спільний доступ</span>
             </button>
             <button onclick="navigateTo('archive')" data-nav="archive" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
@@ -214,7 +266,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
                             <span>Фільтри</span>
                         </button>
-                        <button onclick="openProjectModal()" class="filter-new-btn-desktop items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
+                        <button onclick="openProjectPage()" class="filter-new-btn-desktop items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                             <span>Новий проєкт</span>
                         </button>
@@ -249,7 +301,7 @@
                 <div id="projects-summary" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4"></div>
 
                 <!-- Таблиця проєктів (десктоп) -->
-                <div class="desktop-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                <div class="projects-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm" id="projects-table">
                             <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
@@ -277,7 +329,12 @@
                     </div>
                 </div>
 
-                <div class="mobile-cards-list" id="projects-cards"></div>
+                <div class="project-cards-list" id="projects-cards"></div>
+            </section>
+
+            <!-- ПОВНА КАРТКА ПРОЄКТУ -->
+            <section id="section-project" class="section fade-in hidden">
+                <div id="project-detail-content"></div>
             </section>
 
             <!-- СЕКЦІЯ ІНШІ ДОХОДИ -->
@@ -309,27 +366,6 @@
                     </div>
                 </div>
                 <div class="mobile-cards-list" id="other-cards"></div>
-            </section>
-
-            <!-- СЕКЦІЯ СПІЛЬНИЙ ДОСТУП -->
-            <section id="section-share" class="section fade-in hidden">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold">Спільний доступ</h2>
-                    <p class="text-gray-400 text-sm mt-1">Запрошуйте інших користувачів Google до роботи над вашими таблицями</p>
-                </div>
-
-                <div class="bg-gray-900 rounded-2xl border border-gray-800 p-6 max-w-2xl">
-                    <h3 class="text-lg font-semibold mb-3">Запросити акаунт</h3>
-                    <p class="text-xs text-gray-400 mb-4">Вкажіть Google Email людини, якій ви хочете надати доступ для перегляду та внесення змін у ваш кабінет.</p>
-
-                    <form onsubmit="addShareEmail(event)" class="flex gap-2 mb-6">
-                        <input type="email" id="share-email-input" required placeholder="user@gmail.com" class="flex-1 border border-gray-700 bg-gray-800 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-400">
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer">Надати доступ</button>
-                    </form>
-
-                    <h4 class="text-sm font-semibold text-gray-300 mb-3">Користувачі з доступом:</h4>
-                    <div id="share-list" class="space-y-2"></div>
-                </div>
             </section>
 
             <!-- СЕКЦІЯ АРХІВ -->
@@ -440,10 +476,6 @@
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span>Доходи</span>
             </button>
-            <button class="bottom-nav-btn" id="bnav-share" onclick="navigateTo('share')">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                <span>Доступ</span>
-            </button>
             <button class="bottom-nav-btn" id="bnav-stats" onclick="navigateTo('stats')">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                 <span>Стат</span>
@@ -495,8 +527,7 @@ const MONTHS_UK = ['Січень','Лютий','Березень','Квітен�
 // ====================================================================
 const DB_DEFAULTS = {
     projects: [],
-    otherIncomes: [],
-    sharedUsers: []
+    otherIncomes: []
 };
 let DB = { ...DB_DEFAULTS };
 let currentUserId = null;
@@ -504,6 +535,8 @@ let saveTimer = null;
 let isSaving = false;
 let pendingSave = false;
 let currentSection = 'projects';
+let currentProjectId = null;
+let projectDraft = null;
 let sortField = 'date';
 let sortAsc = false;
 
@@ -546,7 +579,8 @@ sb.auth.onAuthStateChange(async (event, session) => {
         populateFilterYears();
         populateMonthSelects();
         renderProjects();
-        renderShareList();
+        // Persist only the supported data schema after loading older records.
+        saveData();
     } else {
         document.getElementById('login-screen').classList.remove('hidden');
         document.getElementById('app').classList.add('hidden');
@@ -557,12 +591,11 @@ async function loadFromSupabase() {
     try {
         const { data, error } = await sb.from('crm_data').select('data')
             .eq('user_id', currentUserId).maybeSingle();
-        if (data && data.data) {
-            DB = { ...DB_DEFAULTS, ...data.data };
-        }
-        if (!DB.projects) DB.projects = [];
-        if (!DB.otherIncomes) DB.otherIncomes = [];
-        if (!DB.sharedUsers) DB.sharedUsers = [];
+        const stored = data?.data || {};
+        DB = {
+            projects: Array.isArray(stored.projects) ? stored.projects : [],
+            otherIncomes: Array.isArray(stored.otherIncomes) ? stored.otherIncomes : []
+        };
     } catch (e) {
         console.warn('load error:', e);
     }
@@ -619,11 +652,11 @@ function navigateTo(section) {
     currentSection = section;
     document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
     document.getElementById('section-' + section)?.classList.remove('hidden');
-    document.querySelectorAll('[data-nav]').forEach(b => b.classList.toggle('active', b.dataset.nav === section));
+    document.querySelectorAll('[data-nav]').forEach(b => b.classList.toggle('active', b.dataset.nav === section || (section === 'project' && b.dataset.nav === 'projects')));
 
-    ['projects','other','share','stats'].forEach(s => {
+    ['projects','other','stats'].forEach(s => {
         const btn = document.getElementById('bnav-' + s);
-        if (btn) btn.classList.toggle('active', s === section);
+        if (btn) btn.classList.toggle('active', s === section || (section === 'project' && s === 'projects'));
     });
 
     const fab = document.getElementById('fab-btn');
@@ -635,8 +668,8 @@ function navigateTo(section) {
     }
 
     if (section === 'projects') renderProjects();
+    if (section === 'project') renderProjectDetail();
     if (section === 'other') renderOtherIncomes();
-    if (section === 'share') renderShareList();
     if (section === 'archive') renderArchive();
     if (section === 'trash') renderTrash();
     if (section === 'stats') { populateStatsYears(); renderStats(); }
@@ -648,7 +681,7 @@ function toggleSidebar() {
 }
 
 function fabAction() {
-    if (currentSection === 'projects') openProjectModal();
+    if (currentSection === 'projects') openProjectPage();
     if (currentSection === 'other') openOtherIncomeModal();
 }
 
@@ -699,10 +732,11 @@ function calcMemberPaid(m) { return (m.advances || []).reduce((s, a) => s + pars
 function calcTeamTotalPaid(p) { return (p.team || []).reduce((s, m) => s + calcMemberPaid(m), 0); }
 
 // Чистий прибуток проєкту (Сума проєкту мінус Витрати на команду)
+function calcExpensesTotal(p) { return (p.expenses || []).reduce((s, e) => s + parseFloat(e.amount || 0), 0); }
+
 function calcNetProfit(p) {
     const total = parseFloat(p.total || 0);
-    const teamCost = calcTeamTotalCost(p);
-    return total - teamCost;
+    return total - calcTeamTotalCost(p) - calcExpensesTotal(p);
 }
 
 function getDeadlineInfo(p) {
@@ -790,87 +824,49 @@ function renderProjects() {
     tbody.innerHTML = list.map(p => {
         const debt = calcDebt(p);
         const teamCost = calcTeamTotalCost(p);
-        const teamPaid = calcTeamTotalPaid(p);
-        const teamRem = teamCost - teamPaid;
-        const netProfit = calcNetProfit(p);
-
-        let statusClass = 'status-none';
-        let statusText = 'Без оплати';
-        if (calcAdvancesSum(p) > 0 && debt > 0) { statusClass = 'status-advance'; statusText = 'Є аванс'; }
-        if (debt === 0) { statusClass = 'status-paid'; statusText = 'Оплачено'; }
-
+        const expenses = calcExpensesTotal(p);
+        const { statusClass, statusText } = getProjectPaymentStatus(p);
         return `
-            <tr class="hover:bg-gray-800/30">
+            <tr class="hover:bg-gray-800/30 cursor-pointer" onclick="openProjectPage('${p.id}')">
                 <td class="px-4 py-3 text-xs text-gray-500">${p.date || '-'}</td>
-                <td class="px-4 py-3 font-semibold text-white">${p.name}</td>
-                <td class="px-4 py-3 text-xs">
-                    <div class="font-medium text-gray-200">${p.client?.name || '-'} ${p.client?.lastName || ''}</div>
-                    ${p.client?.phone ? `<div class="text-gray-400">${p.client.phone}</div>` : ''}
-                    ${p.client?.social ? `<a href="${p.client.social}" target="_blank" class="text-indigo-400 hover:underline">Соцмережа</a>` : ''}
-                </td>
+                <td class="px-4 py-3 font-semibold text-white">${p.name || 'Без назви'}</td>
+                <td class="px-4 py-3 text-xs"><div class="font-medium text-gray-200">${p.client?.name || '-'} ${p.client?.lastName || ''}</div>${p.client?.phone ? `<div class="text-gray-400">${p.client.phone}</div>` : ''}</td>
                 <td class="px-4 py-3 text-right text-xs font-mono">${p.area || 0}</td>
                 <td class="px-4 py-3 text-right text-xs font-mono">$${p.price || 0}</td>
                 <td class="px-4 py-3 text-right font-semibold font-mono">$${fmt(p.total)}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono text-emerald-400">$${fmt(netProfit)}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono ${debt > 0 ? 'text-red-500' : 'text-green-600'}">$${fmt(debt)}</td>
-                <td class="px-4 py-3 text-center text-xs">
-                    ${(p.team || []).length > 0 ? `
-                        <button onclick="openTeamModal('${p.id}')" class="text-indigo-400 hover:underline font-medium">
-                            ${p.team.length} чол. ($${fmt(teamCost)})
-                        </button>
-                        <div class="text-[10px] text-gray-400">Борг: $${fmt(teamRem)}</div>
-                    ` : `
-                        <button onclick="openTeamModal('${p.id}')" class="text-gray-400 hover:text-indigo-400 text-xs cursor-pointer">+ Додати</button>
-                    `}
-                </td>
+                <td class="px-4 py-3 text-right font-semibold font-mono text-emerald-400">$${fmt(calcNetProfit(p))}</td>
+                <td class="px-4 py-3 text-right font-semibold font-mono ${debt > 0 ? 'text-red-500' : 'text-green-500'}">$${fmt(debt)}</td>
+                <td class="px-4 py-3 text-center text-xs"><span class="text-indigo-300 font-medium">${(p.team || []).length} чол.</span><div class="text-[10px] text-gray-400">$${fmt(teamCost + expenses)} витрат</div></td>
                 <td class="px-4 py-3 text-center">${deadlineBadgeHtml(p)}</td>
                 <td class="px-4 py-3 text-center"><span class="badge ${statusClass}">${statusText}</span></td>
-                <td class="px-4 py-3 text-center space-x-1">
-                    <button onclick="openProjectModal('${p.id}')" class="p-1 text-gray-400 hover:text-indigo-400" title="Редагувати">✏️</button>
-                    <button onclick="archiveProject('${p.id}')" class="p-1 text-gray-400 hover:text-green-400" title="В архів">📦</button>
-                    <button onclick="trashProject('${p.id}')" class="p-1 text-gray-400 hover:text-red-400" title="У кошик">🗑️</button>
-                </td>
-            </tr>
-        `;
+                <td class="px-4 py-3 text-center"><button onclick="event.stopPropagation(); openProjectPage('${p.id}')" class="text-indigo-400 hover:text-indigo-300 text-xs font-semibold">Відкрити</button></td>
+            </tr>`;
     }).join('');
 
-    // Мобільні картки
     cards.innerHTML = list.map(p => {
         const debt = calcDebt(p);
-        const teamCost = calcTeamTotalCost(p);
-        const netProfit = calcNetProfit(p);
-
+        const { statusClass, statusText } = getProjectPaymentStatus(p);
         return `
-            <div class="proj-card">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="min-w-0 flex-1 pr-2">
-                        <h3 class="font-bold text-base truncate">${p.name}</h3>
-                        <p class="text-xs text-gray-400 truncate">Клієнт: ${p.client?.name || '-'} ${p.client?.phone ? `(${p.client.phone})` : ''}</p>
-                    </div>
-                    <span class="text-xs text-gray-500 whitespace-nowrap">${p.date}</span>
+            <article class="project-index-card" tabindex="0" role="button" onclick="openProjectPage('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProjectPage('${p.id}')}">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="min-w-0"><h3 class="font-bold text-base truncate">${p.name || 'Без назви'}</h3><p class="text-xs text-gray-400 mt-1 truncate">${p.client?.name || 'Клієнта не вказано'}${p.client?.phone ? ` · ${p.client.phone}` : ''}</p></div>
+                    <span class="badge ${statusClass} shrink-0">${statusText}</span>
                 </div>
-                <div class="grid grid-cols-2 gap-2 text-xs mb-3 bg-gray-800 p-2.5 rounded-lg border border-gray-700/60">
-                    <div>Сума: <b class="font-mono text-indigo-300">$${fmt(p.total)}</b></div>
-                    <div>Борг: <b class="font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(debt)}</b></div>
-                    <div>Прибуток: <b class="font-mono text-emerald-400">$${fmt(netProfit)}</b></div>
-                    <div>Площа: <b>${p.area} м²</b></div>
-                    <div class="col-span-2 flex items-center justify-between pt-1 border-t border-gray-700/40 mt-1">
-                        <span class="text-gray-400">Дедлайн:</span>
-                        <span>${deadlineBadgeHtml(p)}</span>
-                    </div>
+                <div class="project-metrics text-xs">
+                    <div class="project-metric"><span class="text-gray-400">Сума</span><b class="font-mono text-indigo-300">$${fmt(p.total)}</b></div>
+                    <div class="project-metric"><span class="text-gray-400">Борг</span><b class="font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(debt)}</b></div>
+                    <div class="project-metric"><span class="text-gray-400">Дедлайн</span><b>${p.deadline ? p.deadline : 'Не вказано'}</b></div>
                 </div>
-                <div class="flex justify-between items-center text-sm gap-2">
-                    <button onclick="openTeamModal('${p.id}')" class="text-indigo-400 hover:text-indigo-300 font-medium text-xs sm:text-sm text-left truncate flex-1">
-                        👥 Команда: ${(p.team || []).length} чол. <span class="text-gray-400">($${fmt(teamCost)})</span>
-                    </button>
-                    <div class="flex gap-3 shrink-0 text-xs sm:text-sm">
-                        <button onclick="openProjectModal('${p.id}')" class="text-gray-300 hover:text-white">✏️</button>
-                        <button onclick="archiveProject('${p.id}')" class="text-green-400 hover:text-green-300">📦</button>
-                    </div>
-                </div>
-            </div>
-        `;
+                <div class="flex justify-between gap-3 mt-3 text-xs text-gray-400"><span>${(p.team || []).length} у команді</span><span>${p.area || 0} м²</span><span>${p.date || ''}</span></div>
+            </article>`;
     }).join('');
+}
+
+function getProjectPaymentStatus(p) {
+    const debt = calcDebt(p);
+    if (debt === 0) return { statusClass: 'status-paid', statusText: 'Оплачено' };
+    if (calcAdvancesSum(p) > 0) return { statusClass: 'status-advance', statusText: 'Є аванс' };
+    return { statusClass: 'status-none', statusText: 'Без оплати' };
 }
 
 function sortProjects(field) {
@@ -1235,47 +1231,355 @@ function deleteTeamAdvance(projectId, mIdx, aIdx) {
 }
 
 // ====================================================================
-// СПІЛЬНИЙ ДОСТУП
+// ПОВНА КАРТКА ПРОЄКТУ
 // ====================================================================
-function renderShareList() {
-    const listContainer = document.getElementById('share-list');
-    if (!DB.sharedUsers) DB.sharedUsers = [];
+function createProjectDraft() {
+    return {
+        id: uuid(),
+        date: new Date().toISOString().split('T')[0],
+        deadline: '',
+        name: '',
+        area: 0,
+        price: 0,
+        total: 0,
+        client: { name: '', lastName: '', phone: '', social: '' },
+        advances: [],
+        team: [],
+        expenses: []
+    };
+}
 
-    if (DB.sharedUsers.length === 0) {
-        listContainer.innerHTML = `<p class="text-xs text-gray-400 italic">Ще жодного акаунту не додано.</p>`;
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+    })[char]);
+}
+
+function ensureProjectCollections(p) {
+    if (!p.client) p.client = { name: '', lastName: '', phone: '', social: '' };
+    if (!Array.isArray(p.advances)) p.advances = [];
+    if (!Array.isArray(p.team)) p.team = [];
+    if (!Array.isArray(p.expenses)) p.expenses = [];
+    p.team.forEach(member => { if (!Array.isArray(member.advances)) member.advances = []; });
+}
+
+function getDetailProject() {
+    const project = currentProjectId
+        ? DB.projects.find(p => p.id === currentProjectId)
+        : projectDraft;
+    if (project) ensureProjectCollections(project);
+    return project;
+}
+
+function openProjectPage(id = null, focusId = '') {
+    currentProjectId = id;
+    projectDraft = id ? null : createProjectDraft();
+    navigateTo('project');
+    if (focusId) requestAnimationFrame(() => document.getElementById(focusId)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+}
+
+function closeProjectPage() {
+    currentProjectId = null;
+    projectDraft = null;
+    navigateTo('projects');
+}
+
+function syncProjectPageFields(project) {
+    const read = id => document.getElementById(id)?.value;
+    const date = read('project-date');
+    if (date !== undefined) {
+        project.date = date;
+        project.deadline = read('project-deadline') || '';
+        project.name = read('project-name') || '';
+        project.area = parseFloat(read('project-area')) || 0;
+        project.price = parseFloat(read('project-price')) || 0;
+        project.total = project.area * project.price;
+        project.client = {
+            name: read('project-client-name') || '',
+            lastName: read('project-client-lastname') || '',
+            phone: read('project-client-phone') || '',
+            social: read('project-client-social') || ''
+        };
+    }
+}
+
+function updateProjectTotalFromPage() {
+    const area = parseFloat(document.getElementById('project-area')?.value) || 0;
+    const price = parseFloat(document.getElementById('project-price')?.value) || 0;
+    const total = area * price;
+    const totalField = document.getElementById('project-total');
+    if (totalField) totalField.value = total.toFixed(2);
+    const project = getDetailProject();
+    if (project) { project.area = area; project.price = price; project.total = total; }
+}
+
+function saveProjectPage(event) {
+    event.preventDefault();
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    if (!project.name.trim()) {
+        showToast('Вкажіть назву проєкту', 'error');
+        document.getElementById('project-name')?.focus();
+        return;
+    }
+    const isNew = !currentProjectId;
+    if (isNew) {
+        DB.projects.push(project);
+        currentProjectId = project.id;
+        projectDraft = null;
+    }
+    saveData();
+    populateFilterYears();
+    renderProjectDetail();
+    showToast(isNew ? 'Проєкт створено' : 'Зміни в проєкті збережено');
+}
+
+function persistProjectDetail(message = '') {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    if (currentProjectId) saveData();
+    renderProjectDetail();
+    if (message) showToast(message);
+}
+
+function addClientPayment() {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    project.advances.push({ id: uuid(), date: new Date().toISOString().split('T')[0], amount: 0, comment: '' });
+    persistProjectDetail();
+}
+
+function updateClientPayment(index, field, value) {
+    const project = getDetailProject();
+    if (!project?.advances[index]) return;
+    syncProjectPageFields(project);
+    project.advances[index][field] = field === 'amount' ? (parseFloat(value) || 0) : value;
+    persistProjectDetail();
+}
+
+function removeClientPayment(index) {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    project.advances.splice(index, 1);
+    persistProjectDetail();
+}
+
+function addProjectTeamMember() {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    project.team.push({ id: uuid(), role: '', name: '', cost: 0, advances: [] });
+    persistProjectDetail();
+}
+
+function updateProjectTeamMember(index, field, value) {
+    const project = getDetailProject();
+    if (!project?.team[index]) return;
+    syncProjectPageFields(project);
+    project.team[index][field] = field === 'cost' ? (parseFloat(value) || 0) : value;
+    persistProjectDetail();
+}
+
+function removeProjectTeamMember(index) {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    project.team.splice(index, 1);
+    persistProjectDetail();
+}
+
+function addProjectTeamPayment(memberIndex) {
+    const project = getDetailProject();
+    const member = project?.team[memberIndex];
+    if (!member) return;
+    syncProjectPageFields(project);
+    member.advances.push({ id: uuid(), date: new Date().toISOString().split('T')[0], amount: 0, comment: '' });
+    persistProjectDetail();
+}
+
+function updateProjectTeamPayment(memberIndex, paymentIndex, field, value) {
+    const project = getDetailProject();
+    const payment = project?.team[memberIndex]?.advances?.[paymentIndex];
+    if (!payment) return;
+    syncProjectPageFields(project);
+    payment[field] = field === 'amount' ? (parseFloat(value) || 0) : value;
+    persistProjectDetail();
+}
+
+function removeProjectTeamPayment(memberIndex, paymentIndex) {
+    const project = getDetailProject();
+    if (!project?.team[memberIndex]) return;
+    syncProjectPageFields(project);
+    project.team[memberIndex].advances.splice(paymentIndex, 1);
+    persistProjectDetail();
+}
+
+function addProjectExpense() {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    project.expenses.push({ id: uuid(), date: new Date().toISOString().split('T')[0], name: '', amount: 0, comment: '' });
+    persistProjectDetail();
+}
+
+function updateProjectExpense(index, field, value) {
+    const project = getDetailProject();
+    if (!project?.expenses[index]) return;
+    syncProjectPageFields(project);
+    project.expenses[index][field] = field === 'amount' ? (parseFloat(value) || 0) : value;
+    persistProjectDetail();
+}
+
+function removeProjectExpense(index) {
+    const project = getDetailProject();
+    if (!project) return;
+    syncProjectPageFields(project);
+    project.expenses.splice(index, 1);
+    persistProjectDetail();
+}
+
+function archiveProjectFromPage() {
+    const project = getDetailProject();
+    if (!project || !currentProjectId) return;
+    syncProjectPageFields(project);
+    project.archived = true;
+    saveData();
+    showToast('Проєкт переміщено в архів');
+    closeProjectPage();
+}
+
+function trashProjectFromPage() {
+    const project = getDetailProject();
+    if (!project || !currentProjectId) return;
+    syncProjectPageFields(project);
+    project.deleted = true;
+    saveData();
+    showToast('Проєкт переміщено у кошик');
+    closeProjectPage();
+}
+
+function renderProjectDetail() {
+    const container = document.getElementById('project-detail-content');
+    const project = getDetailProject();
+    if (!container || !project) {
+        if (container) container.innerHTML = '<p class="text-gray-400">Проєкт не знайдено.</p>';
         return;
     }
 
-    listContainer.innerHTML = DB.sharedUsers.map((email, idx) => `
-        <div class="flex justify-between items-center p-3 bg-gray-800 rounded-xl text-sm border border-gray-700/50">
-            <span class="font-medium text-gray-200">${email}</span>
-            <button onclick="removeShareEmail(${idx})" class="text-red-400 hover:text-red-300 text-xs">Забрати доступ</button>
-        </div>
-    `).join('');
+    const isNew = !currentProjectId;
+    const received = calcAdvancesSum(project);
+    const debt = calcDebt(project);
+    const teamCost = calcTeamTotalCost(project);
+    const expenseCost = calcExpensesTotal(project);
+    const teamPaid = calcTeamTotalPaid(project);
+    const { statusClass, statusText } = getProjectPaymentStatus(project);
+
+    const clientPayments = project.advances.length
+        ? project.advances.map((payment, index) => `
+            <div class="project-transaction">
+                <div class="project-transaction-grid">
+                    <label><span class="project-field-label">Дата</span><input type="date" value="${escapeHtml(payment.date)}" onchange="updateClientPayment(${index}, 'date', this.value)" class="project-field"></label>
+                    <label><span class="project-field-label">Сума, $</span><input type="number" step="0.01" value="${payment.amount || ''}" onchange="updateClientPayment(${index}, 'amount', this.value)" class="project-field font-mono"></label>
+                    <label><span class="project-field-label">Коментар</span><input type="text" value="${escapeHtml(payment.comment)}" onchange="updateClientPayment(${index}, 'comment', this.value)" class="project-field"></label>
+                    <button type="button" onclick="removeClientPayment(${index})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                </div>
+            </div>`).join('')
+        : '<p class="text-sm text-gray-500 py-3">Платежів від клієнта ще немає.</p>';
+
+    const teamMembers = project.team.length
+        ? project.team.map((member, memberIndex) => {
+            const memberPaid = calcMemberPaid(member);
+            const memberDebt = (parseFloat(member.cost) || 0) - memberPaid;
+            const payments = member.advances.length
+                ? member.advances.map((payment, paymentIndex) => `
+                    <div class="project-transaction-grid mt-2">
+                        <label><span class="project-field-label">Дата виплати</span><input type="date" value="${escapeHtml(payment.date)}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'date', this.value)" class="project-field"></label>
+                        <label><span class="project-field-label">Сума, $</span><input type="number" step="0.01" value="${payment.amount || ''}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'amount', this.value)" class="project-field font-mono"></label>
+                        <label><span class="project-field-label">Коментар</span><input type="text" value="${escapeHtml(payment.comment)}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'comment', this.value)" class="project-field"></label>
+                        <button type="button" onclick="removeProjectTeamPayment(${memberIndex}, ${paymentIndex})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                    </div>`).join('')
+                : '<p class="text-xs text-gray-500 mt-3">Виплат ще немає.</p>';
+            return `
+                <div class="project-member">
+                    <div class="project-member-header">
+                        <label><span class="project-field-label">Роль</span><input type="text" value="${escapeHtml(member.role)}" onchange="updateProjectTeamMember(${memberIndex}, 'role', this.value)" placeholder="Напр. візуалізатор" class="project-field"></label>
+                        <label><span class="project-field-label">Виконавець</span><input type="text" value="${escapeHtml(member.name)}" onchange="updateProjectTeamMember(${memberIndex}, 'name', this.value)" placeholder="Ім’я" class="project-field"></label>
+                        <label><span class="project-field-label">Вартість, $</span><input type="number" step="0.01" value="${member.cost || ''}" onchange="updateProjectTeamMember(${memberIndex}, 'cost', this.value)" class="project-field font-mono"></label>
+                        <button type="button" onclick="removeProjectTeamMember(${memberIndex})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                    </div>
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs mt-3 text-gray-400"><span>Виплачено: <b class="font-mono text-green-400">$${fmt(memberPaid)}</b></span><span>Залишок: <b class="font-mono ${memberDebt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(memberDebt)}</b></span></div>
+                    <div class="project-member-payments">
+                        <div class="flex justify-between gap-3 items-center"><span class="text-xs font-semibold text-gray-300">Виплати виконавцю</span><button type="button" onclick="addProjectTeamPayment(${memberIndex})" class="text-xs text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати виплату</button></div>
+                        ${payments}
+                    </div>
+                </div>`;
+        }).join('')
+        : '<p class="text-sm text-gray-500 py-3">Команда ще не додана.</p>';
+
+    const expenses = project.expenses.length
+        ? project.expenses.map((expense, index) => `
+            <div class="project-expense">
+                <div class="project-expense-grid">
+                    <label><span class="project-field-label">Дата</span><input type="date" value="${escapeHtml(expense.date)}" onchange="updateProjectExpense(${index}, 'date', this.value)" class="project-field"></label>
+                    <label><span class="project-field-label">Стаття витрат</span><input type="text" value="${escapeHtml(expense.name)}" onchange="updateProjectExpense(${index}, 'name', this.value)" placeholder="Матеріали, виїзд…" class="project-field"></label>
+                    <label><span class="project-field-label">Сума, $</span><input type="number" step="0.01" value="${expense.amount || ''}" onchange="updateProjectExpense(${index}, 'amount', this.value)" class="project-field font-mono"></label>
+                    <button type="button" onclick="removeProjectExpense(${index})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                </div>
+                <label class="block mt-2"><span class="project-field-label">Коментар</span><input type="text" value="${escapeHtml(expense.comment)}" onchange="updateProjectExpense(${index}, 'comment', this.value)" class="project-field"></label>
+            </div>`).join('')
+        : '<p class="text-sm text-gray-500 py-3">Додаткових витрат ще немає.</p>';
+
+    container.innerHTML = `
+        <form onsubmit="saveProjectPage(event)" class="project-detail-page">
+            <div class="project-detail-header">
+                <div class="min-w-0"><button type="button" onclick="closeProjectPage()" class="text-sm text-indigo-300 hover:text-indigo-200 mb-2">← До всіх проєктів</button><div class="flex flex-wrap gap-3 items-center"><h2 class="text-2xl font-bold truncate">${isNew ? 'Новий проєкт' : escapeHtml(project.name || 'Без назви')}</h2><span class="badge ${statusClass}">${statusText}</span></div><p class="text-gray-400 text-sm mt-1">Усі дані, платежі, команда та витрати — на одній сторінці.</p></div>
+                <div class="project-inline-actions shrink-0"><button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-4 py-2.5 text-sm font-semibold">Зберегти</button>${isNew ? '' : `<button type="button" onclick="archiveProjectFromPage()" class="border border-gray-700 hover:bg-gray-800 rounded-xl px-4 py-2.5 text-sm font-semibold">В архів</button><button type="button" onclick="trashProjectFromPage()" class="project-danger-action border rounded-xl px-4 py-2.5 text-sm font-semibold">У кошик</button>`}</div>
+            </div>
+            <div class="project-detail-layout">
+                <div class="project-main-stack">
+                    <section class="project-panel">
+                        <div class="project-panel-title"><h3>Основні дані</h3><span class="text-xs text-gray-500">* обов’язкове поле</span></div>
+                        <div class="project-form-grid">
+                            <label><span class="project-field-label">Дата початку</span><input id="project-date" type="date" value="${escapeHtml(project.date)}" required class="project-field"></label>
+                            <label><span class="project-field-label">Дедлайн</span><input id="project-deadline" type="date" value="${escapeHtml(project.deadline)}" class="project-field"></label>
+                        </div>
+                        <label class="block mt-3"><span class="project-field-label">Назва об’єкта *</span><input id="project-name" type="text" value="${escapeHtml(project.name)}" required placeholder="Назва проєкту" class="project-field"></label>
+                        <div class="project-form-grid project-form-grid-3 mt-4">
+                            <label><span class="project-field-label">Площа, м²</span><input id="project-area" type="number" step="0.01" value="${project.area || ''}" oninput="updateProjectTotalFromPage()" class="project-field"></label>
+                            <label><span class="project-field-label">Ціна, $/м²</span><input id="project-price" type="number" step="0.01" value="${project.price || ''}" oninput="updateProjectTotalFromPage()" class="project-field"></label>
+                            <label><span class="project-field-label">Вартість проєкту, $</span><input id="project-total" type="number" value="${fmt(project.total)}" readonly class="project-field font-mono text-indigo-200 bg-gray-900"></label>
+                        </div>
+                    </section>
+                    <section class="project-panel">
+                        <div class="project-panel-title"><h3>Клієнт</h3></div>
+                        <div class="project-form-grid"><label><span class="project-field-label">Ім’я</span><input id="project-client-name" type="text" value="${escapeHtml(project.client.name)}" class="project-field"></label><label><span class="project-field-label">Прізвище</span><input id="project-client-lastname" type="text" value="${escapeHtml(project.client.lastName)}" class="project-field"></label><label><span class="project-field-label">Телефон</span><input id="project-client-phone" type="tel" value="${escapeHtml(project.client.phone)}" class="project-field"></label><label><span class="project-field-label">Посилання / соцмережа</span><input id="project-client-social" type="url" value="${escapeHtml(project.client.social)}" class="project-field"></label></div>
+                    </section>
+                    <section class="project-panel" id="project-payments">
+                        <div class="project-panel-title"><div><h3>Оплати від клієнта</h3><p class="text-xs text-gray-500 mt-1">Аванси та всі наступні платежі.</p></div><button type="button" onclick="addClientPayment()" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати платіж</button></div>
+                        <div class="project-finance-summary mb-4"><div><span class="text-xs text-gray-400">Отримано</span><b class="block font-mono text-green-400 mt-1">$${fmt(received)}</b></div><div><span class="text-xs text-gray-400">Борг клієнта</span><b class="block font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'} mt-1">$${fmt(debt)}</b></div><div><span class="text-xs text-gray-400">Статус</span><b class="block mt-1">${statusText}</b></div></div>
+                        <div class="space-y-2">${clientPayments}</div>
+                    </section>
+                    <section class="project-panel" id="project-team">
+                        <div class="project-panel-title"><div><h3>Команда</h3><p class="text-xs text-gray-500 mt-1">Вартість робіт і виплати кожному виконавцю.</p></div><button type="button" onclick="addProjectTeamMember()" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати учасника</button></div>
+                        <div class="space-y-3">${teamMembers}</div>
+                    </section>
+                </div>
+                <aside class="project-side-stack">
+                    <section class="project-panel"><div class="project-panel-title"><h3>Фінансова картина</h3></div><div class="space-y-3 text-sm"><div class="flex justify-between gap-3"><span class="text-gray-400">Вартість проєкту</span><b class="font-mono">$${fmt(project.total)}</b></div><div class="flex justify-between gap-3"><span class="text-gray-400">Витрати команди</span><b class="font-mono">$${fmt(teamCost)}</b></div><div class="flex justify-between gap-3"><span class="text-gray-400">Інші витрати</span><b class="font-mono">$${fmt(expenseCost)}</b></div><div class="flex justify-between gap-3"><span class="text-gray-400">Виплачено команді</span><b class="font-mono text-green-400">$${fmt(teamPaid)}</b></div><div class="flex justify-between gap-3 border-t border-gray-800 pt-3"><span class="font-semibold">Чистий прибуток</span><b class="font-mono text-emerald-400">$${fmt(calcNetProfit(project))}</b></div></div></section>
+                    <section class="project-panel" id="project-expenses"><div class="project-panel-title"><div><h3>Додаткові витрати</h3><p class="text-xs text-gray-500 mt-1">Витрати поза оплатою команди.</p></div><button type="button" onclick="addProjectExpense()" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати</button></div><div class="space-y-2">${expenses}</div></section>
+                    <section class="project-panel"><div class="project-panel-title"><h3>Терміни</h3></div><div class="flex justify-between items-center gap-3 text-sm"><span class="text-gray-400">Дедлайн</span><span>${deadlineBadgeHtml(project)}</span></div><p class="text-xs text-gray-500 mt-3">${project.deadline ? escapeHtml(project.deadline) : 'Дедлайн не встановлено'}</p></section>
+                </aside>
+            </div>
+        </form>`;
 }
 
-function addShareEmail(e) {
-    e.preventDefault();
-    const input = document.getElementById('share-email-input');
-    const email = input.value.trim().toLowerCase();
-
-    if (email && !DB.sharedUsers.includes(email)) {
-        DB.sharedUsers.push(email);
-        saveData();
-        renderShareList();
-        input.value = '';
-        showToast('Доступ надано користувачу ' + email);
-    }
-}
-
-function removeShareEmail(idx) {
-    if (DB.sharedUsers[idx]) {
-        const removed = DB.sharedUsers.splice(idx, 1);
-        saveData();
-        renderShareList();
-        showToast('Доступ скасовано для ' + removed);
-    }
-}
+// Compatibility for older inline handlers: project actions always lead to the full page.
+function openProjectModal(id = null) { openProjectPage(id); }
+function openTeamModal(projectId) { openProjectPage(projectId, 'project-team'); }
 
 // ====================================================================
 // ІНШІ ДОХОДИ
@@ -1574,7 +1878,12 @@ function importData(e) {
         try {
             const data = JSON.parse(evt.target.result);
             if (data.projects) {
-                DB = data;
+                DB = {
+                    projects: Array.isArray(data.projects) ? data.projects : [],
+                    otherIncomes: Array.isArray(data.otherIncomes) ? data.otherIncomes : []
+                };
+                currentProjectId = null;
+                projectDraft = null;
                 saveData();
                 renderProjects();
                 showToast('Дані успішно імпортовано');
