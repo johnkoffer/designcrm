@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk" class="light">
+<html lang="uk" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,10 +22,8 @@
 
         /* Sidebar */
         .sidebar-link { transition: all 0.18s ease; border-radius: 10px; }
-        .sidebar-link:hover { background: rgba(90,103,216,0.1); color: #5a67d8; }
-        .sidebar-link.active { background: rgba(90,103,216,0.15); color: #5a67d8; font-weight: 600; }
-        .dark .sidebar-link:hover { background: rgba(129,140,248,0.15); color: #818cf8; }
-        .dark .sidebar-link.active { background: rgba(129,140,248,0.2); color: #818cf8; }
+        .sidebar-link:hover { background: rgba(129,140,248,0.15); color: #818cf8; }
+        .sidebar-link.active { background: rgba(129,140,248,0.2); color: #818cf8; font-weight: 600; }
 
         /* Animations */
         .fade-in { animation: fadeIn 0.25s ease-out; }
@@ -34,53 +32,40 @@
         @keyframes scaleIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
 
         /* Status badges */
-        .status-none { background: #fff0f0; color: #dc2626; border: 1px solid #fecaca; }
-        .status-advance { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
-        .status-paid { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-        .dark .status-none { background: #3b0a0a; color: #fca5a5; border-color: #7f1d1d; }
-        .dark .status-advance { background: #3b1f02; color: #fcd34d; border-color: #78350f; }
-        .dark .status-paid { background: #052e16; color: #86efac; border-color: #14532d; }
+        .status-none { background: #3b0a0a; color: #fca5a5; border: 1px solid #7f1d1d; }
+        .status-advance { background: #3b1f02; color: #fcd34d; border: 1px solid #78350f; }
+        .status-paid { background: #052e16; color: #86efac; border: 1px solid #14532d; }
 
         /* Table */
         table th { cursor: pointer; user-select: none; }
-        table th:hover { background: rgba(90,103,216,0.06); }
+        table th:hover { background: rgba(129,140,248,0.1); }
         .sort-arrow { font-size: 0.6rem; margin-left: 3px; opacity: 0.4; }
-        .sort-arrow.active { opacity: 1; color: #5a67d8; }
+        .sort-arrow.active { opacity: 1; color: #818cf8; }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
 
         /* Tabs */
         .tab-btn { transition: all 0.18s; border-bottom: 2px solid transparent; }
-        .tab-btn.active { border-bottom-color: #5a67d8; color: #5a67d8; font-weight: 600; }
-        .dark .tab-btn.active { border-bottom-color: #818cf8; color: #818cf8; }
+        .tab-btn.active { border-bottom-color: #818cf8; color: #818cf8; font-weight: 600; }
 
         .badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 500; }
         .card-hover { transition: transform 0.18s, box-shadow 0.18s; }
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 
-        #login-screen { background: linear-gradient(135deg, #667eea 0%, #4c3f9f 100%); }
+        #login-screen { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); }
         .login-card { backdrop-filter: blur(12px); }
         .saving-dot { animation: pulse 1s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-        .theme-toggle-track { width: 40px; height: 22px; background: #d1d5db; border-radius: 11px; transition: background 0.2s; cursor: pointer; position: relative; }
-        .dark .theme-toggle-track { background: #818cf8; }
-        .theme-toggle-thumb { width: 18px; height: 18px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
-        .dark .theme-toggle-thumb { transform: translateX(18px); }
-
         input[type="date"], input[type="datetime-local"], select { min-height: 38px; }
         #sidebar-overlay { backdrop-filter: blur(2px); }
 
-        .deadline-overdue { background: #fff0f0; color: #dc2626; border: 1px solid #fecaca; }
-        .deadline-soon { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
-        .deadline-ok { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-        .dark .deadline-overdue { background: #3b0a0a; color: #fca5a5; border-color: #7f1d1d; }
-        .dark .deadline-soon { background: #3b1f02; color: #fcd34d; border-color: #78350f; }
-        .dark .deadline-ok { background: #052e16; color: #86efac; border-color: #14532d; }
+        .deadline-overdue { background: #3b0a0a; color: #fca5a5; border: 1px solid #7f1d1d; }
+        .deadline-soon { background: #3b1f02; color: #fcd34d; border: 1px solid #78350f; }
+        .deadline-ok { background: #052e16; color: #86efac; border: 1px solid #14532d; }
         .deadline-pulse { animation: deadlinePulse 2s infinite; }
         @keyframes deadlinePulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
@@ -90,8 +75,7 @@
             #main-content-inner { padding-bottom: 120px !important; }
         }
         .bottom-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px 4px; font-size: 0.6rem; font-weight: 600; color: #9ca3af; transition: color 0.15s; position: relative; cursor: pointer; border: none; background: none; }
-        .bottom-nav-btn.active { color: #5a67d8; }
-        .dark .bottom-nav-btn.active { color: #818cf8; }
+        .bottom-nav-btn.active { color: #818cf8; }
         .bottom-nav-btn svg { width: 22px; height: 22px; }
 
         .mobile-cards-list { display: none; }
@@ -103,11 +87,9 @@
             #filters-panel.open { display: flex; }
         }
 
-        .proj-card { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px 16px; transition: box-shadow 0.18s; }
-        .dark .proj-card { background: #111827; border-color: #1f2937; }
+        .proj-card { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 14px 16px; transition: box-shadow 0.18s; }
 
-        .fab { position: fixed; bottom: 82px; right: 18px; z-index: 40; width: 52px; height: 52px; border-radius: 50%; background: #5a67d8; color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(90,103,216,0.45); border: none; cursor: pointer; transition: transform 0.15s; }
-        .dark .fab { background: #818cf8; box-shadow: 0 4px 16px rgba(129,140,248,0.4); }
+        .fab { position: fixed; bottom: 82px; right: 18px; z-index: 40; width: 52px; height: 52px; border-radius: 50%; background: #818cf8; color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(129,140,248,0.4); border: none; cursor: pointer; transition: transform 0.15s; }
         @media (max-width: 767px) { .fab { display: flex; } }
 
         .filter-toggle-btn { display: none; }
@@ -120,24 +102,24 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 min-h-screen transition-colors duration-200">
+<body class="bg-gray-950 text-gray-100 min-h-screen">
 
 <!-- АВТОРИЗАЦІЯ -->
 <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-    <div class="login-card bg-white/95 dark:bg-gray-900/95 rounded-2xl shadow-2xl w-full max-w-sm p-8 fade-in border border-white/20">
+    <div class="login-card bg-gray-900/95 rounded-2xl shadow-2xl w-full max-w-sm p-8 fade-in border border-gray-800">
         <div class="text-center mb-8">
-            <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/60 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
-                <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            <div class="w-16 h-16 bg-indigo-900/60 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Кабінет Дизайнера</h1>
-            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Увійдіть, щоб продовжити</p>
+            <h1 class="text-2xl font-bold text-white">Кабінет Дизайнера</h1>
+            <p class="text-gray-400 text-sm mt-1">Увійдіть, щоб продовжити</p>
         </div>
-        <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200 py-3 rounded-xl text-sm font-semibold transition-colors mb-4 shadow-sm cursor-pointer">
+        <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 border border-gray-700 hover:bg-gray-800 text-gray-200 py-3 rounded-xl text-sm font-semibold transition-colors mb-4 shadow-sm cursor-pointer">
             <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
             <span>Увійти через Google</span>
         </button>
-        <div id="login-error" class="hidden text-red-600 text-sm text-center bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2 mb-3"></div>
-        <p class="text-xs text-gray-400 text-center mt-6">Захищено Supabase Cloud</p>
+        <div id="login-error" class="hidden text-red-400 text-sm text-center bg-red-900/20 rounded-lg px-3 py-2 mb-3"></div>
+        <p class="text-xs text-gray-500 text-center mt-6">Захищено Supabase Cloud</p>
     </div>
 </div>
 
@@ -145,9 +127,9 @@
 <div id="app" class="hidden flex min-h-screen">
 
     <!-- БОКОВЕ МЕНЮ -->
-    <aside id="sidebar" class="w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col fixed h-full z-30 transition-transform duration-300 lg:translate-x-0 -translate-x-full">
-        <div class="p-5 border-b border-gray-100 dark:border-gray-800">
-            <h1 class="text-xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+    <aside id="sidebar" class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col fixed h-full z-30 transition-transform duration-300 lg:translate-x-0 -translate-x-full">
+        <div class="p-5 border-b border-gray-800">
+            <h1 class="text-xl font-bold text-indigo-400 flex items-center gap-2">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                 Кабінет Дизайнера
             </h1>
@@ -155,56 +137,49 @@
         </div>
 
         <nav class="flex-1 p-3 space-y-0.5 overflow-y-auto">
-            <button onclick="navigateTo('projects')" data-nav="projects" class="sidebar-link active w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('projects')" data-nav="projects" class="sidebar-link active w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                 <span>Проєкти</span>
-                <span id="nav-badge-projects" class="ml-auto text-xs bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 px-2 py-0.5 rounded-full font-mono">0</span>
+                <span id="nav-badge-projects" class="ml-auto text-xs bg-indigo-900 text-indigo-300 px-2 py-0.5 rounded-full font-mono">0</span>
             </button>
-            <button onclick="navigateTo('other')" data-nav="other" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('other')" data-nav="other" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span>Інші доходи</span>
             </button>
-            <button onclick="navigateTo('share')" data-nav="share" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('share')" data-nav="share" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 <span>Спільний доступ</span>
             </button>
-            <button onclick="navigateTo('archive')" data-nav="archive" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('archive')" data-nav="archive" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                 <span>Архів</span>
             </button>
-            <button onclick="navigateTo('trash')" data-nav="trash" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('trash')" data-nav="trash" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 <span>Кошик</span>
             </button>
-            <button onclick="navigateTo('stats')" data-nav="stats" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('stats')" data-nav="stats" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                 <span>Статистика</span>
             </button>
         </nav>
 
-        <div class="p-3 border-t border-gray-100 dark:border-gray-800 space-y-1">
+        <div class="p-3 border-t border-gray-800 space-y-1">
             <div class="px-4 py-1.5 flex items-center gap-2">
                 <span id="save-status-dot" class="w-2 h-2 rounded-full bg-green-500 shrink-0"></span>
                 <span id="save-status-label" class="text-xs text-gray-400 truncate">Збережено в хмарі</span>
             </div>
 
-            <div class="px-4 py-2 flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">Тема оформлення</span>
-                <button onclick="toggleTheme()" class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors" title="Змінити тему">
-                    <div class="theme-toggle-track"><div class="theme-toggle-thumb"></div></div>
-                </button>
-            </div>
-
-            <button onclick="exportData()" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <button onclick="exportData()" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 <span>Експорт даних</span>
             </button>
-            <label class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+            <label class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                 <span>Імпорт даних</span>
                 <input type="file" accept=".json" onchange="importData(event)" class="hidden">
             </label>
-            <button onclick="doLogout()" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-500 dark:text-red-400 cursor-pointer">
+            <button onclick="doLogout()" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-400 cursor-pointer">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                 <span>Вийти</span>
             </button>
@@ -213,9 +188,9 @@
 
     <!-- КОНТЕНТ -->
     <main class="flex-1 lg:ml-64 min-h-screen">
-        <header class="lg:hidden bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 p-4 flex items-center justify-between sticky top-0 z-20">
-            <h1 class="text-lg font-bold text-indigo-600 dark:text-indigo-400">Кабінет Дизайнера</h1>
-            <button onclick="toggleSidebar()" class="p-2 text-gray-600 dark:text-gray-300">
+        <header class="lg:hidden bg-gray-900 border-b border-gray-800 p-4 flex items-center justify-between sticky top-0 z-20">
+            <h1 class="text-lg font-bold text-indigo-400">Кабінет Дизайнера</h1>
+            <button onclick="toggleSidebar()" class="p-2 text-gray-300">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </header>
@@ -232,10 +207,10 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div>
                         <h2 class="text-2xl font-bold">Проєкти</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Управління дизайн-проєктами та командою</p>
+                        <p class="text-gray-400 text-sm mt-1">Управління дизайн-проєктами та командою</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="toggleFilters()" class="filter-toggle-btn items-center gap-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-300 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors">
+                        <button onclick="toggleFilters()" class="filter-toggle-btn items-center gap-2 border border-gray-700 bg-gray-900 text-gray-300 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
                             <span>Фільтри</span>
                         </button>
@@ -247,14 +222,14 @@
                 </div>
 
                 <!-- Панель фільтрів -->
-                <div id="filters-panel" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-4 mb-4 flex flex-wrap gap-3 items-end">
+                <div id="filters-panel" class="bg-gray-900 rounded-xl border border-gray-800 p-4 mb-4 flex flex-wrap gap-3 items-end">
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Пошук</label>
-                        <input type="text" id="filter-proj-search" oninput="renderProjects()" placeholder="Назва або клієнт..." class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 text-sm w-48 focus:ring-2 focus:ring-indigo-400 outline-none">
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Пошук</label>
+                        <input type="text" id="filter-proj-search" oninput="renderProjects()" placeholder="Назва або клієнт..." class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-48 focus:ring-2 focus:ring-indigo-400 outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Статус оплати</label>
-                        <select id="filter-proj-status" onchange="renderProjects()" class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 text-sm w-44 focus:ring-2 focus:ring-indigo-400 outline-none">
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Статус оплати</label>
+                        <select id="filter-proj-status" onchange="renderProjects()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-44 focus:ring-2 focus:ring-indigo-400 outline-none">
                             <option value="">Всі статуси</option>
                             <option value="none">Без оплати</option>
                             <option value="advance">Є аванс</option>
@@ -262,22 +237,22 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Рік</label>
-                        <select id="filter-proj-year" onchange="renderProjects()" class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 text-sm w-28 focus:ring-2 focus:ring-indigo-400 outline-none"></select>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Рік</label>
+                        <select id="filter-proj-year" onchange="renderProjects()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-28 focus:ring-2 focus:ring-indigo-400 outline-none"></select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Місяць</label>
-                        <select id="filter-proj-month" onchange="renderProjects()" class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 text-sm w-36 focus:ring-2 focus:ring-indigo-400 outline-none"></select>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Місяць</label>
+                        <select id="filter-proj-month" onchange="renderProjects()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-36 focus:ring-2 focus:ring-indigo-400 outline-none"></select>
                     </div>
                 </div>
 
                 <div id="projects-summary" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4"></div>
 
                 <!-- Таблиця проєктів (десктоп) -->
-                <div class="desktop-table-wrap bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+                <div class="desktop-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm" id="projects-table">
-                            <thead class="bg-gray-50 dark:bg-gray-800/60 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                            <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
                                 <tr>
                                     <th class="px-4 py-3 text-left" onclick="sortProjects('date')">Дата <span class="sort-arrow active" id="sort-date">▼</span></th>
                                     <th class="px-4 py-3 text-left" onclick="sortProjects('name')">Назва об'єкта <span class="sort-arrow" id="sort-name">▼</span></th>
@@ -285,6 +260,7 @@
                                     <th class="px-4 py-3 text-right" onclick="sortProjects('area')">Площа, м² <span class="sort-arrow" id="sort-area">▼</span></th>
                                     <th class="px-4 py-3 text-right" onclick="sortProjects('price')">$/м² <span class="sort-arrow" id="sort-price">▼</span></th>
                                     <th class="px-4 py-3 text-right" onclick="sortProjects('total')">Сума, $ <span class="sort-arrow" id="sort-total">▼</span></th>
+                                    <th class="px-4 py-3 text-right" onclick="sortProjects('netProfit')">Прибуток, $ <span class="sort-arrow" id="sort-netProfit">▼</span></th>
                                     <th class="px-4 py-3 text-right" onclick="sortProjects('debt')">Борг, $ <span class="sort-arrow" id="sort-debt">▼</span></th>
                                     <th class="px-4 py-3 text-center">Команда / Витрати</th>
                                     <th class="px-4 py-3 text-center" onclick="sortProjects('deadline')">Дедлайн <span class="sort-arrow" id="sort-deadline">▼</span></th>
@@ -292,7 +268,7 @@
                                     <th class="px-4 py-3 text-center">Дії</th>
                                 </tr>
                             </thead>
-                            <tbody id="projects-tbody" class="divide-y divide-gray-50 dark:divide-gray-800"></tbody>
+                            <tbody id="projects-tbody" class="divide-y divide-gray-800"></tbody>
                         </table>
                     </div>
                     <div id="projects-empty" class="hidden p-16 text-center text-gray-400">
@@ -309,16 +285,16 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
                         <h2 class="text-2xl font-bold">Інші доходи</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Додаткові джерела доходу</p>
+                        <p class="text-gray-400 text-sm mt-1">Додаткові джерела доходу</p>
                     </div>
                     <button onclick="openOtherIncomeModal()" class="filter-new-btn-desktop items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                         <span>Новий запис</span>
                     </button>
                 </div>
-                <div class="desktop-table-wrap bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+                <div class="desktop-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
                     <table class="w-full text-sm">
-                        <thead class="bg-gray-50 dark:bg-gray-800/60 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
                             <tr>
                                 <th class="px-4 py-3 text-left">Дата</th>
                                 <th class="px-4 py-3 text-left">Опис</th>
@@ -326,7 +302,7 @@
                                 <th class="px-4 py-3 text-center">Дії</th>
                             </tr>
                         </thead>
-                        <tbody id="other-tbody" class="divide-y divide-gray-50 dark:divide-gray-800"></tbody>
+                        <tbody id="other-tbody" class="divide-y divide-gray-800"></tbody>
                     </table>
                     <div id="other-empty" class="hidden p-16 text-center text-gray-400">
                         <p class="font-semibold">Записів поки немає</p>
@@ -339,19 +315,19 @@
             <section id="section-share" class="section fade-in hidden">
                 <div class="mb-6">
                     <h2 class="text-2xl font-bold">Спільний доступ</h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Запрошуйте інших користувачів Google до роботи над вашими таблицями</p>
+                    <p class="text-gray-400 text-sm mt-1">Запрошуйте інших користувачів Google до роботи над вашими таблицями</p>
                 </div>
 
-                <div class="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-6 max-w-2xl">
+                <div class="bg-gray-900 rounded-2xl border border-gray-800 p-6 max-w-2xl">
                     <h3 class="text-lg font-semibold mb-3">Запросити акаунт</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Вкажіть Google Email людини, якій ви хочете надати доступ для перегляду та внесення змін у ваш кабінет.</p>
+                    <p class="text-xs text-gray-400 mb-4">Вкажіть Google Email людини, якій ви хочете надати доступ для перегляду та внесення змін у ваш кабінет.</p>
 
                     <form onsubmit="addShareEmail(event)" class="flex gap-2 mb-6">
-                        <input type="email" id="share-email-input" required placeholder="user@gmail.com" class="flex-1 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-400">
+                        <input type="email" id="share-email-input" required placeholder="user@gmail.com" class="flex-1 border border-gray-700 bg-gray-800 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-400">
                         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer">Надати доступ</button>
                     </form>
 
-                    <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Користувачі з доступом:</h4>
+                    <h4 class="text-sm font-semibold text-gray-300 mb-3">Користувачі з доступом:</h4>
                     <div id="share-list" class="space-y-2"></div>
                 </div>
             </section>
@@ -360,26 +336,29 @@
             <section id="section-archive" class="section fade-in hidden">
                 <div class="mb-6">
                     <h2 class="text-2xl font-bold">Архів</h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Завершені та повністю оплачені проєкти</p>
+                    <p class="text-gray-400 text-sm mt-1">Завершені та повністю оплачені проєкти</p>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-gray-50 dark:bg-gray-800/60 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                            <tr>
-                                <th class="px-4 py-3 text-left">Дата</th>
-                                <th class="px-4 py-3 text-left">Назва</th>
-                                <th class="px-4 py-3 text-left">Клієнт</th>
-                                <th class="px-4 py-3 text-right">Площа, м²</th>
-                                <th class="px-4 py-3 text-right">Сума, $</th>
-                                <th class="px-4 py-3 text-center">Дії</th>
-                            </tr>
-                        </thead>
-                        <tbody id="archive-tbody" class="divide-y divide-gray-50 dark:divide-gray-800"></tbody>
-                    </table>
+                <div class="desktop-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
+                                <tr>
+                                    <th class="px-4 py-3 text-left">Дата</th>
+                                    <th class="px-4 py-3 text-left">Назва</th>
+                                    <th class="px-4 py-3 text-left">Клієнт</th>
+                                    <th class="px-4 py-3 text-right">Площа, м²</th>
+                                    <th class="px-4 py-3 text-right">Сума, $</th>
+                                    <th class="px-4 py-3 text-center">Дії</th>
+                                </tr>
+                            </thead>
+                            <tbody id="archive-tbody" class="divide-y divide-gray-800"></tbody>
+                        </table>
+                    </div>
                     <div id="archive-empty" class="hidden p-16 text-center text-gray-400">
                         <p class="font-semibold">Архів порожній</p>
                     </div>
                 </div>
+                <div class="mobile-cards-list" id="archive-cards"></div>
             </section>
 
             <!-- СЕКЦІЯ КОШИК -->
@@ -387,24 +366,26 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
                         <h2 class="text-2xl font-bold">Кошик</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Видалені проєкти</p>
+                        <p class="text-gray-400 text-sm mt-1">Видалені проєкти</p>
                     </div>
                     <button onclick="emptyTrash()" id="btn-empty-trash" class="hidden inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
                         <span>Очистити кошик</span>
                     </button>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-gray-50 dark:bg-gray-800/60 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                            <tr>
-                                <th class="px-4 py-3 text-left">Дата</th>
-                                <th class="px-4 py-3 text-left">Назва</th>
-                                <th class="px-4 py-3 text-right">Сума, $</th>
-                                <th class="px-4 py-3 text-center">Дії</th>
-                            </tr>
-                        </thead>
-                        <tbody id="trash-tbody" class="divide-y divide-gray-50 dark:divide-gray-800"></tbody>
-                    </table>
+                <div class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
+                                <tr>
+                                    <th class="px-4 py-3 text-left">Дата</th>
+                                    <th class="px-4 py-3 text-left">Назва</th>
+                                    <th class="px-4 py-3 text-right">Сума, $</th>
+                                    <th class="px-4 py-3 text-center">Дії</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trash-tbody" class="divide-y divide-gray-800"></tbody>
+                        </table>
+                    </div>
                     <div id="trash-empty" class="hidden p-16 text-center text-gray-400">
                         <p class="font-semibold">Кошик порожній</p>
                     </div>
@@ -415,17 +396,17 @@
             <section id="section-stats" class="section fade-in hidden">
                 <div class="mb-6">
                     <h2 class="text-2xl font-bold">Статистика</h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Аналітика та фінансові звіти</p>
+                    <p class="text-gray-400 text-sm mt-1">Аналітика та фінансові звіти</p>
                 </div>
-                <div class="flex border-b border-gray-200 dark:border-gray-700 mb-6">
-                    <button onclick="switchStatsTab('general')" id="stats-tab-general" class="tab-btn active px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 cursor-pointer">Загальна статистика</button>
-                    <button onclick="switchStatsTab('monthly')" id="stats-tab-monthly" class="tab-btn px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 cursor-pointer">Деталі по місяцях</button>
+                <div class="flex border-b border-gray-800 mb-6">
+                    <button onclick="switchStatsTab('general')" id="stats-tab-general" class="tab-btn active px-6 py-3 text-sm font-medium text-gray-400 cursor-pointer">Загальна статистика</button>
+                    <button onclick="switchStatsTab('monthly')" id="stats-tab-monthly" class="tab-btn px-6 py-3 text-sm font-medium text-gray-400 cursor-pointer">Деталі по місяцях</button>
                 </div>
                 <div id="stats-general" class="fade-in">
                     <div class="flex flex-wrap gap-3 mb-6">
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Рік</label>
-                            <select id="stats-year" onchange="renderStats()" class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
+                            <select id="stats-year" onchange="renderStats()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
                         </div>
                     </div>
                     <div id="stats-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6"></div>
@@ -434,11 +415,11 @@
                     <div class="flex flex-wrap gap-3 mb-6">
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Рік</label>
-                            <select id="stats-monthly-year" onchange="renderMonthlyDetails()" class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
+                            <select id="stats-monthly-year" onchange="renderMonthlyDetails()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Місяць</label>
-                            <select id="stats-monthly-month" onchange="renderMonthlyDetails()" class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
+                            <select id="stats-monthly-month" onchange="renderMonthlyDetails()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
                         </div>
                     </div>
                     <div id="monthly-details-content"></div>
@@ -449,7 +430,7 @@
     </main>
 
     <!-- НИЖНЯ НАВІГАЦІЯ ДЛЯ МОБІЛЬНИХ -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-30 bg-gray-900 border-t border-gray-800">
         <div class="flex">
             <button class="bottom-nav-btn active" id="bnav-projects" onclick="navigateTo('projects')">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
@@ -479,17 +460,17 @@
 <div id="modal" class="fixed inset-0 z-[55] hidden">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal()"></div>
     <div class="relative flex items-start justify-center min-h-full p-4 pt-[5vh]">
-        <div id="modal-content" class="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-100 dark:border-gray-800 scale-in p-6"></div>
+        <div id="modal-content" class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-800 scale-in p-6"></div>
     </div>
 </div>
 
 <div id="confirm-modal" class="fixed inset-0 z-[60] hidden">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
     <div class="relative flex items-center justify-center min-h-full p-4">
-        <div class="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-gray-100 dark:border-gray-800 scale-in">
+        <div class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-gray-800 scale-in">
             <p id="confirm-text" class="text-center text-base mb-6"></p>
             <div class="flex gap-3 justify-center">
-                <button onclick="confirmAction(false)" class="px-6 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-sm font-semibold transition-colors cursor-pointer">Скасувати</button>
+                <button onclick="confirmAction(false)" class="px-6 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-sm font-semibold transition-colors cursor-pointer">Скасувати</button>
                 <button onclick="confirmAction(true)" class="px-6 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-sm font-semibold transition-colors cursor-pointer">Підтвердити</button>
             </div>
         </div>
@@ -515,8 +496,7 @@ const MONTHS_UK = ['Січень','Лютий','Березень','Квітен�
 const DB_DEFAULTS = {
     projects: [],
     otherIncomes: [],
-    sharedUsers: [],
-    settings: { theme: 'light' }
+    sharedUsers: []
 };
 let DB = { ...DB_DEFAULTS };
 let currentUserId = null;
@@ -563,7 +543,6 @@ sb.auth.onAuthStateChange(async (event, session) => {
         await loadFromSupabase();
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
-        initTheme();
         populateFilterYears();
         populateMonthSelects();
         renderProjects();
@@ -634,19 +613,6 @@ function setSaveStatus(status) {
 }
 
 // ====================================================================
-// ТЕМА
-// ====================================================================
-function initTheme() {
-    const isDark = DB.settings?.theme === 'dark';
-    document.documentElement.classList.toggle('dark', isDark);
-}
-function toggleTheme() {
-    DB.settings.theme = DB.settings.theme === 'dark' ? 'light' : 'dark';
-    saveData();
-    initTheme();
-}
-
-// ====================================================================
 // НАВІГАЦІЯ
 // ====================================================================
 function navigateTo(section) {
@@ -691,7 +657,7 @@ function toggleFilters() {
 }
 
 // ====================================================================
-// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+// ДОПОМІЖНІ ФУНКЦІЇ
 // ====================================================================
 function showToast(msg, type = 'success') {
     const bg = type === 'success' ? 'bg-green-600' : 'bg-red-600';
@@ -732,6 +698,13 @@ function calcTeamTotalCost(p) { return (p.team || []).reduce((s, m) => s + parse
 function calcMemberPaid(m) { return (m.advances || []).reduce((s, a) => s + parseFloat(a.amount || 0), 0); }
 function calcTeamTotalPaid(p) { return (p.team || []).reduce((s, m) => s + calcMemberPaid(m), 0); }
 
+// Чистий прибуток проєкту (Сума проєкту мінус Витрати на команду)
+function calcNetProfit(p) {
+    const total = parseFloat(p.total || 0);
+    const teamCost = calcTeamTotalCost(p);
+    return total - teamCost;
+}
+
 function getDeadlineInfo(p) {
     if (!p.deadline) return null;
     const today = new Date(); today.setHours(0,0,0,0);
@@ -741,7 +714,7 @@ function getDeadlineInfo(p) {
 }
 function deadlineBadgeHtml(p) {
     const info = getDeadlineInfo(p);
-    if (!info) return `<span class="text-gray-300 dark:text-gray-600 text-xs">-</span>`;
+    if (!info) return `<span class="text-gray-600 text-xs">-</span>`;
     const { diff } = info;
     if (diff < 0) return `<span class="badge deadline-overdue deadline-pulse">Прострочено (${Math.abs(diff)} дн.)</span>`;
     if (diff === 0) return `<span class="badge deadline-overdue deadline-pulse">Сьогодні!</span>`;
@@ -796,6 +769,7 @@ function renderProjects() {
     list.sort((a, b) => {
         let va = a[sortField], vb = b[sortField];
         if (sortField === 'debt') { va = calcDebt(a); vb = calcDebt(b); }
+        if (sortField === 'netProfit') { va = calcNetProfit(a); vb = calcNetProfit(b); }
         if (va < vb) return sortAsc ? -1 : 1;
         if (va > vb) return sortAsc ? 1 : -1;
         return 0;
@@ -818,6 +792,7 @@ function renderProjects() {
         const teamCost = calcTeamTotalCost(p);
         const teamPaid = calcTeamTotalPaid(p);
         const teamRem = teamCost - teamPaid;
+        const netProfit = calcNetProfit(p);
 
         let statusClass = 'status-none';
         let statusText = 'Без оплати';
@@ -825,34 +800,35 @@ function renderProjects() {
         if (debt === 0) { statusClass = 'status-paid'; statusText = 'Оплачено'; }
 
         return `
-            <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30">
+            <tr class="hover:bg-gray-800/30">
                 <td class="px-4 py-3 text-xs text-gray-500">${p.date || '-'}</td>
-                <td class="px-4 py-3 font-semibold text-gray-900 dark:text-white">${p.name}</td>
+                <td class="px-4 py-3 font-semibold text-white">${p.name}</td>
                 <td class="px-4 py-3 text-xs">
-                    <div class="font-medium">${p.client?.name || '-'} ${p.client?.lastName || ''}</div>
+                    <div class="font-medium text-gray-200">${p.client?.name || '-'} ${p.client?.lastName || ''}</div>
                     ${p.client?.phone ? `<div class="text-gray-400">${p.client.phone}</div>` : ''}
-                    ${p.client?.social ? `<a href="${p.client.social}" target="_blank" class="text-indigo-500 hover:underline">Соцмережа</a>` : ''}
+                    ${p.client?.social ? `<a href="${p.client.social}" target="_blank" class="text-indigo-400 hover:underline">Соцмережа</a>` : ''}
                 </td>
                 <td class="px-4 py-3 text-right text-xs font-mono">${p.area || 0}</td>
                 <td class="px-4 py-3 text-right text-xs font-mono">$${p.price || 0}</td>
                 <td class="px-4 py-3 text-right font-semibold font-mono">$${fmt(p.total)}</td>
+                <td class="px-4 py-3 text-right font-semibold font-mono text-emerald-400">$${fmt(netProfit)}</td>
                 <td class="px-4 py-3 text-right font-semibold font-mono ${debt > 0 ? 'text-red-500' : 'text-green-600'}">$${fmt(debt)}</td>
                 <td class="px-4 py-3 text-center text-xs">
                     ${(p.team || []).length > 0 ? `
-                        <button onclick="openTeamModal('${p.id}')" class="text-indigo-600 hover:underline font-medium">
+                        <button onclick="openTeamModal('${p.id}')" class="text-indigo-400 hover:underline font-medium">
                             ${p.team.length} чол. ($${fmt(teamCost)})
                         </button>
                         <div class="text-[10px] text-gray-400">Борг: $${fmt(teamRem)}</div>
                     ` : `
-                        <button onclick="openTeamModal('${p.id}')" class="text-gray-400 hover:text-indigo-600 text-xs cursor-pointer">+ Додати</button>
+                        <button onclick="openTeamModal('${p.id}')" class="text-gray-400 hover:text-indigo-400 text-xs cursor-pointer">+ Додати</button>
                     `}
                 </td>
                 <td class="px-4 py-3 text-center">${deadlineBadgeHtml(p)}</td>
                 <td class="px-4 py-3 text-center"><span class="badge ${statusClass}">${statusText}</span></td>
                 <td class="px-4 py-3 text-center space-x-1">
-                    <button onclick="openProjectModal('${p.id}')" class="p-1 text-gray-500 hover:text-indigo-600" title="Редагувати">✏️</button>
-                    <button onclick="archiveProject('${p.id}')" class="p-1 text-gray-500 hover:text-green-600" title="В архів">📦</button>
-                    <button onclick="trashProject('${p.id}')" class="p-1 text-gray-500 hover:text-red-600" title="У кошик">🗑️</button>
+                    <button onclick="openProjectModal('${p.id}')" class="p-1 text-gray-400 hover:text-indigo-400" title="Редагувати">✏️</button>
+                    <button onclick="archiveProject('${p.id}')" class="p-1 text-gray-400 hover:text-green-400" title="В архів">📦</button>
+                    <button onclick="trashProject('${p.id}')" class="p-1 text-gray-400 hover:text-red-400" title="У кошик">🗑️</button>
                 </td>
             </tr>
         `;
@@ -861,26 +837,35 @@ function renderProjects() {
     // Мобільні картки
     cards.innerHTML = list.map(p => {
         const debt = calcDebt(p);
+        const teamCost = calcTeamTotalCost(p);
+        const netProfit = calcNetProfit(p);
+
         return `
             <div class="proj-card">
                 <div class="flex justify-between items-start mb-2">
-                    <div>
-                        <h3 class="font-bold text-base">${p.name}</h3>
-                        <p class="text-xs text-gray-500">Клієнт: ${p.client?.name || '-'} ${p.client?.phone ? `(${p.client.phone})` : ''}</p>
+                    <div class="min-w-0 flex-1 pr-2">
+                        <h3 class="font-bold text-base truncate">${p.name}</h3>
+                        <p class="text-xs text-gray-400 truncate">Клієнт: ${p.client?.name || '-'} ${p.client?.phone ? `(${p.client.phone})` : ''}</p>
                     </div>
-                    <span class="text-xs text-gray-400">${p.date}</span>
+                    <span class="text-xs text-gray-500 whitespace-nowrap">${p.date}</span>
                 </div>
-                <div class="grid grid-cols-2 gap-2 text-xs mb-3 bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">
-                    <div>Сума: <b class="font-mono">$${fmt(p.total)}</b></div>
-                    <div>Борг: <b class="font-mono ${debt > 0 ? 'text-red-500' : 'text-green-600'}">$${fmt(debt)}</b></div>
+                <div class="grid grid-cols-2 gap-2 text-xs mb-3 bg-gray-800 p-2.5 rounded-lg border border-gray-700/60">
+                    <div>Сума: <b class="font-mono text-indigo-300">$${fmt(p.total)}</b></div>
+                    <div>Борг: <b class="font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(debt)}</b></div>
+                    <div>Прибуток: <b class="font-mono text-emerald-400">$${fmt(netProfit)}</b></div>
                     <div>Площа: <b>${p.area} м²</b></div>
-                    <div>Дедлайн: ${deadlineBadgeHtml(p)}</div>
+                    <div class="col-span-2 flex items-center justify-between pt-1 border-t border-gray-700/40 mt-1">
+                        <span class="text-gray-400">Дедлайн:</span>
+                        <span>${deadlineBadgeHtml(p)}</span>
+                    </div>
                 </div>
-                <div class="flex justify-between items-center text-xs">
-                    <button onclick="openTeamModal('${p.id}')" class="text-indigo-600 font-medium">Команда: ${(p.team || []).length} чол.</button>
-                    <div class="space-x-2">
-                        <button onclick="openProjectModal('${p.id}')" class="text-gray-600">✏️ Редагувати</button>
-                        <button onclick="archiveProject('${p.id}')" class="text-green-600">📦 Архів</button>
+                <div class="flex justify-between items-center text-sm gap-2">
+                    <button onclick="openTeamModal('${p.id}')" class="text-indigo-400 hover:text-indigo-300 font-medium text-xs sm:text-sm text-left truncate flex-1">
+                        👥 Команда: ${(p.team || []).length} чол. <span class="text-gray-400">($${fmt(teamCost)})</span>
+                    </button>
+                    <div class="flex gap-3 shrink-0 text-xs sm:text-sm">
+                        <button onclick="openProjectModal('${p.id}')" class="text-gray-300 hover:text-white">✏️</button>
+                        <button onclick="archiveProject('${p.id}')" class="text-green-400 hover:text-green-300">📦</button>
                     </div>
                 </div>
             </div>
@@ -900,21 +885,21 @@ function renderSummary(list) {
     const debt = list.reduce((s, p) => s + calcDebt(p), 0);
 
     document.getElementById('projects-summary').innerHTML = `
-        <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Всього проєктів</p>
             <p class="text-xl font-bold mt-1">${list.length}</p>
         </div>
-        <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Загальна сума</p>
-            <p class="text-xl font-bold mt-1 font-mono text-indigo-600 dark:text-indigo-400">$${fmt(total)}</p>
+            <p class="text-xl font-bold mt-1 font-mono text-indigo-400">$${fmt(total)}</p>
         </div>
-        <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Отримано авансів</p>
-            <p class="text-xl font-bold mt-1 font-mono text-green-600">$${fmt(advances)}</p>
+            <p class="text-xl font-bold mt-1 font-mono text-green-500">$${fmt(advances)}</p>
         </div>
-        <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Заборгованість</p>
-            <p class="text-xl font-bold mt-1 font-mono text-red-500">$${fmt(debt)}</p>
+            <p class="text-xl font-bold mt-1 font-mono text-red-400">$${fmt(debt)}</p>
         </div>
     `;
 }
@@ -942,40 +927,40 @@ function openProjectModal(id = null) {
             <div class="grid grid-cols-2 gap-3">
                 <div>
                     <label class="block text-xs font-semibold mb-1">Дата початку *</label>
-                    <input type="date" id="p-date" value="${p.date}" required class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl px-3 py-2 text-sm">
+                    <input type="date" id="p-date" value="${p.date}" required class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold mb-1">Дедлайн</label>
-                    <input type="date" id="p-deadline" value="${p.deadline || ''}" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl px-3 py-2 text-sm">
+                    <input type="date" id="p-deadline" value="${p.deadline || ''}" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
                 </div>
             </div>
 
             <div>
                 <label class="block text-xs font-semibold mb-1">Назва об'єкта *</label>
-                <input type="text" id="p-name" value="${p.name}" required placeholder="ЖК Новопечерські Липки, кв. 45" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl px-3 py-2 text-sm">
+                <input type="text" id="p-name" value="${p.name}" required placeholder="ЖК Новопечерські Липки, кв. 45" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
             </div>
 
             <!-- БЛОК КЛІЄНТА -->
-            <div class="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800 space-y-3">
-                <p class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Дані клієнта</p>
+            <div class="p-3 bg-gray-800/50 rounded-xl border border-gray-800 space-y-3">
+                <p class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Дані клієнта</p>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-medium mb-1">Ім'я клієнта</label>
-                        <input type="text" id="p-client-name" value="${p.client?.name || ''}" placeholder="Олександр" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
+                        <input type="text" id="p-client-name" value="${p.client?.name || ''}" placeholder="Олександр" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                     <div>
                         <label class="block text-xs font-medium mb-1">Прізвище (необов'язково)</label>
-                        <input type="text" id="p-client-lastname" value="${p.client?.lastName || ''}" placeholder="Шевченко" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
+                        <input type="text" id="p-client-lastname" value="${p.client?.lastName || ''}" placeholder="Шевченко" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-medium mb-1">Телефон</label>
-                        <input type="text" id="p-client-phone" value="${p.client?.phone || ''}" placeholder="+380..." class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
+                        <input type="text" id="p-client-phone" value="${p.client?.phone || ''}" placeholder="+380..." class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                     <div>
                         <label class="block text-xs font-medium mb-1">Соцмережа / Лінк</label>
-                        <input type="text" id="p-client-social" value="${p.client?.social || ''}" placeholder="https://t.me/username" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
+                        <input type="text" id="p-client-social" value="${p.client?.social || ''}" placeholder="https://t.me/username" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                 </div>
             </div>
@@ -983,38 +968,38 @@ function openProjectModal(id = null) {
             <div class="grid grid-cols-3 gap-3">
                 <div>
                     <label class="block text-xs font-semibold mb-1">Площа, м²</label>
-                    <input type="number" step="0.01" id="p-area" value="${p.area}" oninput="calcTotal()" placeholder="75" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl px-3 py-2 text-sm">
+                    <input type="number" step="0.01" id="p-area" value="${p.area}" oninput="calcTotal()" placeholder="75" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold mb-1">Ціна $/м²</label>
-                    <input type="number" step="0.01" id="p-price" value="${p.price}" oninput="calcTotal()" placeholder="25" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl px-3 py-2 text-sm">
+                    <input type="number" step="0.01" id="p-price" value="${p.price}" oninput="calcTotal()" placeholder="25" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold mb-1">Загалом $</label>
-                    <input type="number" step="0.01" id="p-total" value="${p.total}" readonly class="w-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 rounded-xl px-3 py-2 text-sm font-bold font-mono">
+                    <input type="number" step="0.01" id="p-total" value="${p.total}" readonly class="w-full border border-gray-700 bg-gray-900 rounded-xl px-3 py-2 text-sm font-bold font-mono">
                 </div>
             </div>
 
             <!-- АВАНСИ КЛІЄНТА -->
-            <div class="border-t border-gray-100 dark:border-gray-800 pt-3">
+            <div class="border-t border-gray-800 pt-3">
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-xs font-bold">Оплата від клієнта (Аванси)</span>
-                    <button type="button" onclick="addClientAdvanceInput()" class="text-xs text-indigo-600 hover:underline">+ Додати платіж</button>
+                    <button type="button" onclick="addClientAdvanceInput()" class="text-xs text-indigo-400 hover:underline">+ Додати платіж</button>
                 </div>
                 <div id="p-advances-container" class="space-y-2">
                     ${(p.advances || []).map((a, i) => `
                         <div class="flex gap-2 items-center">
-                            <input type="date" value="${a.date}" class="p-adv-date border rounded-lg text-xs p-1.5 bg-transparent">
-                            <input type="number" step="0.01" value="${a.amount}" placeholder="Сума $" class="p-adv-amount w-24 border rounded-lg text-xs p-1.5 bg-transparent">
-                            <input type="text" value="${a.comment || ''}" placeholder="Коментар" class="p-adv-comment flex-1 border rounded-lg text-xs p-1.5 bg-transparent">
-                            <button type="button" onclick="this.parentElement.remove()" class="text-red-500 text-xs px-1">✕</button>
+                            <input type="date" value="${a.date}" class="p-adv-date border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
+                            <input type="number" step="0.01" value="${a.amount}" placeholder="Сума $" class="p-adv-amount w-24 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
+                            <input type="text" value="${a.comment || ''}" placeholder="Коментар" class="p-adv-comment flex-1 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
+                            <button type="button" onclick="this.parentElement.remove()" class="text-red-400 text-xs px-1">✕</button>
                         </div>
                     `).join('')}
                 </div>
             </div>
 
-            <div class="flex justify-end gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
-                <button type="button" onclick="closeModal()" class="px-5 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-sm font-semibold">Скасувати</button>
+            <div class="flex justify-end gap-2 pt-4 border-t border-gray-800">
+                <button type="button" onclick="closeModal()" class="px-5 py-2 rounded-xl bg-gray-800 text-sm font-semibold">Скасувати</button>
                 <button type="submit" class="px-5 py-2 rounded-xl bg-indigo-600 text-white text-sm font-semibold">Зберегти</button>
             </div>
         </form>
@@ -1033,10 +1018,10 @@ function addClientAdvanceInput() {
     const div = document.createElement('div');
     div.className = 'flex gap-2 items-center';
     div.innerHTML = `
-        <input type="date" value="${today}" class="p-adv-date border rounded-lg text-xs p-1.5 bg-transparent">
-        <input type="number" step="0.01" placeholder="Сума $" class="p-adv-amount w-24 border rounded-lg text-xs p-1.5 bg-transparent">
-        <input type="text" placeholder="Коментар" class="p-adv-comment flex-1 border rounded-lg text-xs p-1.5 bg-transparent">
-        <button type="button" onclick="this.parentElement.remove()" class="text-red-500 text-xs px-1">✕</button>
+        <input type="date" value="${today}" class="p-adv-date border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
+        <input type="number" step="0.01" placeholder="Сума $" class="p-adv-amount w-24 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
+        <input type="text" placeholder="Коментар" class="p-adv-comment flex-1 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
+        <button type="button" onclick="this.parentElement.remove()" class="text-red-400 text-xs px-1">✕</button>
     `;
     container.appendChild(div);
 }
@@ -1122,22 +1107,22 @@ function openTeamModal(projectId) {
                     <h3 class="text-lg font-bold">Делегування: ${p.name}</h3>
                     <p class="text-xs text-gray-400">Управління командою та витратами на проєкт</p>
                 </div>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">✕</button>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-200">✕</button>
             </div>
 
             <!-- Сумарна інфо по команді -->
-            <div class="grid grid-cols-3 gap-2 p-3 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl text-center text-xs">
+            <div class="grid grid-cols-3 gap-2 p-3 bg-indigo-950/40 rounded-xl text-center text-xs border border-indigo-900/50">
                 <div>
-                    <span class="text-gray-500">Всього витрат</span>
-                    <p class="font-bold font-mono text-sm">$${fmt(totalCost)}</p>
+                    <span class="text-gray-400">Всього витрат</span>
+                    <p class="font-bold font-mono text-sm text-gray-100">$${fmt(totalCost)}</p>
                 </div>
                 <div>
-                    <span class="text-gray-500">Виплачено</span>
-                    <p class="font-bold font-mono text-sm text-green-600">$${fmt(totalPaid)}</p>
+                    <span class="text-gray-400">Виплачено</span>
+                    <p class="font-bold font-mono text-sm text-green-400">$${fmt(totalPaid)}</p>
                 </div>
                 <div>
-                    <span class="text-gray-500">Залишок сплати</span>
-                    <p class="font-bold font-mono text-sm text-red-500">$${fmt(totalRem)}</p>
+                    <span class="text-gray-400">Залишок сплати</span>
+                    <p class="font-bold font-mono text-sm text-red-400">$${fmt(totalRem)}</p>
                 </div>
             </div>
 
@@ -1147,31 +1132,34 @@ function openTeamModal(projectId) {
                     const paid = calcMemberPaid(m);
                     const rem = (m.cost || 0) - paid;
                     return `
-                        <div class="p-3 border border-gray-200 dark:border-gray-800 rounded-xl space-y-2 bg-white dark:bg-gray-900">
-                            <div class="flex gap-2 items-center">
-                                <input type="text" value="${m.role}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'role', this.value)" placeholder="Роль (напр. Візуалізатор)" class="w-1/3 border rounded-lg px-2 py-1 text-xs">
-                                <input type="text" value="${m.name}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'name', this.value)" placeholder="Ім'я виконавця" class="flex-1 border rounded-lg px-2 py-1 text-xs">
-                                <button onclick="deleteTeamMember('${p.id}', ${mIdx})" class="text-red-500 hover:text-red-700 text-xs px-2">Видалити</button>
+                        <div class="p-3 border border-gray-800 rounded-xl space-y-2 bg-gray-900">
+                            <div class="flex gap-2 items-center flex-wrap sm:flex-nowrap">
+                                <input type="text" value="${m.role}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'role', this.value)" placeholder="Роль (напр. Візуалізатор)" class="w-full sm:w-1/3 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1.5 text-sm">
+                                <input type="text" value="${m.name}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'name', this.value)" placeholder="Ім'я виконавця" class="flex-1 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1.5 text-sm">
+                                <button onclick="deleteTeamMember('${p.id}', ${mIdx})" class="text-red-400 hover:text-red-300 text-xs px-2 shrink-0">Видалити</button>
                             </div>
 
-                            <div class="flex gap-2 items-center text-xs">
-                                <span class="text-gray-500">Вартість послуги:</span>
-                                <input type="number" step="0.01" value="${m.cost}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'cost', parseFloat(this.value)||0)" class="w-24 border rounded-lg px-2 py-1 font-mono font-bold">
+                            <div class="flex gap-2 items-center text-sm flex-wrap">
+                                <span class="text-gray-400">Вартість:</span>
+                                <input type="number" step="0.01" value="${m.cost}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'cost', parseFloat(this.value)||0)" class="w-24 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1 font-mono font-bold text-sm">
                                 <span>$</span>
-                                <span class="ml-auto text-gray-400">Оплачено: <b class="text-green-600 font-mono">$${fmt(paid)}</b> | Борг: <b class="text-red-500 font-mono">$${fmt(rem)}</b></span>
+                                <div class="ml-auto text-xs text-gray-400 flex gap-2">
+                                    <span>Сплачено: <b class="text-green-400 font-mono">$${fmt(paid)}</b></span>
+                                    <span>| Борг: <b class="text-red-400 font-mono">$${fmt(rem)}</b></span>
+                                </div>
                             </div>
 
                             <!-- Список авансів члена команди -->
-                            <div class="pl-3 border-l-2 border-indigo-200 dark:border-indigo-900 space-y-1.5 pt-1">
+                            <div class="pl-3 border-l-2 border-indigo-900 space-y-1.5 pt-1">
                                 <div class="flex justify-between items-center">
-                                    <span class="text-[11px] font-semibold text-gray-500">Виплачені аванси:</span>
-                                    <button onclick="addTeamAdvance('${p.id}', ${mIdx})" class="text-[11px] text-indigo-600 hover:underline">+ Додати аванс</button>
+                                    <span class="text-xs font-semibold text-gray-400">Виплачені аванси:</span>
+                                    <button onclick="addTeamAdvance('${p.id}', ${mIdx})" class="text-xs text-indigo-400 hover:underline">+ Додати аванс</button>
                                 </div>
                                 ${(m.advances || []).map((a, aIdx) => `
                                     <div class="flex gap-1.5 items-center">
-                                        <input type="date" value="${a.date}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'date', this.value)" class="text-[10px] border rounded p-1 bg-transparent">
-                                        <input type="number" step="0.01" value="${a.amount}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'amount', parseFloat(this.value)||0)" placeholder="Сума $" class="w-20 text-[10px] border rounded p-1 font-mono bg-transparent">
-                                        <input type="text" value="${a.comment || ''}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'comment', this.value)" placeholder="Коментар" class="flex-1 text-[10px] border rounded p-1 bg-transparent">
+                                        <input type="date" value="${a.date}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'date', this.value)" class="text-xs border border-gray-700 rounded p-1 bg-gray-800">
+                                        <input type="number" step="0.01" value="${a.amount}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'amount', parseFloat(this.value)||0)" placeholder="Сума $" class="w-20 text-xs border border-gray-700 rounded p-1 font-mono bg-gray-800">
+                                        <input type="text" value="${a.comment || ''}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'comment', this.value)" placeholder="Коментар" class="flex-1 text-xs border border-gray-700 rounded p-1 bg-gray-800">
                                         <button onclick="deleteTeamAdvance('${p.id}', ${mIdx}, ${aIdx})" class="text-red-400 text-xs px-1">✕</button>
                                     </div>
                                 `).join('')}
@@ -1181,9 +1169,9 @@ function openTeamModal(projectId) {
                 }).join('')}
             </div>
 
-            <div class="flex justify-between pt-3 border-t border-gray-100 dark:border-gray-800">
-                <button onclick="addTeamMember('${p.id}')" class="px-4 py-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 rounded-xl text-xs font-semibold hover:bg-indigo-100">+ Додати фахівця</button>
-                <button onclick="closeModal(); renderProjects();" class="px-5 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold">Готово</button>
+            <div class="flex justify-between pt-3 border-t border-gray-800">
+                <button onclick="addTeamMember('${p.id}')" class="px-4 py-2 bg-indigo-950 text-indigo-300 rounded-xl text-xs sm:text-sm font-semibold hover:bg-indigo-900 transition-colors">+ Додати фахівця</button>
+                <button onclick="closeModal(); renderProjects();" class="px-5 py-2 bg-indigo-600 text-white rounded-xl text-xs sm:text-sm font-semibold hover:bg-indigo-700 transition-colors">Готово</button>
             </div>
         </div>
     `);
@@ -1259,9 +1247,9 @@ function renderShareList() {
     }
 
     listContainer.innerHTML = DB.sharedUsers.map((email, idx) => `
-        <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl text-sm">
-            <span class="font-medium">${email}</span>
-            <button onclick="removeShareEmail(${idx})" class="text-red-500 hover:text-red-700 text-xs">Забрати доступ</button>
+        <div class="flex justify-between items-center p-3 bg-gray-800 rounded-xl text-sm border border-gray-700/50">
+            <span class="font-medium text-gray-200">${email}</span>
+            <button onclick="removeShareEmail(${idx})" class="text-red-400 hover:text-red-300 text-xs">Забрати доступ</button>
         </div>
     `).join('');
 }
@@ -1308,12 +1296,12 @@ function renderOtherIncomes() {
     empty.classList.add('hidden');
 
     tbody.innerHTML = list.map(item => `
-        <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30">
-            <td class="px-4 py-3 text-xs text-gray-500">${item.date}</td>
-            <td class="px-4 py-3 font-semibold">${item.desc}</td>
-            <td class="px-4 py-3 text-right font-mono font-bold text-green-600">₴${fmt(item.amount)}</td>
+        <tr class="hover:bg-gray-800/30">
+            <td class="px-4 py-3 text-xs text-gray-400">${item.date}</td>
+            <td class="px-4 py-3 font-semibold text-gray-200">${item.desc}</td>
+            <td class="px-4 py-3 text-right font-mono font-bold text-green-500">₴${fmt(item.amount)}</td>
             <td class="px-4 py-3 text-center">
-                <button onclick="deleteOtherIncome('${item.id}')" class="text-red-500 hover:text-red-700 text-xs">Видалити</button>
+                <button onclick="deleteOtherIncome('${item.id}')" class="text-red-400 hover:text-red-300 text-xs">Видалити</button>
             </td>
         </tr>
     `).join('');
@@ -1321,12 +1309,12 @@ function renderOtherIncomes() {
     cards.innerHTML = list.map(item => `
         <div class="proj-card flex justify-between items-center">
             <div>
-                <p class="font-bold text-sm">${item.desc}</p>
+                <p class="font-bold text-sm text-gray-200">${item.desc}</p>
                 <p class="text-xs text-gray-400">${item.date}</p>
             </div>
             <div class="text-right">
-                <p class="font-mono font-bold text-green-600 text-sm">₴${fmt(item.amount)}</p>
-                <button onclick="deleteOtherIncome('${item.id}')" class="text-red-500 text-xs">Видалити</button>
+                <p class="font-mono font-bold text-green-500 text-sm">₴${fmt(item.amount)}</p>
+                <button onclick="deleteOtherIncome('${item.id}')" class="text-red-400 text-xs">Видалити</button>
             </div>
         </div>
     `).join('');
@@ -1338,18 +1326,18 @@ function openOtherIncomeModal() {
         <form onsubmit="saveOtherIncome(event)" class="space-y-4">
             <div>
                 <label class="block text-xs font-semibold mb-1">Дата *</label>
-                <input type="date" id="o-date" value="${new Date().toISOString().split('T')[0]}" required class="w-full border rounded-xl p-2 text-sm">
+                <input type="date" id="o-date" value="${new Date().toISOString().split('T')[0]}" required class="w-full border border-gray-700 bg-gray-800 rounded-xl p-2 text-sm">
             </div>
             <div>
                 <label class="block text-xs font-semibold mb-1">Опис *</label>
-                <input type="text" id="o-desc" required placeholder="Консультація, авторський нагляд тощо" class="w-full border rounded-xl p-2 text-sm">
+                <input type="text" id="o-desc" required placeholder="Консультація, авторський нагляд тощо" class="w-full border border-gray-700 bg-gray-800 rounded-xl p-2 text-sm">
             </div>
             <div>
                 <label class="block text-xs font-semibold mb-1">Сума, ₴ *</label>
-                <input type="number" step="0.01" id="o-amount" required placeholder="5000" class="w-full border rounded-xl p-2 text-sm">
+                <input type="number" step="0.01" id="o-amount" required placeholder="5000" class="w-full border border-gray-700 bg-gray-800 rounded-xl p-2 text-sm">
             </div>
             <div class="flex justify-end gap-2 pt-2">
-                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-100 rounded-xl text-xs font-semibold">Скасувати</button>
+                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-800 rounded-xl text-xs font-semibold">Скасувати</button>
                 <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold">Зберегти</button>
             </div>
         </form>
@@ -1384,24 +1372,50 @@ function deleteOtherIncome(id) {
 // ====================================================================
 function renderArchive() {
     const tbody = document.getElementById('archive-tbody');
+    const cards = document.getElementById('archive-cards');
     const empty = document.getElementById('archive-empty');
     const list = DB.projects.filter(p => p.archived && !p.deleted);
 
-    if (!list.length) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+    if (!list.length) { 
+        tbody.innerHTML = ''; 
+        cards.innerHTML = ''; 
+        empty.classList.remove('hidden'); 
+        return; 
+    }
     empty.classList.add('hidden');
 
     tbody.innerHTML = list.map(p => `
-        <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 text-xs">
-            <td class="px-4 py-3 text-gray-500">${p.date}</td>
-            <td class="px-4 py-3 font-semibold">${p.name}</td>
-            <td class="px-4 py-3">${p.client?.name || '-'}</td>
+        <tr class="hover:bg-gray-800/30 text-xs">
+            <td class="px-4 py-3 text-gray-400">${p.date}</td>
+            <td class="px-4 py-3 font-semibold text-gray-200">${p.name}</td>
+            <td class="px-4 py-3 text-gray-300">${p.client?.name || '-'}</td>
             <td class="px-4 py-3 text-right font-mono">${p.area}</td>
-            <td class="px-4 py-3 text-right font-mono font-bold">$${fmt(p.total)}</td>
+            <td class="px-4 py-3 text-right font-mono font-bold text-indigo-300">$${fmt(p.total)}</td>
             <td class="px-4 py-3 text-center space-x-2">
-                <button onclick="unarchiveProject('${p.id}')" class="text-indigo-600 hover:underline">Розархівувати</button>
-                <button onclick="trashProject('${p.id}')" class="text-red-500 hover:underline">У кошик</button>
+                <button onclick="unarchiveProject('${p.id}')" class="text-indigo-400 hover:underline">Розархівувати</button>
+                <button onclick="trashProject('${p.id}')" class="text-red-400 hover:underline">У кошик</button>
             </td>
         </tr>
+    `).join('');
+
+    cards.innerHTML = list.map(p => `
+        <div class="proj-card">
+            <div class="flex justify-between items-start mb-2">
+                <div>
+                    <h3 class="font-bold text-base text-gray-200">${p.name}</h3>
+                    <p class="text-xs text-gray-400">Клієнт: ${p.client?.name || '-'}</p>
+                </div>
+                <span class="text-xs text-gray-500">${p.date}</span>
+            </div>
+            <div class="flex justify-between items-center text-xs mb-3 bg-gray-800 p-2 rounded-lg border border-gray-700/50">
+                <span>Площа: <b>${p.area} м²</b></span>
+                <span>Сума: <b class="font-mono text-indigo-300">$${fmt(p.total)}</b></span>
+            </div>
+            <div class="flex justify-end gap-3 text-xs">
+                <button onclick="unarchiveProject('${p.id}')" class="text-indigo-400 font-medium">Розархівувати</button>
+                <button onclick="trashProject('${p.id}')" class="text-red-400">У кошик</button>
+            </div>
+        </div>
     `).join('');
 }
 
@@ -1426,13 +1440,13 @@ function renderTrash() {
     btnEmpty.classList.remove('hidden');
 
     tbody.innerHTML = list.map(p => `
-        <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 text-xs">
-            <td class="px-4 py-3 text-gray-500">${p.date}</td>
-            <td class="px-4 py-3 font-semibold">${p.name}</td>
+        <tr class="hover:bg-gray-800/30 text-xs">
+            <td class="px-4 py-3 text-gray-400">${p.date}</td>
+            <td class="px-4 py-3 font-semibold text-gray-200">${p.name}</td>
             <td class="px-4 py-3 text-right font-mono">$${fmt(p.total)}</td>
             <td class="px-4 py-3 text-center space-x-2">
-                <button onclick="restoreProject('${p.id}')" class="text-green-600 hover:underline">Відновити</button>
-                <button onclick="deletePermanently('${p.id}')" class="text-red-600 hover:underline">Видалити назавжди</button>
+                <button onclick="restoreProject('${p.id}')" class="text-green-400 hover:underline">Відновити</button>
+                <button onclick="deletePermanently('${p.id}')" class="text-red-400 hover:underline">Видалити назавжди</button>
             </td>
         </tr>
     `).join('');
@@ -1491,21 +1505,21 @@ function renderStats() {
     const netProfit = totalIncome - totalTeamExpenses;
 
     document.getElementById('stats-cards').innerHTML = `
-        <div class="bg-white dark:bg-gray-900 border p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Всього проєктів за рік</p>
             <p class="text-2xl font-bold mt-1">${list.length}</p>
         </div>
-        <div class="bg-white dark:bg-gray-900 border p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Отримано від клієнтів ($)</p>
-            <p class="text-2xl font-bold mt-1 font-mono text-green-600">$${fmt(totalIncome)}</p>
+            <p class="text-2xl font-bold mt-1 font-mono text-green-500">$${fmt(totalIncome)}</p>
         </div>
-        <div class="bg-white dark:bg-gray-900 border p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Витрати на команду ($)</p>
-            <p class="text-2xl font-bold mt-1 font-mono text-red-500">$${fmt(totalTeamExpenses)}</p>
+            <p class="text-2xl font-bold mt-1 font-mono text-red-400">$${fmt(totalTeamExpenses)}</p>
         </div>
-        <div class="bg-white dark:bg-gray-900 border p-4 rounded-xl">
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
             <p class="text-xs text-gray-400">Чистий прибуток ($)</p>
-            <p class="text-2xl font-bold mt-1 font-mono text-indigo-600">$${fmt(netProfit)}</p>
+            <p class="text-2xl font-bold mt-1 font-mono text-indigo-400">$${fmt(netProfit)}</p>
         </div>
     `;
 }
@@ -1523,16 +1537,16 @@ function renderMonthlyDetails() {
     }
 
     container.innerHTML = `
-        <div class="bg-white dark:bg-gray-900 rounded-xl border p-4">
+        <div class="bg-gray-900 rounded-xl border border-gray-800 p-4">
             <h4 class="font-bold mb-3 text-sm">Проєкти за ${MONTHS_UK[month]} ${year} року:</h4>
             <div class="space-y-2">
                 ${list.map(p => `
-                    <div class="flex justify-between items-center text-xs p-2 border-b last:border-0">
+                    <div class="flex justify-between items-center text-xs p-2 border-b border-gray-800 last:border-0">
                         <div>
-                            <span class="font-bold">${p.name}</span>
+                            <span class="font-bold text-gray-200">${p.name}</span>
                             <span class="text-gray-400">(${p.client?.name || 'Без клієнта'})</span>
                         </div>
-                        <div class="font-mono font-bold">$${fmt(p.total)}</div>
+                        <div class="font-mono font-bold text-indigo-300">$${fmt(p.total)}</div>
                     </div>
                 `).join('')}
             </div>
