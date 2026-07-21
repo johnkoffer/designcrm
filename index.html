@@ -6,7 +6,6 @@
     <title>Кабінет Дизайнера</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-	<script src="app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -52,7 +51,7 @@
         .tab-btn { transition: all 0.18s; border-bottom: 2px solid transparent; }
         .tab-btn.active { border-bottom-color: #818cf8; color: #818cf8; font-weight: 600; }
 
-        .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 500; }
+        .badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 500; }
         .card-hover { transition: transform 0.18s, box-shadow 0.18s; }
         .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 
@@ -75,21 +74,20 @@
             #bottom-nav { display: flex; }
             #main-content-inner { padding-bottom: 120px !important; }
         }
-        .bottom-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px 4px; font-size: 0.65rem; font-weight: 600; color: #9ca3af; transition: color 0.15s; position: relative; cursor: pointer; border: none; background: none; }
+        .bottom-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px 4px; font-size: 0.6rem; font-weight: 600; color: #9ca3af; transition: color 0.15s; position: relative; cursor: pointer; border: none; background: none; }
         .bottom-nav-btn.active { color: #818cf8; }
         .bottom-nav-btn svg { width: 22px; height: 22px; }
 
         .mobile-cards-list { display: none; }
         .desktop-table-wrap { display: block; }
         @media (max-width: 767px) {
-            .mobile-cards-list { display: flex; flex-direction: column; gap: 12px; }
+            .mobile-cards-list { display: flex; flex-direction: column; gap: 10px; }
             .desktop-table-wrap { display: none; }
             #filters-panel { display: none; }
             #filters-panel.open { display: flex; }
         }
 
-        .proj-card { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 14px 16px; transition: all 0.18s; }
-        .proj-card:active { background: #1f2937; }
+        .proj-card { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 14px 16px; transition: box-shadow 0.18s; }
 
         .fab { position: fixed; bottom: 82px; right: 18px; z-index: 40; width: 52px; height: 52px; border-radius: 50%; background: #818cf8; color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(129,140,248,0.4); border: none; cursor: pointer; transition: transform 0.15s; }
         @media (max-width: 767px) { .fab { display: flex; } }
@@ -101,28 +99,6 @@
         }
         @media (min-width: 768px) {
             .filter-new-btn-desktop { display: inline-flex; }
-        }
-
-        /* Покращення модальних вікон на мобільних (Bottom Sheet) */
-        #modal { z-index: 70; }
-        #confirm-modal { z-index: 80; }
-        #toast-container { z-index: 90; }
-
-        @media (max-width: 767px) {
-            #modal {
-                align-items: flex-end;
-                padding: 0;
-            }
-            #modal-content {
-                max-height: 86vh !important;
-                max-width: 100% !important;
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
-                padding: 20px 16px 36px 16px;
-                box-shadow: 0 -10px 25px rgba(0,0,0,0.5);
-            }
         }
     </style>
 </head>
@@ -481,15 +457,15 @@
 </div>
 
 <!-- МОДАЛЬНІ ВІКНА -->
-<div id="modal" class="fixed inset-0 z-[70] hidden">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
-    <div class="relative flex items-start justify-center min-h-full p-4 md:pt-[5vh]">
+<div id="modal" class="fixed inset-0 z-[55] hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="relative flex items-start justify-center min-h-full p-4 pt-[5vh]">
         <div id="modal-content" class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-800 scale-in p-6"></div>
     </div>
 </div>
 
-<div id="confirm-modal" class="fixed inset-0 z-[80] hidden">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+<div id="confirm-modal" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
     <div class="relative flex items-center justify-center min-h-full p-4">
         <div class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-gray-800 scale-in">
             <p id="confirm-text" class="text-center text-base mb-6"></p>
@@ -501,7 +477,7 @@
     </div>
 </div>
 
-<div id="toast-container" class="fixed z-[90] space-y-2 bottom-20 right-4"></div>
+<div id="toast-container" class="fixed z-[70] space-y-2 bottom-20 right-4"></div>
 
 <script>
 // ====================================================================
@@ -522,6 +498,11 @@ const DB_DEFAULTS = {
     otherIncomes: [],
     sharedUsers: []
 };
+let DB = { ...DB_DEFAULTS };
+let currentUserId = null;
+let saveTimer = null;
+let isSaving = false;
+let pendingSave = false;
 let currentSection = 'projects';
 let sortField = 'date';
 let sortAsc = false;
@@ -717,7 +698,7 @@ function calcTeamTotalCost(p) { return (p.team || []).reduce((s, m) => s + parse
 function calcMemberPaid(m) { return (m.advances || []).reduce((s, a) => s + parseFloat(a.amount || 0), 0); }
 function calcTeamTotalPaid(p) { return (p.team || []).reduce((s, m) => s + calcMemberPaid(m), 0); }
 
-// Чистий прибуток проєкту
+// Чистий прибуток проєкту (Сума проєкту мінус Витрати на команду)
 function calcNetProfit(p) {
     const total = parseFloat(p.total || 0);
     const teamCost = calcTeamTotalCost(p);
@@ -821,9 +802,7 @@ function renderProjects() {
         return `
             <tr class="hover:bg-gray-800/30">
                 <td class="px-4 py-3 text-xs text-gray-500">${p.date || '-'}</td>
-                <td class="px-4 py-3 font-semibold text-white">
-                    <button onclick="viewProjectModal('${p.id}')" class="text-left hover:text-indigo-400 font-semibold cursor-pointer">${p.name}</button>
-                </td>
+                <td class="px-4 py-3 font-semibold text-white">${p.name}</td>
                 <td class="px-4 py-3 text-xs">
                     <div class="font-medium text-gray-200">${p.client?.name || '-'} ${p.client?.lastName || ''}</div>
                     ${p.client?.phone ? `<div class="text-gray-400">${p.client.phone}</div>` : ''}
@@ -831,9 +810,9 @@ function renderProjects() {
                 </td>
                 <td class="px-4 py-3 text-right text-xs font-mono">${p.area || 0}</td>
                 <td class="px-4 py-3 text-right text-xs font-mono">$${p.price || 0}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono text-sm">$${fmt(p.total)}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono text-sm text-emerald-400">$${fmt(netProfit)}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono text-sm ${debt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(debt)}</td>
+                <td class="px-4 py-3 text-right font-semibold font-mono">$${fmt(p.total)}</td>
+                <td class="px-4 py-3 text-right font-semibold font-mono text-emerald-400">$${fmt(netProfit)}</td>
+                <td class="px-4 py-3 text-right font-semibold font-mono ${debt > 0 ? 'text-red-500' : 'text-green-600'}">$${fmt(debt)}</td>
                 <td class="px-4 py-3 text-center text-xs">
                     ${(p.team || []).length > 0 ? `
                         <button onclick="openTeamModal('${p.id}')" class="text-indigo-400 hover:underline font-medium">
@@ -847,7 +826,6 @@ function renderProjects() {
                 <td class="px-4 py-3 text-center">${deadlineBadgeHtml(p)}</td>
                 <td class="px-4 py-3 text-center"><span class="badge ${statusClass}">${statusText}</span></td>
                 <td class="px-4 py-3 text-center space-x-1">
-                    <button onclick="viewProjectModal('${p.id}')" class="p-1 text-gray-400 hover:text-white" title="Переглянути">👁️</button>
                     <button onclick="openProjectModal('${p.id}')" class="p-1 text-gray-400 hover:text-indigo-400" title="Редагувати">✏️</button>
                     <button onclick="archiveProject('${p.id}')" class="p-1 text-gray-400 hover:text-green-400" title="В архів">📦</button>
                     <button onclick="trashProject('${p.id}')" class="p-1 text-gray-400 hover:text-red-400" title="У кошик">🗑️</button>
@@ -856,177 +834,43 @@ function renderProjects() {
         `;
     }).join('');
 
-    // Мобільні картки (Оновлений кегель і зручні кнопки)
+    // Мобільні картки
     cards.innerHTML = list.map(p => {
         const debt = calcDebt(p);
         const teamCost = calcTeamTotalCost(p);
         const netProfit = calcNetProfit(p);
 
-        let statusClass = 'status-none';
-        let statusText = 'Без оплати';
-        if (calcAdvancesSum(p) > 0 && debt > 0) { statusClass = 'status-advance'; statusText = 'Є аванс'; }
-        if (debt === 0) { statusClass = 'status-paid'; statusText = 'Оплачено'; }
-
         return `
-            <div class="proj-card cursor-pointer hover:border-indigo-500/50" onclick="viewProjectModal('${p.id}')">
-                <div class="flex justify-between items-start gap-2 mb-2">
-                    <div class="min-w-0 flex-1">
-                        <h3 class="font-bold text-base text-gray-100 truncate">${p.name}</h3>
+            <div class="proj-card">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="min-w-0 flex-1 pr-2">
+                        <h3 class="font-bold text-base truncate">${p.name}</h3>
                         <p class="text-xs text-gray-400 truncate">Клієнт: ${p.client?.name || '-'} ${p.client?.phone ? `(${p.client.phone})` : ''}</p>
                     </div>
-                    <span class="badge ${statusClass} shrink-0">${statusText}</span>
+                    <span class="text-xs text-gray-500 whitespace-nowrap">${p.date}</span>
                 </div>
-
-                <div class="grid grid-cols-2 gap-2 text-xs mb-3 bg-gray-800/80 p-2.5 rounded-xl border border-gray-700/50">
-                    <div>
-                        <span class="text-gray-400 block text-[11px]">Загалом ($)</span>
-                        <b class="font-mono text-sm text-indigo-300">$${fmt(p.total)}</b>
-                    </div>
-                    <div>
-                        <span class="text-gray-400 block text-[11px]">Борг ($)</span>
-                        <b class="font-mono text-sm ${debt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(debt)}</b>
-                    </div>
-                    <div>
-                        <span class="text-gray-400 block text-[11px]">Прибуток ($)</span>
-                        <b class="font-mono text-sm text-emerald-400">$${fmt(netProfit)}</b>
-                    </div>
-                    <div>
-                        <span class="text-gray-400 block text-[11px]">Площа / Ціна</span>
-                        <b class="text-sm text-gray-200">${p.area || 0} м²</b>
+                <div class="grid grid-cols-2 gap-2 text-xs mb-3 bg-gray-800 p-2.5 rounded-lg border border-gray-700/60">
+                    <div>Сума: <b class="font-mono text-indigo-300">$${fmt(p.total)}</b></div>
+                    <div>Борг: <b class="font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(debt)}</b></div>
+                    <div>Прибуток: <b class="font-mono text-emerald-400">$${fmt(netProfit)}</b></div>
+                    <div>Площа: <b>${p.area} м²</b></div>
+                    <div class="col-span-2 flex items-center justify-between pt-1 border-t border-gray-700/40 mt-1">
+                        <span class="text-gray-400">Дедлайн:</span>
+                        <span>${deadlineBadgeHtml(p)}</span>
                     </div>
                 </div>
-
-                <div class="flex justify-between items-center text-xs pt-1 border-t border-gray-800" onclick="event.stopPropagation()">
-                    <div class="flex items-center gap-1.5 text-gray-400">
-                        <span>Дедлайн:</span>
-                        ${deadlineBadgeHtml(p)}
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <button onclick="viewProjectModal('${p.id}')" class="px-2 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs" title="Деталі">👁️</button>
-                        <button onclick="openTeamModal('${p.id}')" class="px-2 py-1.5 bg-gray-800 hover:bg-gray-700 text-indigo-400 rounded-lg text-xs font-medium" title="Команда">👥 ${p.team?.length || 0}</button>
-                        <button onclick="openProjectModal('${p.id}')" class="px-2 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs" title="Редагувати">✏️</button>
-                        <button onclick="archiveProject('${p.id}')" class="px-2 py-1.5 bg-gray-800 hover:bg-gray-700 text-green-400 rounded-lg text-xs" title="В архів">📦</button>
+                <div class="flex justify-between items-center text-sm gap-2">
+                    <button onclick="openTeamModal('${p.id}')" class="text-indigo-400 hover:text-indigo-300 font-medium text-xs sm:text-sm text-left truncate flex-1">
+                        👥 Команда: ${(p.team || []).length} чол. <span class="text-gray-400">($${fmt(teamCost)})</span>
+                    </button>
+                    <div class="flex gap-3 shrink-0 text-xs sm:text-sm">
+                        <button onclick="openProjectModal('${p.id}')" class="text-gray-300 hover:text-white">✏️</button>
+                        <button onclick="archiveProject('${p.id}')" class="text-green-400 hover:text-green-300">📦</button>
                     </div>
                 </div>
             </div>
         `;
     }).join('');
-}
-
-// МОДАЛЬНЕ ВІКНО ПЕРЕГЛЯДУ ПРОЄКТУ (READ-ONLY VIEW)
-function viewProjectModal(id) {
-    const p = DB.projects.find(x => x.id === id);
-    if (!p) return;
-
-    const debt = calcDebt(p);
-    const teamCost = calcTeamTotalCost(p);
-    const netProfit = calcNetProfit(p);
-    const totalAdvances = calcAdvancesSum(p);
-
-    openModal(`
-        <div class="space-y-4 text-sm">
-            <div class="flex justify-between items-start border-b border-gray-800 pb-3">
-                <div>
-                    <div class="flex items-center gap-2 mb-1 flex-wrap">
-                        <h3 class="text-lg font-bold text-white">${p.name}</h3>
-                        ${deadlineBadgeHtml(p)}
-                    </div>
-                    <p class="text-xs text-gray-400">Дата початку: ${p.date || 'не вказано'}</p>
-                </div>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-lg p-1">✕</button>
-            </div>
-
-            <!-- Клієнт -->
-            <div class="bg-gray-800/60 p-3 rounded-xl border border-gray-700/50 space-y-1">
-                <p class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Клієнт</p>
-                <div class="grid grid-cols-2 gap-2 text-xs mt-2">
-                    <div><span class="text-gray-400 block text-[11px]">Ім'я:</span> <span class="font-semibold text-gray-200">${p.client?.name || '-'} ${p.client?.lastName || ''}</span></div>
-                    <div><span class="text-gray-400 block text-[11px]">Телефон:</span> <span class="font-mono text-gray-200">${p.client?.phone || '-'}</span></div>
-                    ${p.client?.social ? `<div class="col-span-2"><span class="text-gray-400 text-[11px]">Посилання:</span> <a href="${p.client.social}" target="_blank" class="text-indigo-400 hover:underline break-all block">${p.client.social}</a></div>` : ''}
-                </div>
-            </div>
-
-            <!-- Фінансова сітка -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                <div class="bg-gray-800/80 p-2.5 rounded-xl border border-gray-700/50">
-                    <span class="text-gray-400 block text-[11px]">Площа / Ціна</span>
-                    <span class="font-semibold text-white">${p.area || 0} м² × $${p.price || 0}</span>
-                </div>
-                <div class="bg-gray-800/80 p-2.5 rounded-xl border border-gray-700/50">
-                    <span class="text-gray-400 block text-[11px]">Загальна сума</span>
-                    <span class="font-mono font-bold text-indigo-300 text-sm">$${fmt(p.total)}</span>
-                </div>
-                <div class="bg-gray-800/80 p-2.5 rounded-xl border border-gray-700/50">
-                    <span class="text-gray-400 block text-[11px]">Отримано авансів</span>
-                    <span class="font-mono font-bold text-green-400 text-sm">$${fmt(totalAdvances)}</span>
-                </div>
-                <div class="bg-gray-800/80 p-2.5 rounded-xl border border-gray-700/50">
-                    <span class="text-gray-400 block text-[11px]">Борг клієнта</span>
-                    <span class="font-mono font-bold ${debt > 0 ? 'text-red-400' : 'text-green-400'} text-sm">$${fmt(debt)}</span>
-                </div>
-                <div class="bg-gray-800/80 p-2.5 rounded-xl border border-gray-700/50">
-                    <span class="text-gray-400 block text-[11px]">Витрати на команду</span>
-                    <span class="font-mono font-bold text-amber-400 text-sm">$${fmt(teamCost)}</span>
-                </div>
-                <div class="bg-gray-800/80 p-2.5 rounded-xl border border-gray-700/50">
-                    <span class="text-gray-400 block text-[11px]">Чистий прибуток</span>
-                    <span class="font-mono font-bold text-emerald-400 text-sm">$${fmt(netProfit)}</span>
-                </div>
-            </div>
-
-            <!-- Історія авансів -->
-            <div class="bg-gray-800/40 p-3 rounded-xl border border-gray-800">
-                <p class="text-xs font-bold text-gray-300 mb-2">Оплати клієнта (${(p.advances || []).length})</p>
-                ${!(p.advances?.length) ? `<p class="text-xs text-gray-500 italic">Оплат ще не зафіксовано</p>` : `
-                    <div class="space-y-1.5 max-h-32 overflow-y-auto">
-                        ${p.advances.map(a => `
-                            <div class="flex justify-between items-center text-xs bg-gray-900/60 p-2 rounded-lg border border-gray-800">
-                                <span class="text-gray-400">${a.date} ${a.comment ? `<span class="text-gray-500">(${a.comment})</span>` : ''}</span>
-                                <span class="font-mono font-bold text-green-400">+$${fmt(a.amount)}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                `}
-            </div>
-
-            <!-- Команда -->
-            <div class="bg-gray-800/40 p-3 rounded-xl border border-gray-800">
-                <div class="flex justify-between items-center mb-2">
-                    <p class="text-xs font-bold text-gray-300">Команда (${(p.team || []).length})</p>
-                    <button onclick="openTeamModal('${p.id}')" class="text-xs text-indigo-400 hover:underline">Керувати командою ⚙️</button>
-                </div>
-                ${!(p.team?.length) ? `<p class="text-xs text-gray-500 italic">Виконавців не залучено</p>` : `
-                    <div class="space-y-1.5 max-h-32 overflow-y-auto">
-                        ${p.team.map(m => {
-                            const mPaid = calcMemberPaid(m);
-                            const mRem = (m.cost || 0) - mPaid;
-                            return `
-                                <div class="flex justify-between items-center text-xs bg-gray-900/60 p-2 rounded-lg border border-gray-800">
-                                    <div>
-                                        <span class="font-medium text-gray-200">${m.role}: ${m.name || 'Анонім'}</span>
-                                    </div>
-                                    <div class="text-right font-mono">
-                                        <span class="text-gray-300">$${fmt(m.cost)}</span>
-                                        <span class="text-gray-500 text-[10px] block">сплачено $${fmt(mPaid)} | борг $${fmt(mRem)}</span>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                `}
-            </div>
-
-            <!-- Кнопки дій -->
-            <div class="flex justify-end gap-2 pt-3 border-t border-gray-800">
-                <button onclick="openProjectModal('${p.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer">
-                    <span>✏️ Редагувати</span>
-                </button>
-                <button onclick="closeModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-xs font-semibold transition-colors cursor-pointer">
-                    Закрити
-                </button>
-            </div>
-        </div>
-    `);
 }
 
 function sortProjects(field) {
@@ -1078,7 +922,7 @@ function openProjectModal(id = null) {
     const isEdit = !!id;
 
     openModal(`
-        <h3 class="text-xl font-bold mb-4 text-white">${isEdit ? 'Редагувати проєкт' : 'Новий проєкт'}</h3>
+        <h3 class="text-xl font-bold mb-4">${isEdit ? 'Редагувати проєкт' : 'Новий проєкт'}</h3>
         <form onsubmit="saveProject(event, '${p.id}')" class="space-y-4">
             <div class="grid grid-cols-2 gap-3">
                 <div>
@@ -1105,7 +949,7 @@ function openProjectModal(id = null) {
                         <input type="text" id="p-client-name" value="${p.client?.name || ''}" placeholder="Олександр" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium mb-1">Прізвище</label>
+                        <label class="block text-xs font-medium mb-1">Прізвище (необов'язково)</label>
                         <input type="text" id="p-client-lastname" value="${p.client?.lastName || ''}" placeholder="Шевченко" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                 </div>
@@ -1115,7 +959,7 @@ function openProjectModal(id = null) {
                         <input type="text" id="p-client-phone" value="${p.client?.phone || ''}" placeholder="+380..." class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium mb-1">Link / Соцмережа</label>
+                        <label class="block text-xs font-medium mb-1">Соцмережа / Лінк</label>
                         <input type="text" id="p-client-social" value="${p.client?.social || ''}" placeholder="https://t.me/username" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
                     </div>
                 </div>
@@ -1205,6 +1049,7 @@ function saveProject(e, id) {
         social: document.getElementById('p-client-social').value
     };
 
+    // Збір авансів
     const dates = document.querySelectorAll('.p-adv-date');
     const amounts = document.querySelectorAll('.p-adv-amount');
     const comments = document.querySelectorAll('.p-adv-comment');
@@ -1265,6 +1110,7 @@ function openTeamModal(projectId) {
                 <button onclick="closeModal()" class="text-gray-400 hover:text-gray-200">✕</button>
             </div>
 
+            <!-- Сумарна інфо по команді -->
             <div class="grid grid-cols-3 gap-2 p-3 bg-indigo-950/40 rounded-xl text-center text-xs border border-indigo-900/50">
                 <div>
                     <span class="text-gray-400">Всього витрат</span>
@@ -1288,7 +1134,7 @@ function openTeamModal(projectId) {
                     return `
                         <div class="p-3 border border-gray-800 rounded-xl space-y-2 bg-gray-900">
                             <div class="flex gap-2 items-center flex-wrap sm:flex-nowrap">
-                                <input type="text" value="${m.role}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'role', this.value)" placeholder="Роль" class="w-full sm:w-1/3 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1.5 text-sm">
+                                <input type="text" value="${m.role}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'role', this.value)" placeholder="Роль (напр. Візуалізатор)" class="w-full sm:w-1/3 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1.5 text-sm">
                                 <input type="text" value="${m.name}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'name', this.value)" placeholder="Ім'я виконавця" class="flex-1 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1.5 text-sm">
                                 <button onclick="deleteTeamMember('${p.id}', ${mIdx})" class="text-red-400 hover:text-red-300 text-xs px-2 shrink-0">Видалити</button>
                             </div>
@@ -1303,6 +1149,7 @@ function openTeamModal(projectId) {
                                 </div>
                             </div>
 
+                            <!-- Список авансів члена команди -->
                             <div class="pl-3 border-l-2 border-indigo-900 space-y-1.5 pt-1">
                                 <div class="flex justify-between items-center">
                                     <span class="text-xs font-semibold text-gray-400">Виплачені аванси:</span>
@@ -1475,7 +1322,7 @@ function renderOtherIncomes() {
 
 function openOtherIncomeModal() {
     openModal(`
-        <h3 class="text-xl font-bold mb-4 text-white">Новий дохід</h3>
+        <h3 class="text-xl font-bold mb-4">Новий дохід</h3>
         <form onsubmit="saveOtherIncome(event)" class="space-y-4">
             <div>
                 <label class="block text-xs font-semibold mb-1">Дата *</label>
@@ -1545,7 +1392,6 @@ function renderArchive() {
             <td class="px-4 py-3 text-right font-mono">${p.area}</td>
             <td class="px-4 py-3 text-right font-mono font-bold text-indigo-300">$${fmt(p.total)}</td>
             <td class="px-4 py-3 text-center space-x-2">
-                <button onclick="viewProjectModal('${p.id}')" class="text-gray-400 hover:text-white">👁️</button>
                 <button onclick="unarchiveProject('${p.id}')" class="text-indigo-400 hover:underline">Розархівувати</button>
                 <button onclick="trashProject('${p.id}')" class="text-red-400 hover:underline">У кошик</button>
             </td>
@@ -1553,7 +1399,7 @@ function renderArchive() {
     `).join('');
 
     cards.innerHTML = list.map(p => `
-        <div class="proj-card cursor-pointer" onclick="viewProjectModal('${p.id}')">
+        <div class="proj-card">
             <div class="flex justify-between items-start mb-2">
                 <div>
                     <h3 class="font-bold text-base text-gray-200">${p.name}</h3>
@@ -1561,12 +1407,11 @@ function renderArchive() {
                 </div>
                 <span class="text-xs text-gray-500">${p.date}</span>
             </div>
-            <div class="flex justify-between items-center text-xs mb-3 bg-gray-800 p-2.5 rounded-xl border border-gray-700/50">
+            <div class="flex justify-between items-center text-xs mb-3 bg-gray-800 p-2 rounded-lg border border-gray-700/50">
                 <span>Площа: <b>${p.area} м²</b></span>
-                <span>Сума: <b class="font-mono text-sm text-indigo-300">$${fmt(p.total)}</b></span>
+                <span>Сума: <b class="font-mono text-indigo-300">$${fmt(p.total)}</b></span>
             </div>
-            <div class="flex justify-end gap-3 text-xs" onclick="event.stopPropagation()">
-                <button onclick="viewProjectModal('${p.id}')" class="text-gray-300 font-medium">👁️ Деталі</button>
+            <div class="flex justify-end gap-3 text-xs">
                 <button onclick="unarchiveProject('${p.id}')" class="text-indigo-400 font-medium">Розархівувати</button>
                 <button onclick="trashProject('${p.id}')" class="text-red-400">У кошик</button>
             </div>
@@ -1741,6 +1586,5 @@ function importData(e) {
     reader.readAsText(file);
 }
 </script>
-<script src="app.js"></script>
 </body>
 </html>
