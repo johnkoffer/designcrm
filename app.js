@@ -1,32 +1,35 @@
 // ==========================================
 // 1. ГЛОБАЛЬНИЙ СТАН
 // ==========================================
-let currentUser = null;
-let currentUserId = null;
-let currentWorkspace = 'personal'; // 'personal' або user_id/email іншого кабінету
-let personalDB = null;            // Твої особисті дані
-let sharedWorkspaces = [];        // Список кабінетів, до яких є доступ
-let DB = { projects: [], income: [], sharedUsers: [] }; // Активна база даних
-let isReadOnlyMode = false;       // Прапорець "тільки для читання"
+window.currentUser = null;
+window.currentUserId = null;
+window.currentWorkspace = 'personal'; 
+window.personalDB = null;            
+window.sharedWorkspaces = [];        
+window.DB = { projects: [], income: [], sharedUsers: [] }; 
+window.isReadOnlyMode = false;       
 
 // ==========================================
 // 2. ІНІЦІАЛІЗАЦІЯ ТА АВТОРИЗАЦІЯ
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Слухаємо стан авторизації в Supabase
+  // Перевіряємо, чи підключено Supabase
+  if (typeof supabase === 'undefined') {
+    console.error('Supabase SDK не знайдено! Перевір підключення скрипта Supabase в index.html перед app.js');
+    return;
+  }
+
+  // Слухаємо стан авторизації
   supabase.auth.onAuthStateChange(async (event, session) => {
     if (session) {
-      currentUser = session.user;
-      currentUserId = session.user.id;
+      window.currentUser = session.user;
+      window.currentUserId = session.user.id;
       
-      // Перемикаємо екрани
       document.getElementById('auth-screen')?.classList.add('hidden');
       document.getElementById('main-app')?.classList.remove('hidden');
 
-      // Підтягуємо всі доступні простори
       await loadAllWorkspaces();
     } else {
-      // Показуємо логін, ховаємо додаток
       document.getElementById('auth-screen')?.classList.remove('hidden');
       document.getElementById('main-app')?.classList.add('hidden');
     }
@@ -37,57 +40,61 @@ document.addEventListener('DOMContentLoaded', () => {
 // 3. РОБОТА З ПРОСТОРАМИ (WORKSPACES)
 // ==========================================
 async function loadAllWorkspaces() {
-  if (!currentUser) return;
-  const userEmail = currentUser.email;
+  if (!window.currentUser) return;
+  const userEmail = window.currentUser.email;
 
-  // 1. Завантажуємо свій кабінет
-  const { data: ownData } = await supabase
-    .from('crm_data')
-    .select('*')
-    .eq('user_id', currentUserId)
-    .maybeSingle();
+  try {
+    // 1. Завантажуємо свій кабінет
+    const { data: ownData, error: ownError } = await supabase
+      .from('crm_data')
+      .select('*')
+      .eq('user_id', window.currentUserId)
+      .maybeSingle();
 
-  if (ownData && ownData.data) {
-    personalDB = ownData.data;
-  } else {
-    // Якщо акаунт новий - створюємо дефолтну структуру
-    personalDB = { projects: [], income: [], sharedUsers: [] };
+    if (ownError) console.error('Помилка завантаження свого кабінету:', ownError.message);
+
+    if (ownData && ownData.data) {
+      window.personalDB = ownData.data;
+    } else {
+      window.personalDB = { projects: [], income: [], sharedUsers: [] };
+    }
+
+    // 2. Шукаємо чужі кабінети
+    const { data: sharedData, error: sharedError } = await supabase
+      .from('crm_data')
+      .select('*')
+      .neq('user_id', window.currentUserId)
+      .contains('data', { sharedUsers: [userEmail] });
+
+    if (sharedError) console.error('Помилка завантаження спільного доступу:', sharedError.message);
+
+    window.sharedWorkspaces = sharedData || [];
+
+    renderWorkspaceSelector();
+    switchWorkspace(window.currentWorkspace);
+  } catch (e) {
+    console.error('Помилка в loadAllWorkspaces:', e);
   }
-
-  // 2. Шукаємо чужі кабінети, де зашерено на наш email
-  const { data: sharedData } = await supabase
-    .from('crm_data')
-    .select('*')
-    .neq('user_id', currentUserId)
-    .contains('data', { sharedUsers: [userEmail] });
-
-  sharedWorkspaces = sharedData || [];
-
-  // Оновлюємо селектор просторів у шапці/сайдбарі
-  renderWorkspaceSelector();
-  
-  // Активуємо обраний простір
-  switchWorkspace(currentWorkspace);
 }
 
 function switchWorkspace(workspaceId) {
-  currentWorkspace = workspaceId;
+  window.currentWorkspace = workspaceId;
 
   if (workspaceId === 'personal') {
-    // Працюємо зі своїми проєктами
-    DB = personalDB;
-    setReadOnlyMode(false); // Повний доступ на редагування
+    window.DB = window.personalDB || { projects: [], income: [], sharedUsers: [] };
+    setReadOnlyMode(false);
   } else {
-    // Працюємо в чужому просторі
-    const targetWorkspace = sharedWorkspaces.find(w => w.user_id === workspaceId);
+    const targetWorkspace = window.sharedWorkspaces.find(w => w.user_id === workspaceId);
     if (targetWorkspace) {
-      DB = targetWorkspace.data || { projects: [], income: [] };
-      // Чужий простір за замовчуванням у режимі перегляду
+      window.DB = targetWorkspace.data || { projects: [], income: [], sharedUsers: [] };
       setReadOnlyMode(true); 
     }
   }
 
-  // Перемальовуємо весь інтерфейс
+  // Захист від відсутності необхідних масивів
+  if (!window.DB.projects) window.DB.projects = [];
+  if (!window.DB.income) window.DB.income = [];
+
   renderApp(); 
 }
 
@@ -96,64 +103,60 @@ function switchWorkspace(workspaceId) {
 // ==========================================
 let saveTimeout = null;
 
-// Викликай цієї функцію щоразу, коли міняєш DB (додав проєкт, змінив статус тощо)
 function triggerAutoSave() {
-  if (isReadOnlyMode) return; // У чужому кабінеті зберігати не даємо
+  if (window.isReadOnlyMode) return;
   
   clearTimeout(saveTimeout);
-  // Пауза 800мс після останньої дії перед записом в базу
   saveTimeout = setTimeout(() => {
     _doSave();
   }, 800);
 }
 
 async function _doSave() {
-  if (!currentUserId) return;
+  if (!window.currentUserId) return;
 
-  const targetUserId = (currentWorkspace === 'personal') 
-    ? currentUserId 
-    : currentWorkspace; // Записуємо в user_id власника простору
+  const targetUserId = (window.currentWorkspace === 'personal') 
+    ? window.currentUserId 
+    : window.currentWorkspace;
 
   const { error } = await supabase
     .from('crm_data')
     .upsert({
       user_id: targetUserId,
-      data: DB,
+      data: window.DB,
       updated_at: new Date().toISOString()
     }, { onConflict: 'user_id' });
 
   if (error) {
-    console.error('Помилка збереження:', error.message);
+    console.error('Помилка збереження в Supabase:', error.message);
   } else {
-    console.log('Збережено в Supabase!');
+    console.log('Дані успішно збережено!');
   }
 }
 
 // ==========================================
-// 5. РЕНДЕРИНГ ІНТЕРФЕЙСУ ТА РЕЖИМИ
+// 5. РЕНДЕРИНГ ІНТЕРФЕЙСУ ТА КЕРУВАННЯ
 // ==========================================
 function renderWorkspaceSelector() {
   const selector = document.getElementById('workspace-selector');
   if (!selector) return;
 
-  let html = `<option value="personal"> Мій кабінет</option>`;
+  let html = `<option value="personal">Мій кабінет</option>`;
   
-  sharedWorkspaces.forEach((ws, idx) => {
+  (window.sharedWorkspaces || []).forEach((ws, idx) => {
     const title = ws.data?.workspaceName || `Кабінет клієнта #${idx + 1}`;
-    html += `<option value="${ws.user_id}"> ${title}</option>`;
+    html += `<option value="${ws.user_id}">${title}</option>`;
   });
 
   selector.innerHTML = html;
-  selector.value = currentWorkspace;
+  selector.value = window.currentWorkspace;
 
-  // Подія перемикання кабінету
   selector.onchange = (e) => switchWorkspace(e.target.value);
 }
 
 function setReadOnlyMode(readOnly) {
-  isReadOnlyMode = readOnly;
+  window.isReadOnlyMode = readOnly;
   
-  // Ховаємо або блокуємо елементи керування, якщо це перегляд
   const writeElements = document.querySelectorAll('.action-btn-write, #btn-add-project, .btn-delete-proj');
   writeElements.forEach(el => {
     if (readOnly) {
@@ -163,7 +166,6 @@ function setReadOnlyMode(readOnly) {
     }
   });
 
-  // Бейдж режиму "Тільки перегляд"
   const readOnlyBadge = document.getElementById('readonly-badge');
   if (readOnlyBadge) {
     readOnlyBadge.classList.toggle('hidden', !readOnly);
@@ -171,7 +173,6 @@ function setReadOnlyMode(readOnly) {
 }
 
 function renderApp() {
-  // Головний диспетчер перемальовування
   renderProjectsList();
   renderStats();
 }
@@ -180,24 +181,25 @@ function renderProjectsList() {
   const container = document.getElementById('projects-container');
   if (!container) return;
 
-  if (!DB.projects || DB.projects.length === 0) {
+  const projects = window.DB?.projects || [];
+
+  if (projects.length === 0) {
     container.innerHTML = `<div class="p-6 text-center text-gray-400">Проєктів поки немає</div>`;
     return;
   }
 
-  // Оновлюємо список (верстка підтягнеться з твоїх стилів)
-  container.innerHTML = DB.projects.map(project => `
+  container.innerHTML = projects.map(project => `
     <div class="p-4 bg-white dark:bg-slate-800 rounded-xl mb-3 shadow-sm flex justify-between items-center">
       <div>
-        <h3 class="font-bold text-gray-800 dark:text-white">${project.title}</h3>
+        <h3 class="font-bold text-gray-800 dark:text-white">${project.title || 'Без назви'}</h3>
         <p class="text-xs text-gray-500">Клієнт: ${project.client || 'Не вказано'} | $${project.price || 0}</p>
       </div>
       <div class="flex items-center gap-2">
         <span class="px-2.5 py-1 text-xs rounded-full bg-blue-50 text-blue-600 font-medium">
           ${project.status || 'В роботі'}
         </span>
-        ${!isReadOnlyMode ? `
-          <button onclick="deleteProject('${project.id}')" class="btn-delete-proj text-red-400 hover:text-red-600 p-1">
+        ${!window.isReadOnlyMode ? `
+          <button onclick="window.deleteProject('${project.id}')" class="btn-delete-proj text-red-400 hover:text-red-600 p-1">
             🗑️
           </button>
         ` : ''}
@@ -210,7 +212,8 @@ function renderStats() {
   const totalIncomeEl = document.getElementById('stat-total-income');
   if (!totalIncomeEl) return;
 
-  const total = (DB.projects || []).reduce((sum, p) => sum + (Number(p.price) || 0), 0);
+  const projects = window.DB?.projects || [];
+  const total = projects.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
   totalIncomeEl.innerText = `$${total}`;
 }
 
@@ -218,11 +221,11 @@ function renderStats() {
 // 6. ХЕЛПЕРИ ДЛЯ ЗМІНИ ДАНИХ (CRUD)
 // ==========================================
 function addProject(projectData) {
-  if (isReadOnlyMode) return;
+  if (window.isReadOnlyMode) return;
 
-  if (!DB.projects) DB.projects = [];
+  if (!window.DB.projects) window.DB.projects = [];
   
-  DB.projects.push({
+  window.DB.projects.push({
     id: 'proj_' + Date.now(),
     createdAt: new Date().toISOString(),
     ...projectData
@@ -233,9 +236,18 @@ function addProject(projectData) {
 }
 
 function deleteProject(id) {
-  if (isReadOnlyMode) return;
+  if (window.isReadOnlyMode) return;
 
-  DB.projects = DB.projects.filter(p => p.id !== id);
+  window.DB.projects = (window.DB.projects || []).filter(p => p.id !== id);
   renderApp();
   triggerAutoSave();
 }
+
+// ==========================================
+// 7. РЕЄСТРАЦІЯ ФУНКЦІЙ У ГЛОБАЛЬНОМУ ОБ'ЄКТІ WINDOW
+// ==========================================
+window.switchWorkspace = switchWorkspace;
+window.addProject = addProject;
+window.deleteProject = deleteProject;
+window.triggerAutoSave = triggerAutoSave;
+window.renderApp = renderApp;
