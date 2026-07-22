@@ -3,235 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кабінет Дизайнера</title>
+    <title>Кабінет Дизайнера | Material Design 3</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <style>
+        /* ====================================================================
+           MATERIAL DESIGN 3 DESIGN SYSTEM & COLOR TOKENS (Dark Theme Default)
+           ==================================================================== */
         :root {
-            --accent: #5a67d8;
-            --accent-light: #ebf0ff;
-            --accent-hover: #4c56c4;
-            --radius: 12px;
+            /* Primary Tonal Palette (M3 Deep Violet / Indigo Tone) */
+            --md-sys-color-primary: #D0BCFF;
+            --md-sys-color-on-primary: #381E72;
+            --md-sys-color-primary-container: #4F378B;
+            --md-sys-color-on-primary-container: #EADDFF;
+
+            /* Secondary Tonal Palette (Slate / Cool Indigo) */
+            --md-sys-color-secondary: #CCC2DC;
+            --md-sys-color-on-secondary: #332D41;
+            --md-sys-color-secondary-container: #4A4458;
+            --md-sys-color-on-secondary-container: #E8DEF8;
+
+            /* Tertiary Tonal Palette (Teal Accent) */
+            --md-sys-color-tertiary: #EFB8C8;
+            --md-sys-color-on-tertiary: #492532;
+            --md-sys-color-tertiary-container: #633B48;
+            --md-sys-color-on-tertiary-container: #FFD8E4;
+
+            /* Error / Alert Tokens */
+            --md-sys-color-error: #F2B8B5;
+            --md-sys-color-on-error: #601410;
+            --md-sys-color-error-container: #8C1D18;
+            --md-sys-color-on-error-container: #F9DEDC;
+
+            /* Success Tokens */
+            --md-sys-color-success: #A6F4C5;
+            --md-sys-color-on-success: #003822;
+            --md-sys-color-success-container: #005234;
+            --md-sys-color-on-success-container: #C8FFDA;
+
+            /* Warning / Caution Tokens */
+            --md-sys-color-warning: #FFDCC3;
+            --md-sys-color-on-warning: #4A2800;
+            --md-sys-color-warning-container: #6B3C00;
+            --md-sys-color-on-warning-container: #FFDCC3;
+
+            /* Surface & Background Tokens (Tonal Elevation Levels) */
+            --md-sys-color-background: #141218;
+            --md-sys-color-on-background: #E6E0E9;
+            --md-sys-color-surface: #141218;
+            --md-sys-color-on-surface: #E6E0E9;
+            --md-sys-color-surface-variant: #49454F;
+            --md-sys-color-on-surface-variant: #CAC4D0;
+            --md-sys-color-outline: #938F99;
+            --md-sys-color-outline-variant: #44474E;
+
+            /* Surface Containers (M3 Elevation hierarchy) */
+            --md-sys-color-surface-container-lowest: #0F0D13;
+            --md-sys-color-surface-container-low: #1D1B20;
+            --md-sys-color-surface-container: #211F26;
+            --md-sys-color-surface-container-high: #2B2930;
+            --md-sys-color-surface-container-highest: #36343B;
+
+            /* M3 Radius Tokens */
+            --md-sys-shape-corner-xs: 4px;
+            --md-sys-shape-corner-s: 8px;
+            --md-sys-shape-corner-m: 12px;
+            --md-sys-shape-corner-l: 16px;
+            --md-sys-shape-corner-xl: 28px;
+            --md-sys-shape-corner-full: 9999px;
         }
+
         * { box-sizing: border-box; }
-        body { font-family: 'DM Sans', sans-serif; }
-        code, .mono { font-family: 'DM Mono', monospace; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            margin: 0;
+            padding: 0;
+        }
+        code, .mono, font-mono { font-family: 'Roboto Mono', monospace; }
 
-        /* Sidebar */
-        .sidebar-link { transition: all 0.18s ease; border-radius: 10px; }
-        .sidebar-link:hover { background: rgba(129,140,248,0.15); color: #818cf8; }
-        .sidebar-link.active { background: rgba(129,140,248,0.2); color: #818cf8; font-weight: 600; }
+        /* M3 Navigation Drawer (Sidebar) */
+        .m3-drawer {
+            background-color: var(--md-sys-color-surface-container-low);
+            border-right: 1px solid var(--md-sys-color-outline-variant);
+        }
+        .m3-drawer-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin: 4px 12px;
+            border-radius: var(--md-sys-shape-corner-full);
+            color: var(--md-sys-color-on-surface-variant);
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            text-align: left;
+        }
+        .m3-drawer-item:hover {
+            background-color: rgba(208, 188, 255, 0.08);
+            color: var(--md-sys-color-on-surface);
+        }
+        .m3-drawer-item.active {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            font-weight: 700;
+        }
 
-        /* Animations */
-        .fade-in { animation: fadeIn 0.25s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .scale-in { animation: scaleIn 0.2s ease; }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+        /* M3 Cards (Elevated & Outlined) */
+        .m3-card {
+            background-color: var(--md-sys-color-surface-container);
+            border-radius: var(--md-sys-shape-corner-l);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .m3-card-hover:hover {
+            background-color: var(--md-sys-color-surface-container-high);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .m3-card-interactive {
+            cursor: pointer;
+        }
+        .m3-card-interactive:focus-visible {
+            outline: 2px solid var(--md-sys-color-primary);
+            outline-offset: 2px;
+        }
 
-        /* Status badges */
-        .status-none { background: #3b0a0a; color: #fca5a5; border: 1px solid #7f1d1d; }
-        .status-advance { background: #3b1f02; color: #fcd34d; border: 1px solid #78350f; }
-        .status-paid { background: #052e16; color: #86efac; border: 1px solid #14532d; }
+        /* M3 Text Fields (Outlined Input) */
+        .m3-field-wrap {
+            position: relative;
+            margin-bottom: 4px;
+        }
+        .m3-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 6px;
+            letter-spacing: 0.2px;
+        }
+        .m3-input, select.m3-input, textarea.m3-input {
+            width: 100%;
+            min-height: 48px;
+            background-color: var(--md-sys-color-surface-container-high);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-corner-s);
+            padding: 10px 14px;
+            color: var(--md-sys-color-on-surface);
+            font-size: 0.875rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .m3-input:focus, select.m3-input:focus, textarea.m3-input:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 3px rgba(208, 188, 255, 0.2);
+            background-color: var(--md-sys-color-surface-container-highest);
+        }
+        .m3-input[readonly] {
+            background-color: var(--md-sys-color-surface-container-low);
+            border-color: var(--md-sys-color-outline-variant);
+            color: var(--md-sys-color-primary);
+        }
 
-        /* Table */
-        table th { cursor: pointer; user-select: none; }
-        table th:hover { background: rgba(129,140,248,0.1); }
-        .sort-arrow { font-size: 0.6rem; margin-left: 3px; opacity: 0.4; }
-        .sort-arrow.active { opacity: 1; color: #818cf8; }
+        /* M3 Buttons (Filled, Tonal, Outlined, Text) */
+        .m3-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: var(--md-sys-shape-corner-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            border: none;
+            text-decoration: none;
+        }
+        .m3-btn-filled {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+        .m3-btn-filled:hover {
+            background-color: #e8def8;
+            box-shadow: 0 2px 8px rgba(208, 188, 255, 0.3);
+        }
+        .m3-btn-tonal {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+        .m3-btn-tonal:hover {
+            background-color: #5A536B;
+        }
+        .m3-btn-outlined {
+            background-color: transparent;
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-primary);
+        }
+        .m3-btn-outlined:hover {
+            background-color: rgba(208, 188, 255, 0.08);
+            border-color: var(--md-sys-color-primary);
+        }
+        .m3-btn-danger {
+            background-color: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-on-error-container);
+        }
+        .m3-btn-danger:hover {
+            background-color: #B3261E;
+        }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        /* M3 Floating Action Button (FAB) */
+        .m3-fab {
+            position: fixed;
+            bottom: 92px;
+            right: 20px;
+            z-index: 40;
+            width: 56px;
+            height: 56px;
+            border-radius: var(--md-sys-shape-corner-l);
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .m3-fab:hover {
+            transform: scale(1.05);
+            background-color: #6146A3;
+        }
+        @media (max-width: 767px) { .m3-fab { display: flex; } }
 
-        /* Tabs */
-        .tab-btn { transition: all 0.18s; border-bottom: 2px solid transparent; }
-        .tab-btn.active { border-bottom-color: #818cf8; color: #818cf8; font-weight: 600; }
+        /* M3 Filter Chips & Status Badges */
+        .m3-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: var(--md-sys-shape-corner-s);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+        }
+        .status-none {
+            background-color: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-on-error-container);
+            border-color: rgba(242, 184, 181, 0.2);
+        }
+        .status-advance {
+            background-color: var(--md-sys-color-warning-container);
+            color: var(--md-sys-color-on-warning-container);
+            border-color: rgba(255, 220, 195, 0.2);
+        }
+        .status-paid {
+            background-color: var(--md-sys-color-success-container);
+            color: var(--md-sys-color-on-success-container);
+            border-color: rgba(166, 244, 197, 0.2);
+        }
 
-        .badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 500; }
-        .card-hover { transition: transform 0.18s, box-shadow 0.18s; }
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+        .deadline-overdue { background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container); border: 1px solid var(--md-sys-color-error); }
+        .deadline-soon { background: var(--md-sys-color-warning-container); color: var(--md-sys-color-on-warning-container); border: 1px solid var(--md-sys-color-warning); }
+        .deadline-ok { background: var(--md-sys-color-success-container); color: var(--md-sys-color-on-success-container); border: 1px solid var(--md-sys-color-success); }
+        .deadline-pulse { animation: m3Pulse 2s infinite; }
+        @keyframes m3Pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
-        #login-screen { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); }
-        .login-card { backdrop-filter: blur(12px); }
-        .saving-dot { animation: pulse 1s infinite; }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-        input[type="date"], input[type="datetime-local"], select { min-height: 38px; }
-        #sidebar-overlay { backdrop-filter: blur(2px); }
-
-        .deadline-overdue { background: #3b0a0a; color: #fca5a5; border: 1px solid #7f1d1d; }
-        .deadline-soon { background: #3b1f02; color: #fcd34d; border: 1px solid #78350f; }
-        .deadline-ok { background: #052e16; color: #86efac; border: 1px solid #14532d; }
-        .deadline-pulse { animation: deadlinePulse 2s infinite; }
-        @keyframes deadlinePulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-
-        #bottom-nav { display: none; }
+        /* M3 Bottom Navigation Bar */
+        #bottom-nav {
+            display: none;
+            background-color: var(--md-sys-color-surface-container-low);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+        }
         @media (max-width: 1023px) {
             #bottom-nav { display: flex; }
             #main-content-inner { padding-bottom: 120px !important; }
         }
-        .bottom-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px 4px; font-size: 0.6rem; font-weight: 600; color: #9ca3af; transition: color 0.15s; position: relative; cursor: pointer; border: none; background: none; }
-        .bottom-nav-btn.active { color: #818cf8; }
-        .bottom-nav-btn svg { width: 22px; height: 22px; }
+        .m3-bnav-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface-variant);
+            transition: color 0.2s ease;
+            position: relative;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        .m3-bnav-icon-wrap {
+            padding: 4px 18px;
+            border-radius: var(--md-sys-shape-corner-full);
+            transition: background-color 0.2s ease;
+        }
+        .m3-bnav-btn.active {
+            color: var(--md-sys-color-on-surface);
+        }
+        .m3-bnav-btn.active .m3-bnav-icon-wrap {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+        .m3-bnav-btn svg { width: 22px; height: 22px; }
 
+        /* Table & Cards layout switching */
         .mobile-cards-list { display: none; }
         .desktop-table-wrap { display: block; }
         @media (max-width: 767px) {
-            .mobile-cards-list { display: flex; flex-direction: column; gap: 10px; }
+            .mobile-cards-list { display: flex; flex-direction: column; gap: 12px; }
             .desktop-table-wrap { display: none; }
             #filters-panel { display: none; }
             #filters-panel.open { display: flex; }
         }
 
-        .proj-card { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 14px 16px; transition: box-shadow 0.18s; }
-
-        .fab { position: fixed; bottom: 82px; right: 18px; z-index: 40; width: 52px; height: 52px; border-radius: 50%; background: #818cf8; color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(129,140,248,0.4); border: none; cursor: pointer; transition: transform 0.15s; }
-        @media (max-width: 767px) { .fab { display: flex; } }
-
-        .filter-toggle-btn { display: none; }
-        @media (max-width: 767px) {
-            .filter-toggle-btn { display: flex; }
-            .filter-new-btn-desktop { display: none; }
-        }
-        @media (min-width: 768px) {
-            .filter-new-btn-desktop { display: inline-flex; }
-        }
-
-        /* Project index: a table for wide monitors and focused cards for every other screen. */
         .project-cards-list { display: none; }
-        .project-index-card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 18px; cursor: pointer; transition: transform .18s, border-color .18s, box-shadow .18s; }
-        .project-index-card:hover { transform: translateY(-2px); border-color: #4f46e5; box-shadow: 0 12px 28px rgba(0,0,0,.22); }
-        .project-index-card:focus-visible { outline: 2px solid #818cf8; outline-offset: 3px; }
-        .project-index-card .project-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
-        .project-index-card .project-metric { padding: 10px; background: rgba(31,41,55,.72); border: 1px solid rgba(75,85,99,.36); border-radius: 10px; min-width: 0; }
-        .project-index-card .project-metric b { display: block; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; }
-
-        /* A project is edited on a dedicated page; no secondary dialogs are needed. */
-        .project-detail-page { max-width: 1600px; margin: 0 auto; }
-        .project-detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
-        .project-detail-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(320px, .85fr); gap: 16px; align-items: start; }
-        .project-main-stack, .project-side-stack { display: grid; gap: 16px; }
-        .project-panel { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; min-width: 0; }
-        .project-panel-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
-        .project-panel-title h3 { font-size: .95rem; font-weight: 700; color: #e5e7eb; }
-        .project-field-label { display: block; margin-bottom: 6px; font-size: .72rem; font-weight: 600; color: #9ca3af; }
-        .project-field { width: 100%; min-height: 42px; border: 1px solid #374151; border-radius: 10px; background: #1f2937; padding: 9px 11px; font-size: .875rem; color: #f3f4f6; outline: none; }
-        .project-field:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(129,140,248,.16); }
-        .project-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-        .project-form-grid.project-form-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .project-finance-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-        .project-finance-summary > div { padding: 11px; border-radius: 10px; background: rgba(30,41,59,.75); border: 1px solid rgba(75,85,99,.42); }
-        .project-transaction, .project-member, .project-expense { border: 1px solid #273449; border-radius: 12px; background: rgba(17,24,39,.72); padding: 12px; }
-        .project-transaction-grid { display: grid; grid-template-columns: 130px 120px minmax(0, 1fr) auto; gap: 8px; align-items: end; }
-        .project-member-header { display: grid; grid-template-columns: minmax(120px, .8fr) minmax(160px, 1fr) 120px auto; gap: 8px; align-items: end; }
-        .project-expense-grid { display: grid; grid-template-columns: 130px minmax(0, 1fr) 120px auto; gap: 8px; align-items: end; }
-        .project-member-payments { margin-top: 12px; padding-top: 12px; border-top: 1px solid #273449; }
-        .project-inline-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-        .project-danger-action { color: #fca5a5; border-color: rgba(127,29,29,.75); background: rgba(127,29,29,.16); }
-        .project-danger-action:hover { background: rgba(127,29,29,.34); }
-
         @media (min-width: 1280px) {
             .projects-table-wrap { display: block; }
             .project-cards-list { display: none; }
         }
         @media (min-width: 768px) and (max-width: 1279px) {
             .projects-table-wrap { display: none; }
-            .project-cards-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+            .project-cards-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
         }
         @media (max-width: 767px) {
             .projects-table-wrap { display: none; }
-            .project-cards-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
-            .project-index-card { padding: 14px; }
-            .project-index-card .project-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 12px; }
-            .project-index-card .project-metric:last-child { display: none; }
-            .project-detail-header { display: block; }
-            .project-detail-header .project-inline-actions { margin-top: 12px; }
-            .project-detail-layout { grid-template-columns: 1fr; gap: 12px; }
-            .project-panel { padding: 15px; border-radius: 14px; }
-            .project-form-grid, .project-form-grid.project-form-grid-3, .project-finance-summary { grid-template-columns: 1fr; gap: 10px; }
-            .project-transaction-grid, .project-member-header, .project-expense-grid { grid-template-columns: 1fr; gap: 9px; }
-            .project-transaction-grid .project-remove-button, .project-member-header .project-remove-button, .project-expense-grid .project-remove-button { width: 100%; }
+            .project-cards-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
         }
+
+        /* M3 Table Styling */
+        table { width: 100%; border-collapse: collapse; }
+        table th {
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+            color: var(--md-sys-color-on-surface-variant);
+            background-color: var(--md-sys-color-surface-container-high);
+            padding: 12px 16px;
+            cursor: pointer;
+            user-select: none;
+        }
+        table th:hover { background-color: var(--md-sys-color-surface-container-highest); }
+        table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        }
+        table tbody tr:hover { background-color: rgba(208, 188, 255, 0.04); }
+
+        .sort-arrow { font-size: 0.65rem; margin-left: 4px; opacity: 0.4; }
+        .sort-arrow.active { opacity: 1; color: var(--md-sys-color-primary); }
+
+        /* M3 Project Detail Layout */
+        .project-detail-page { max-width: 1600px; margin: 0 auto; }
+        .project-detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+        .project-detail-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(320px, .85fr); gap: 20px; align-items: start; }
+        .project-main-stack, .project-side-stack { display: grid; gap: 20px; }
+        .project-panel {
+            background-color: var(--md-sys-color-surface-container);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-sys-shape-corner-l);
+            padding: 24px;
+            min-width: 0;
+        }
+        .project-panel-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+        .project-panel-title h3 { font-size: 1rem; font-weight: 700; color: var(--md-sys-color-on-surface); margin: 0; }
+        .project-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        .project-form-grid.project-form-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .project-finance-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+        .project-finance-summary > div {
+            padding: 14px;
+            border-radius: var(--md-sys-shape-corner-m);
+            background-color: var(--md-sys-color-surface-container-high);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+        .project-transaction, .project-member, .project-expense {
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-sys-shape-corner-m);
+            background-color: var(--md-sys-color-surface-container-low);
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .project-transaction-grid { display: grid; grid-template-columns: 140px 130px minmax(0, 1fr) auto; gap: 12px; align-items: end; }
+        .project-member-header { display: grid; grid-template-columns: minmax(130px, .8fr) minmax(160px, 1fr) 130px auto; gap: 12px; align-items: end; }
+        .project-expense-grid { display: grid; grid-template-columns: 140px minmax(0, 1fr) 130px auto; gap: 12px; align-items: end; }
+        .project-member-payments { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--md-sys-color-outline-variant); }
+        .project-inline-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        @media (max-width: 767px) {
+            .project-detail-header { display: block; }
+            .project-detail-header .project-inline-actions { margin-top: 16px; }
+            .project-detail-layout { grid-template-columns: 1fr; gap: 16px; }
+            .project-panel { padding: 16px; border-radius: var(--md-sys-shape-corner-m); }
+            .project-form-grid, .project-form-grid.project-form-grid-3, .project-finance-summary { grid-template-columns: 1fr; gap: 12px; }
+            .project-transaction-grid, .project-member-header, .project-expense-grid { grid-template-columns: 1fr; gap: 12px; }
+            .project-remove-button { width: 100%; }
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.25s cubic-bezier(0.2, 0, 0, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .scale-in { animation: scaleIn 0.2s cubic-bezier(0.2, 0, 0, 1); }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+        
+        .saving-dot { animation: pulse 1s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--md-sys-color-outline); border-radius: 4px; }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen">
+<body class="min-h-screen">
 
-<!-- АВТОРИЗАЦІЯ -->
-<div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-    <div class="login-card bg-gray-900/95 rounded-2xl shadow-2xl w-full max-w-sm p-8 fade-in border border-gray-800">
-        <div class="text-center mb-8">
-            <div class="w-16 h-16 bg-indigo-900/60 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
-                <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-            </div>
-            <h1 class="text-2xl font-bold text-white">Кабінет Дизайнера</h1>
-            <p class="text-gray-400 text-sm mt-1">Увійдіть, щоб продовжити</p>
+<!-- АВТОРИЗАЦІЯ (M3 Surface Card Login) -->
+<div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4" style="background-color: var(--md-sys-color-background);">
+    <div class="m3-card w-full max-w-sm p-8 fade-in text-center" style="background-color: var(--md-sys-color-surface-container-high);">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
         </div>
-        <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 border border-gray-700 hover:bg-gray-800 text-gray-200 py-3 rounded-xl text-sm font-semibold transition-colors mb-4 shadow-sm cursor-pointer">
+        <h1 class="text-2xl font-extrabold tracking-tight mb-1" style="color: var(--md-sys-color-on-surface);">Кабінет Дизайнера</h1>
+        <p class="text-xs mb-8" style="color: var(--md-sys-color-on-surface-variant);">Material Design 3 Management System</p>
+        
+        <button onclick="loginWithGoogle()" class="m3-btn m3-btn-filled w-full mb-4 py-3">
             <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
             <span>Увійти через Google</span>
         </button>
-        <div id="login-error" class="hidden text-red-400 text-sm text-center bg-red-900/20 rounded-lg px-3 py-2 mb-3"></div>
-        <p class="text-xs text-gray-500 text-center mt-6">Захищено Supabase Cloud</p>
+        <div id="login-error" class="hidden text-xs text-center p-3 rounded-lg mb-3" style="background-color: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container);"></div>
+        <p class="text-[11px] mt-6" style="color: var(--md-sys-color-outline);">Захищено Supabase Cloud</p>
     </div>
 </div>
 
 <!-- ГОЛОВНИЙ ІНТЕРФЕЙС -->
 <div id="app" class="hidden flex min-h-screen">
 
-    <!-- БОКОВЕ МЕНЮ -->
-    <aside id="sidebar" class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col fixed h-full z-30 transition-transform duration-300 lg:translate-x-0 -translate-x-full">
-        <div class="p-5 border-b border-gray-800">
-            <h1 class="text-xl font-bold text-indigo-400 flex items-center gap-2">
+    <!-- M3 NAVIGATION DRAWER (БОКОВЕ МЕНЮ) -->
+    <aside id="sidebar" class="m3-drawer w-64 flex flex-col fixed h-full z-30 transition-transform duration-300 lg:translate-x-0 -translate-x-full">
+        <div class="p-6 border-b" style="border-color: var(--md-sys-color-outline-variant);">
+            <h1 class="text-lg font-bold flex items-center gap-2.5" style="color: var(--md-sys-color-primary);">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                 Кабінет Дизайнера
             </h1>
-            <p class="text-xs text-gray-400 mt-1 truncate" id="sidebar-user-email">Завантаження...</p>
+            <p class="text-xs mt-1 truncate" style="color: var(--md-sys-color-on-surface-variant);" id="sidebar-user-email">Завантаження...</p>
         </div>
 
-        <nav class="flex-1 p-3 space-y-0.5 overflow-y-auto">
-            <button onclick="navigateTo('projects')" data-nav="projects" class="sidebar-link active w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
+        <nav class="flex-1 py-4 space-y-1 overflow-y-auto">
+            <button onclick="navigateTo('projects')" data-nav="projects" class="m3-drawer-item active w-full">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                 <span>Проєкти</span>
-                <span id="nav-badge-projects" class="ml-auto text-xs bg-indigo-900 text-indigo-300 px-2 py-0.5 rounded-full font-mono">0</span>
+                <span id="nav-badge-projects" class="ml-auto text-xs px-2 py-0.5 rounded-full font-mono" style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);">0</span>
             </button>
-            <button onclick="navigateTo('other')" data-nav="other" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('other')" data-nav="other" class="m3-drawer-item w-full">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span>Інші доходи</span>
             </button>
-            <button onclick="navigateTo('archive')" data-nav="archive" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('archive')" data-nav="archive" class="m3-drawer-item w-full">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                 <span>Архів</span>
             </button>
-            <button onclick="navigateTo('trash')" data-nav="trash" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('trash')" data-nav="trash" class="m3-drawer-item w-full">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 <span>Кошик</span>
             </button>
-            <button onclick="navigateTo('stats')" data-nav="stats" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
+            <button onclick="navigateTo('stats')" data-nav="stats" class="m3-drawer-item w-full">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                 <span>Статистика</span>
             </button>
         </nav>
 
-        <div class="p-3 border-t border-gray-800 space-y-1">
-            <div class="px-4 py-1.5 flex items-center gap-2">
-                <span id="save-status-dot" class="w-2 h-2 rounded-full bg-green-500 shrink-0"></span>
-                <span id="save-status-label" class="text-xs text-gray-400 truncate">Збережено в хмарі</span>
+        <div class="p-4 border-t space-y-1" style="border-color: var(--md-sys-color-outline-variant);">
+            <div class="px-4 py-2 flex items-center gap-2.5">
+                <span id="save-status-dot" class="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0"></span>
+                <span id="save-status-label" class="text-xs truncate" style="color: var(--md-sys-color-on-surface-variant);">Збережено в хмарі</span>
             </div>
 
-            <button onclick="exportData()" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
+            <button onclick="exportData()" class="m3-drawer-item w-full">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 <span>Експорт даних</span>
             </button>
-            <label class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-300 cursor-pointer">
+            <label class="m3-drawer-item w-full">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                 <span>Імпорт даних</span>
                 <input type="file" accept=".json" onchange="importData(event)" class="hidden">
             </label>
-            <button onclick="doLogout()" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-400 cursor-pointer">
+            <button onclick="doLogout()" class="m3-drawer-item w-full" style="color: var(--md-sys-color-error);">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                 <span>Вийти</span>
             </button>
@@ -240,92 +510,93 @@
 
     <!-- КОНТЕНТ -->
     <main class="flex-1 lg:ml-64 min-h-screen">
-        <header class="lg:hidden bg-gray-900 border-b border-gray-800 p-4 flex items-center justify-between sticky top-0 z-20">
-            <h1 class="text-lg font-bold text-indigo-400">Кабінет Дизайнера</h1>
-            <button onclick="toggleSidebar()" class="p-2 text-gray-300">
+        <header class="lg:hidden border-b p-4 flex items-center justify-between sticky top-0 z-20" style="background-color: var(--md-sys-color-surface-container); border-color: var(--md-sys-color-outline-variant);">
+            <h1 class="text-base font-bold" style="color: var(--md-sys-color-primary);">Кабінет Дизайнера</h1>
+            <button onclick="toggleSidebar()" class="p-2" style="color: var(--md-sys-color-on-surface);">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </header>
-        <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-20 hidden lg:hidden" onclick="toggleSidebar()"></div>
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden" onclick="toggleSidebar()"></div>
 
-        <button class="fab" id="fab-btn" onclick="fabAction()" title="Новий">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+        <!-- M3 Floating Action Button -->
+        <button class="m3-fab" id="fab-btn" onclick="fabAction()" title="Новий">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
         </button>
 
         <div id="main-content-inner" class="p-4 md:p-6 lg:p-8">
 
             <!-- СЕКЦІЯ ПРОЄКТИ -->
             <section id="section-projects" class="section fade-in">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-2xl font-bold">Проєкти</h2>
-                        <p class="text-gray-400 text-sm mt-1">Управління дизайн-проєктами та командою</p>
+                        <h2 class="text-2xl font-bold tracking-tight">Проєкти</h2>
+                        <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Управління дизайн-проєктами та командою</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="toggleFilters()" class="filter-toggle-btn items-center gap-2 border border-gray-700 bg-gray-900 text-gray-300 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors">
+                    <div class="flex items-center gap-3">
+                        <button onclick="toggleFilters()" class="filter-toggle-btn m3-btn m3-btn-outlined">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
                             <span>Фільтри</span>
                         </button>
-                        <button onclick="openProjectPage()" class="filter-new-btn-desktop items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
+                        <button onclick="openProjectPage()" class="filter-new-btn-desktop m3-btn m3-btn-filled">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                             <span>Новий проєкт</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Панель фільтрів -->
-                <div id="filters-panel" class="bg-gray-900 rounded-xl border border-gray-800 p-4 mb-4 flex flex-wrap gap-3 items-end">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Пошук</label>
-                        <input type="text" id="filter-proj-search" oninput="renderProjects()" placeholder="Назва або клієнт..." class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-48 focus:ring-2 focus:ring-indigo-400 outline-none">
+                <!-- M3 Панель фільтрів -->
+                <div id="filters-panel" class="m3-card p-4 mb-6 flex flex-wrap gap-4 items-end">
+                    <div class="m3-field-wrap">
+                        <label class="m3-label">Пошук</label>
+                        <input type="text" id="filter-proj-search" oninput="renderProjects()" placeholder="Назва або клієнт..." class="m3-input w-48">
                     </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Статус оплати</label>
-                        <select id="filter-proj-status" onchange="renderProjects()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-44 focus:ring-2 focus:ring-indigo-400 outline-none">
+                    <div class="m3-field-wrap">
+                        <label class="m3-label">Статус оплати</label>
+                        <select id="filter-proj-status" onchange="renderProjects()" class="m3-input w-44">
                             <option value="">Всі статуси</option>
                             <option value="none">Без оплати</option>
                             <option value="advance">Внесено аванс</option>
                             <option value="paid">Оплачено</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Рік</label>
-                        <select id="filter-proj-year" onchange="renderProjects()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-28 focus:ring-2 focus:ring-indigo-400 outline-none"></select>
+                    <div class="m3-field-wrap">
+                        <label class="m3-label">Рік</label>
+                        <select id="filter-proj-year" onchange="renderProjects()" class="m3-input w-28"></select>
                     </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Місяць</label>
-                        <select id="filter-proj-month" onchange="renderProjects()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm w-36 focus:ring-2 focus:ring-indigo-400 outline-none"></select>
+                    <div class="m3-field-wrap">
+                        <label class="m3-label">Місяць</label>
+                        <select id="filter-proj-month" onchange="renderProjects()" class="m3-input w-36"></select>
                     </div>
                 </div>
 
-                <div id="projects-summary" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4"></div>
+                <div id="projects-summary" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"></div>
 
-                <!-- Таблиця проєктів (десктоп) -->
-                <div class="projects-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                <!-- Таблиця проєктів (десктоп M3 Table) -->
+                <div class="projects-table-wrap m3-card overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm" id="projects-table">
-                            <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
+                        <table id="projects-table">
+                            <thead>
                                 <tr>
-                                    <th class="px-4 py-3 text-left" onclick="sortProjects('date')">Дата <span class="sort-arrow active" id="sort-date">▼</span></th>
-                                    <th class="px-4 py-3 text-left" onclick="sortProjects('name')">Назва об'єкта <span class="sort-arrow" id="sort-name">▼</span></th>
-                                    <th class="px-4 py-3 text-left">Клієнт</th>
-                                    <th class="px-4 py-3 text-right" onclick="sortProjects('area')">Площа, м² <span class="sort-arrow" id="sort-area">▼</span></th>
-                                    <th class="px-4 py-3 text-right" onclick="sortProjects('price')">$/м² <span class="sort-arrow" id="sort-price">▼</span></th>
-                                    <th class="px-4 py-3 text-right" onclick="sortProjects('total')">Сума, $ <span class="sort-arrow" id="sort-total">▼</span></th>
-                                    <th class="px-4 py-3 text-right" onclick="sortProjects('netProfit')">Прибуток, $ <span class="sort-arrow" id="sort-netProfit">▼</span></th>
-                                    <th class="px-4 py-3 text-right" onclick="sortProjects('debt')">Борг, $ <span class="sort-arrow" id="sort-debt">▼</span></th>
-                                    <th class="px-4 py-3 text-center">Команда / Витрати</th>
-                                    <th class="px-4 py-3 text-center" onclick="sortProjects('deadline')">Дедлайн <span class="sort-arrow" id="sort-deadline">▼</span></th>
-                                    <th class="px-4 py-3 text-center">Статус</th>
-                                    <th class="px-4 py-3 text-center">Дії</th>
+                                    <th onclick="sortProjects('date')">Дата <span class="sort-arrow active" id="sort-date">▼</span></th>
+                                    <th onclick="sortProjects('name')">Назва об'єкта <span class="sort-arrow" id="sort-name">▼</span></th>
+                                    <th>Клієнт</th>
+                                    <th class="text-right" onclick="sortProjects('area')">Площа, м² <span class="sort-arrow" id="sort-area">▼</span></th>
+                                    <th class="text-right" onclick="sortProjects('price')">$/м² <span class="sort-arrow" id="sort-price">▼</span></th>
+                                    <th class="text-right" onclick="sortProjects('total')">Сума, $ <span class="sort-arrow" id="sort-total">▼</span></th>
+                                    <th class="text-right" onclick="sortProjects('netProfit')">Прибуток, $ <span class="sort-arrow" id="sort-netProfit">▼</span></th>
+                                    <th class="text-right" onclick="sortProjects('debt')">Борг, $ <span class="sort-arrow" id="sort-debt">▼</span></th>
+                                    <th class="text-center">Команда / Витрати</th>
+                                    <th class="text-center" onclick="sortProjects('deadline')">Дедлайн <span class="sort-arrow" id="sort-deadline">▼</span></th>
+                                    <th class="text-center">Статус</th>
+                                    <th class="text-center">Дії</th>
                                 </tr>
                             </thead>
-                            <tbody id="projects-tbody" class="divide-y divide-gray-800"></tbody>
+                            <tbody id="projects-tbody"></tbody>
                         </table>
                     </div>
-                    <div id="projects-empty" class="hidden p-16 text-center text-gray-400">
-                        <p class="font-semibold">Проєктів поки немає</p>
-                        <p class="text-sm mt-1">Натисніть «Новий проєкт», щоб додати перший</p>
+                    <div id="projects-empty" class="hidden p-16 text-center" style="color: var(--md-sys-color-on-surface-variant);">
+                        <p class="font-semibold text-base">Проєктів поки немає</p>
+                        <p class="text-xs mt-1">Натисніть «Новий проєкт», щоб додати перший</p>
                     </div>
                 </div>
 
@@ -341,27 +612,27 @@
             <section id="section-other" class="section fade-in hidden">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-2xl font-bold">Інші доходи</h2>
-                        <p class="text-gray-400 text-sm mt-1">Додаткові джерела доходу</p>
+                        <h2 class="text-2xl font-bold tracking-tight">Інші доходи</h2>
+                        <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Додаткові джерела доходу</p>
                     </div>
-                    <button onclick="openOtherIncomeModal()" class="filter-new-btn-desktop items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
+                    <button onclick="openOtherIncomeModal()" class="filter-new-btn-desktop m3-btn m3-btn-filled">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                         <span>Новий запис</span>
                     </button>
                 </div>
-                <div class="desktop-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
+                <div class="desktop-table-wrap m3-card overflow-hidden">
+                    <table>
+                        <thead>
                             <tr>
-                                <th class="px-4 py-3 text-left">Дата</th>
-                                <th class="px-4 py-3 text-left">Опис</th>
-                                <th class="px-4 py-3 text-right">Сума, ₴</th>
-                                <th class="px-4 py-3 text-center">Дії</th>
+                                <th>Дата</th>
+                                <th>Опис</th>
+                                <th class="text-right">Сума, ₴</th>
+                                <th class="text-center">Дії</th>
                             </tr>
                         </thead>
-                        <tbody id="other-tbody" class="divide-y divide-gray-800"></tbody>
+                        <tbody id="other-tbody"></tbody>
                     </table>
-                    <div id="other-empty" class="hidden p-16 text-center text-gray-400">
+                    <div id="other-empty" class="hidden p-16 text-center" style="color: var(--md-sys-color-on-surface-variant);">
                         <p class="font-semibold">Записів поки немає</p>
                     </div>
                 </div>
@@ -371,26 +642,26 @@
             <!-- СЕКЦІЯ АРХІВ -->
             <section id="section-archive" class="section fade-in hidden">
                 <div class="mb-6">
-                    <h2 class="text-2xl font-bold">Архів</h2>
-                    <p class="text-gray-400 text-sm mt-1">Завершені та повністю оплачені проєкти</p>
+                    <h2 class="text-2xl font-bold tracking-tight">Архів</h2>
+                    <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Завершені та повністю оплачені проєкти</p>
                 </div>
-                <div class="desktop-table-wrap bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                <div class="desktop-table-wrap m3-card overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <th class="px-4 py-3 text-left">Дата</th>
-                                    <th class="px-4 py-3 text-left">Назва</th>
-                                    <th class="px-4 py-3 text-left">Клієнт</th>
-                                    <th class="px-4 py-3 text-right">Площа, м²</th>
-                                    <th class="px-4 py-3 text-right">Сума, $</th>
-                                    <th class="px-4 py-3 text-center">Дії</th>
+                                    <th>Дата</th>
+                                    <th>Назва</th>
+                                    <th>Клієнт</th>
+                                    <th class="text-right">Площа, м²</th>
+                                    <th class="text-right">Сума, $</th>
+                                    <th class="text-center">Дії</th>
                                 </tr>
                             </thead>
-                            <tbody id="archive-tbody" class="divide-y divide-gray-800"></tbody>
+                            <tbody id="archive-tbody"></tbody>
                         </table>
                     </div>
-                    <div id="archive-empty" class="hidden p-16 text-center text-gray-400">
+                    <div id="archive-empty" class="hidden p-16 text-center" style="color: var(--md-sys-color-on-surface-variant);">
                         <p class="font-semibold">Архів порожній</p>
                     </div>
                 </div>
@@ -401,28 +672,28 @@
             <section id="section-trash" class="section fade-in hidden">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-2xl font-bold">Кошик</h2>
-                        <p class="text-gray-400 text-sm mt-1">Видалені проєкти</p>
+                        <h2 class="text-2xl font-bold tracking-tight">Кошик</h2>
+                        <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Видалені проєкти</p>
                     </div>
-                    <button onclick="emptyTrash()" id="btn-empty-trash" class="hidden inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
+                    <button onclick="emptyTrash()" id="btn-empty-trash" class="hidden m3-btn m3-btn-danger">
                         <span>Очистити кошик</span>
                     </button>
                 </div>
-                <div class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                <div class="m3-card overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead class="bg-gray-800/60 text-xs uppercase tracking-wide text-gray-400">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <th class="px-4 py-3 text-left">Дата</th>
-                                    <th class="px-4 py-3 text-left">Назва</th>
-                                    <th class="px-4 py-3 text-right">Сума, $</th>
-                                    <th class="px-4 py-3 text-center">Дії</th>
+                                    <th>Дата</th>
+                                    <th>Назва</th>
+                                    <th class="text-right">Сума, $</th>
+                                    <th class="text-center">Дії</th>
                                 </tr>
                             </thead>
-                            <tbody id="trash-tbody" class="divide-y divide-gray-800"></tbody>
+                            <tbody id="trash-tbody"></tbody>
                         </table>
                     </div>
-                    <div id="trash-empty" class="hidden p-16 text-center text-gray-400">
+                    <div id="trash-empty" class="hidden p-16 text-center" style="color: var(--md-sys-color-on-surface-variant);">
                         <p class="font-semibold">Кошик порожній</p>
                     </div>
                 </div>
@@ -431,31 +702,31 @@
             <!-- СЕКЦІЯ СТАТИСТИКА -->
             <section id="section-stats" class="section fade-in hidden">
                 <div class="mb-6">
-                    <h2 class="text-2xl font-bold">Статистика</h2>
-                    <p class="text-gray-400 text-sm mt-1">Аналітика та фінансові звіти</p>
+                    <h2 class="text-2xl font-bold tracking-tight">Статистика</h2>
+                    <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Аналітика та фінансові звіти</p>
                 </div>
-                <div class="flex border-b border-gray-800 mb-6">
-                    <button onclick="switchStatsTab('general')" id="stats-tab-general" class="tab-btn active px-6 py-3 text-sm font-medium text-gray-400 cursor-pointer">Загальна статистика</button>
-                    <button onclick="switchStatsTab('monthly')" id="stats-tab-monthly" class="tab-btn px-6 py-3 text-sm font-medium text-gray-400 cursor-pointer">Деталі по місяцях</button>
+                <div class="flex border-b mb-6" style="border-color: var(--md-sys-color-outline-variant);">
+                    <button onclick="switchStatsTab('general')" id="stats-tab-general" class="m3-btn m3-btn-tonal rounded-b-none px-6 py-3">Загальна статистика</button>
+                    <button onclick="switchStatsTab('monthly')" id="stats-tab-monthly" class="m3-btn m3-btn-outlined rounded-b-none border-none px-6 py-3">Деталі по місяцях</button>
                 </div>
                 <div id="stats-general" class="fade-in">
-                    <div class="flex flex-wrap gap-3 mb-6">
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Рік</label>
-                            <select id="stats-year" onchange="renderStats()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="m3-field-wrap">
+                            <label class="m3-label">Рік</label>
+                            <select id="stats-year" onchange="renderStats()" class="m3-input w-36"></select>
                         </div>
                     </div>
                     <div id="stats-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6"></div>
                 </div>
                 <div id="stats-monthly" class="fade-in hidden">
-                    <div class="flex flex-wrap gap-3 mb-6">
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Рік</label>
-                            <select id="stats-monthly-year" onchange="renderMonthlyDetails()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="m3-field-wrap">
+                            <label class="m3-label">Рік</label>
+                            <select id="stats-monthly-year" onchange="renderMonthlyDetails()" class="m3-input w-36"></select>
                         </div>
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Місяць</label>
-                            <select id="stats-monthly-month" onchange="renderMonthlyDetails()" class="border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none"></select>
+                        <div class="m3-field-wrap">
+                            <label class="m3-label">Місяць</label>
+                            <select id="stats-monthly-month" onchange="renderMonthlyDetails()" class="m3-input w-40"></select>
                         </div>
                     </div>
                     <div id="monthly-details-content"></div>
@@ -465,45 +736,53 @@
         </div>
     </main>
 
-    <!-- НИЖНЯ НАВІГАЦІЯ ДЛЯ МОБІЛЬНИХ -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-30 bg-gray-900 border-t border-gray-800">
+    <!-- M3 BOTTOM NAVIGATION BAR ДЛЯ МОБІЛЬНИХ -->
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-30">
         <div class="flex">
-            <button class="bottom-nav-btn active" id="bnav-projects" onclick="navigateTo('projects')">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+            <button class="m3-bnav-btn active" id="bnav-projects" onclick="navigateTo('projects')">
+                <div class="m3-bnav-icon-wrap">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                </div>
                 <span>Проєкти</span>
             </button>
-            <button class="bottom-nav-btn" id="bnav-other" onclick="navigateTo('other')">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <button class="m3-bnav-btn" id="bnav-other" onclick="navigateTo('other')">
+                <div class="m3-bnav-icon-wrap">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
                 <span>Доходи</span>
             </button>
-            <button class="bottom-nav-btn" id="bnav-stats" onclick="navigateTo('stats')">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <button class="m3-bnav-btn" id="bnav-stats" onclick="navigateTo('stats')">
+                <div class="m3-bnav-icon-wrap">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
                 <span>Стат</span>
             </button>
-            <button class="bottom-nav-btn" id="bnav-more" onclick="toggleSidebar()">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <button class="m3-bnav-btn" id="bnav-more" onclick="toggleSidebar()">
+                <div class="m3-bnav-icon-wrap">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </div>
                 <span>Більше</span>
             </button>
         </div>
     </nav>
 </div>
 
-<!-- МОДАЛЬНІ ВІКНА -->
+<!-- МОДАЛЬНІ ВІКНА (M3 Dialogs) -->
 <div id="modal" class="fixed inset-0 z-[55] hidden">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-xs" onclick="closeModal()"></div>
     <div class="relative flex items-start justify-center min-h-full p-4 pt-[5vh]">
-        <div id="modal-content" class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-800 scale-in p-6"></div>
+        <div id="modal-content" class="relative m3-card w-full max-w-lg max-h-[90vh] overflow-y-auto scale-in p-6" style="background-color: var(--md-sys-color-surface-container-high);"></div>
     </div>
 </div>
 
 <div id="confirm-modal" class="fixed inset-0 z-[60] hidden">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
     <div class="relative flex items-center justify-center min-h-full p-4">
-        <div class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-gray-800 scale-in">
-            <p id="confirm-text" class="text-center text-base mb-6"></p>
+        <div class="relative m3-card w-full max-w-sm p-6 scale-in" style="background-color: var(--md-sys-color-surface-container-high);">
+            <p id="confirm-text" class="text-center text-sm font-semibold mb-6"></p>
             <div class="flex gap-3 justify-center">
-                <button onclick="confirmAction(false)" class="px-6 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-sm font-semibold transition-colors cursor-pointer">Скасувати</button>
-                <button onclick="confirmAction(true)" class="px-6 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-sm font-semibold transition-colors cursor-pointer">Підтвердити</button>
+                <button onclick="confirmAction(false)" class="m3-btn m3-btn-outlined">Скасувати</button>
+                <button onclick="confirmAction(true)" class="m3-btn m3-btn-danger">Підтвердити</button>
             </div>
         </div>
     </div>
@@ -579,7 +858,6 @@ sb.auth.onAuthStateChange(async (event, session) => {
         populateFilterYears();
         populateMonthSelects();
         renderProjects();
-        // Persist only the supported data schema after loading older records.
         saveData();
     } else {
         document.getElementById('login-screen').classList.remove('hidden');
@@ -634,19 +912,19 @@ function setSaveStatus(status) {
     const label = document.getElementById('save-status-label');
     if (!dot) return;
     if (status === 'saving') {
-        dot.className = 'w-2 h-2 rounded-full bg-yellow-500 saving-dot shrink-0';
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-yellow-500 saving-dot shrink-0';
         label.textContent = 'Збереження...';
     } else if (status === 'saved') {
-        dot.className = 'w-2 h-2 rounded-full bg-green-500 shrink-0';
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-green-500 shrink-0';
         label.textContent = 'Збережено в хмарі';
     } else {
-        dot.className = 'w-2 h-2 rounded-full bg-red-500 shrink-0';
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-red-500 shrink-0';
         label.textContent = 'Помилка збереження';
     }
 }
 
 // ====================================================================
-// НАВІГАЦІЯ
+// НАВІГАЦІЯ M3
 // ====================================================================
 function navigateTo(section) {
     currentSection = section;
@@ -690,12 +968,14 @@ function toggleFilters() {
 }
 
 // ====================================================================
-// ДОПОМІЖНІ ФУНКЦІЇ
+// ДОПОМІЖНІ ФУНКЦІЇ (M3 Toast & Modals)
 // ====================================================================
 function showToast(msg, type = 'success') {
-    const bg = type === 'success' ? 'bg-green-600' : 'bg-red-600';
+    const isErr = type === 'error';
     const toast = document.createElement('div');
-    toast.className = `${bg} text-white px-4 py-2.5 rounded-xl shadow-lg text-sm font-medium fade-in flex items-center gap-2`;
+    toast.className = `m3-card px-4 py-3 text-xs font-semibold fade-in flex items-center gap-2 shadow-xl border-none`;
+    toast.style.backgroundColor = isErr ? 'var(--md-sys-color-error-container)' : 'var(--md-sys-color-primary-container)';
+    toast.style.color = isErr ? 'var(--md-sys-color-on-error-container)' : 'var(--md-sys-color-on-primary-container)';
     toast.innerHTML = msg;
     document.getElementById('toast-container').appendChild(toast);
     setTimeout(() => { toast.remove(); }, 3000);
@@ -726,12 +1006,9 @@ function confirmAction(yes) {
 function calcAdvancesSum(p) { return (p.advances || []).reduce((s, a) => s + parseFloat(a.amount || 0), 0); }
 function calcDebt(p) { return Math.max(0, (p.total || 0) - calcAdvancesSum(p)); }
 
-// Розрахунки по делегуванню команді
 function calcTeamTotalCost(p) { return (p.team || []).reduce((s, m) => s + parseFloat(m.cost || 0), 0); }
 function calcMemberPaid(m) { return (m.advances || []).reduce((s, a) => s + parseFloat(a.amount || 0), 0); }
 function calcTeamTotalPaid(p) { return (p.team || []).reduce((s, m) => s + calcMemberPaid(m), 0); }
-
-// Чистий прибуток проєкту (Сума проєкту мінус Витрати на команду)
 function calcExpensesTotal(p) { return (p.expenses || []).reduce((s, e) => s + parseFloat(e.amount || 0), 0); }
 
 function calcNetProfit(p) {
@@ -748,12 +1025,12 @@ function getDeadlineInfo(p) {
 }
 function deadlineBadgeHtml(p) {
     const info = getDeadlineInfo(p);
-    if (!info) return `<span class="text-gray-600 text-xs">-</span>`;
+    if (!info) return `<span class="text-xs" style="color: var(--md-sys-color-outline);">-</span>`;
     const { diff } = info;
-    if (diff < 0) return `<span class="badge deadline-overdue deadline-pulse">Прострочено (${Math.abs(diff)} дн.)</span>`;
-    if (diff === 0) return `<span class="badge deadline-overdue deadline-pulse">Сьогодні!</span>`;
-    if (diff <= 3) return `<span class="badge deadline-soon">Залишилось ${diff} дн.</span>`;
-    return `<span class="badge deadline-ok">${diff} дн.</span>`;
+    if (diff < 0) return `<span class="m3-chip deadline-overdue deadline-pulse">Прострочено (${Math.abs(diff)} дн.)</span>`;
+    if (diff === 0) return `<span class="m3-chip deadline-overdue deadline-pulse">Сьогодні!</span>`;
+    if (diff <= 3) return `<span class="m3-chip deadline-soon">Залишилось ${diff} дн.</span>`;
+    return `<span class="m3-chip deadline-ok">${diff} дн.</span>`;
 }
 
 function populateFilterYears() {
@@ -770,7 +1047,7 @@ function populateMonthSelects() {
 }
 
 // ====================================================================
-// ПРОЄКТИ
+// ПРОЄКТИ (M3 Render)
 // ====================================================================
 function renderProjects() {
     const tbody = document.getElementById('projects-tbody');
@@ -797,7 +1074,6 @@ function renderProjects() {
         list = list.filter(p => new Date(p.date).getMonth() == month);
     }
 
-    // Сортування
     list.sort((a, b) => {
         let va = a[sortField], vb = b[sortField];
         if (sortField === 'debt') { va = calcDebt(a); vb = calcDebt(b); }
@@ -825,19 +1101,27 @@ function renderProjects() {
         const expenses = calcExpensesTotal(p);
         const { statusClass, statusText } = getProjectPaymentStatus(p);
         return `
-            <tr class="hover:bg-gray-800/30 cursor-pointer" onclick="openProjectPage('${p.id}')">
-                <td class="px-4 py-3 text-xs text-gray-500">${p.date || '-'}</td>
-                <td class="px-4 py-3 font-semibold text-white">${p.name || 'Без назви'}</td>
-                <td class="px-4 py-3 text-xs"><div class="font-medium text-gray-200">${p.client?.name || '-'} ${p.client?.lastName || ''}</div>${p.client?.phone ? `<div class="text-gray-400">${p.client.phone}</div>` : ''}</td>
-                <td class="px-4 py-3 text-right text-xs font-mono">${p.area || 0}</td>
-                <td class="px-4 py-3 text-right text-xs font-mono">$${p.price || 0}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono">$${fmt(p.total)}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono text-emerald-400">$${fmt(calcNetProfit(p))}</td>
-                <td class="px-4 py-3 text-right font-semibold font-mono ${debt > 0 ? 'text-red-500' : 'text-green-500'}">$${fmt(debt)}</td>
-                <td class="px-4 py-3 text-center text-xs"><span class="text-indigo-300 font-medium">${(p.team || []).length} чол.</span><div class="text-[10px] text-gray-400">$${fmt(teamCost + expenses)} витрат</div></td>
-                <td class="px-4 py-3 text-center">${deadlineBadgeHtml(p)}</td>
-                <td class="px-4 py-3 text-center"><span class="badge ${statusClass}">${statusText}</span></td>
-                <td class="px-4 py-3 text-center"><button onclick="event.stopPropagation(); openProjectPage('${p.id}')" class="text-indigo-400 hover:text-indigo-300 text-xs font-semibold">Відкрити</button></td>
+            <tr class="cursor-pointer" onclick="openProjectPage('${p.id}')">
+                <td class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">${p.date || '-'}</td>
+                <td class="font-bold" style="color: var(--md-sys-color-on-surface);">${p.name || 'Без назви'}</td>
+                <td class="text-xs">
+                    <div class="font-semibold" style="color: var(--md-sys-color-on-surface);">${p.client?.name || '-'} ${p.client?.lastName || ''}</div>
+                    ${p.client?.phone ? `<div style="color: var(--md-sys-color-on-surface-variant);">${p.client.phone}</div>` : ''}
+                </td>
+                <td class="text-right text-xs font-mono">${p.area || 0}</td>
+                <td class="text-right text-xs font-mono">$${p.price || 0}</td>
+                <td class="text-right font-bold font-mono">$${fmt(p.total)}</td>
+                <td class="text-right font-bold font-mono" style="color: var(--md-sys-color-success);">$${fmt(calcNetProfit(p))}</td>
+                <td class="text-right font-bold font-mono" style="color: ${debt > 0 ? 'var(--md-sys-color-error)' : 'var(--md-sys-color-success)'}">$${fmt(debt)}</td>
+                <td class="text-center text-xs">
+                    <span class="font-semibold" style="color: var(--md-sys-color-primary);">${(p.team || []).length} чол.</span>
+                    <div class="text-[10px]" style="color: var(--md-sys-color-on-surface-variant);">$${fmt(teamCost + expenses)} витрат</div>
+                </td>
+                <td class="text-center">${deadlineBadgeHtml(p)}</td>
+                <td class="text-center"><span class="m3-chip ${statusClass}">${statusText}</span></td>
+                <td class="text-center">
+                    <button onclick="event.stopPropagation(); openProjectPage('${p.id}')" class="m3-btn m3-btn-outlined py-1 px-3 text-xs">Відкрити</button>
+                </td>
             </tr>`;
     }).join('');
 
@@ -845,17 +1129,33 @@ function renderProjects() {
         const debt = calcDebt(p);
         const { statusClass, statusText } = getProjectPaymentStatus(p);
         return `
-            <article class="project-index-card" tabindex="0" role="button" onclick="openProjectPage('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProjectPage('${p.id}')}">
+            <article class="m3-card m3-card-hover m3-card-interactive p-4" tabindex="0" role="button" onclick="openProjectPage('${p.id}')">
                 <div class="flex items-start justify-between gap-3">
-                    <div class="min-w-0"><h3 class="font-bold text-base truncate">${p.name || 'Без назви'}</h3><p class="text-xs text-gray-400 mt-1 truncate">${p.client?.name || 'Клієнта не вказано'}${p.client?.phone ? ` · ${p.client.phone}` : ''}</p></div>
-                    <span class="badge ${statusClass} shrink-0">${statusText}</span>
+                    <div class="min-w-0">
+                        <h3 class="font-bold text-base truncate" style="color: var(--md-sys-color-on-surface);">${p.name || 'Без назви'}</h3>
+                        <p class="text-xs mt-1 truncate" style="color: var(--md-sys-color-on-surface-variant);">${p.client?.name || 'Клієнта не вказано'}${p.client?.phone ? ` · ${p.client.phone}` : ''}</p>
+                    </div>
+                    <span class="m3-chip ${statusClass} shrink-0">${statusText}</span>
                 </div>
-                <div class="project-metrics text-xs">
-                    <div class="project-metric"><span class="text-gray-400">Сума</span><b class="font-mono text-indigo-300">$${fmt(p.total)}</b></div>
-                    <div class="project-metric"><span class="text-gray-400">Борг</span><b class="font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(debt)}</b></div>
-                    <div class="project-metric"><span class="text-gray-400">Дедлайн</span><b>${p.deadline ? p.deadline : 'Не вказано'}</b></div>
+                <div class="grid grid-cols-3 gap-2 mt-4 text-xs">
+                    <div class="p-2.5 rounded-lg border" style="background-color: var(--md-sys-color-surface-container-high); border-color: var(--md-sys-color-outline-variant);">
+                        <span style="color: var(--md-sys-color-on-surface-variant);">Сума</span>
+                        <b class="block mt-1 font-mono text-sm" style="color: var(--md-sys-color-primary);">$${fmt(p.total)}</b>
+                    </div>
+                    <div class="p-2.5 rounded-lg border" style="background-color: var(--md-sys-color-surface-container-high); border-color: var(--md-sys-color-outline-variant);">
+                        <span style="color: var(--md-sys-color-on-surface-variant);">Борг</span>
+                        <b class="block mt-1 font-mono text-sm" style="color: ${debt > 0 ? 'var(--md-sys-color-error)' : 'var(--md-sys-color-success)'}">$${fmt(debt)}</b>
+                    </div>
+                    <div class="p-2.5 rounded-lg border" style="background-color: var(--md-sys-color-surface-container-high); border-color: var(--md-sys-color-outline-variant);">
+                        <span style="color: var(--md-sys-color-on-surface-variant);">Дедлайн</span>
+                        <b class="block mt-1 truncate">${p.deadline ? p.deadline : 'Н/А'}</b>
+                    </div>
                 </div>
-                <div class="flex justify-between gap-3 mt-3 text-xs text-gray-400"><span>${(p.team || []).length} у команді</span><span>${p.area || 0} м²</span><span>${p.date || ''}</span></div>
+                <div class="flex justify-between gap-3 mt-4 text-xs" style="color: var(--md-sys-color-on-surface-variant);">
+                    <span>${(p.team || []).length} у команді</span>
+                    <span>${p.area || 0} м²</span>
+                    <span>${p.date || ''}</span>
+                </div>
             </article>`;
     }).join('');
 }
@@ -887,357 +1187,27 @@ function renderSummary(list) {
     const debt = list.reduce((s, p) => s + calcDebt(p), 0);
 
     document.getElementById('projects-summary').innerHTML = `
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Всього проєктів</p>
-            <p class="text-xl font-bold mt-1">${list.length}</p>
+        <div class="m3-card p-4">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Всього проєктів</p>
+            <p class="text-2xl font-extrabold mt-1" style="color: var(--md-sys-color-on-surface);">${list.length}</p>
         </div>
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Загальна сума</p>
-            <p class="text-xl font-bold mt-1 font-mono text-indigo-400">$${fmt(total)}</p>
+        <div class="m3-card p-4">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Загальна сума</p>
+            <p class="text-2xl font-extrabold mt-1 font-mono" style="color: var(--md-sys-color-primary);">$${fmt(total)}</p>
         </div>
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Отримано авансів</p>
-            <p class="text-xl font-bold mt-1 font-mono text-green-500">$${fmt(advances)}</p>
+        <div class="m3-card p-4">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Отримано авансів</p>
+            <p class="text-2xl font-extrabold mt-1 font-mono" style="color: var(--md-sys-color-success);">$${fmt(advances)}</p>
         </div>
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Заборгованість</p>
-            <p class="text-xl font-bold mt-1 font-mono text-red-400">$${fmt(debt)}</p>
+        <div class="m3-card p-4">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Заборгованість</p>
+            <p class="text-2xl font-extrabold mt-1 font-mono" style="color: var(--md-sys-color-error);">$${fmt(debt)}</p>
         </div>
     `;
 }
 
-// МОДАЛЬНЕ ВІКНО СТВОРЕННЯ/РЕДАГУВАННЯ ПРОЄКТУ
-function openProjectModal(id = null) {
-    const p = DB.projects.find(x => x.id === id) || {
-        id: uuid(),
-        date: new Date().toISOString().split('T')[0],
-        name: '',
-        area: '',
-        price: '',
-        total: 0,
-        deadline: '',
-        client: { name: '', lastName: '', phone: '', social: '' },
-        advances: [],
-        team: []
-    };
-
-    const isEdit = !!id;
-
-    openModal(`
-        <h3 class="text-xl font-bold mb-4">${isEdit ? 'Редагувати проєкт' : 'Новий проєкт'}</h3>
-        <form onsubmit="saveProject(event, '${p.id}')" class="space-y-4">
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-xs font-semibold mb-1">Дата початку *</label>
-                    <input type="date" id="p-date" value="${p.date}" required class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold mb-1">Дедлайн</label>
-                    <input type="date" id="p-deadline" value="${p.deadline || ''}" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold mb-1">Назва об'єкта *</label>
-                <input type="text" id="p-name" value="${p.name}" required placeholder="ЖК Новопечерські Липки, кв. 45" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
-            </div>
-
-            <!-- БЛОК КЛІЄНТА -->
-            <div class="p-3 bg-gray-800/50 rounded-xl border border-gray-800 space-y-3">
-                <p class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Дані клієнта</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-medium mb-1">Ім'я клієнта</label>
-                        <input type="text" id="p-client-name" value="${p.client?.name || ''}" placeholder="Олександр" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium mb-1">Прізвище (необов'язково)</label>
-                        <input type="text" id="p-client-lastname" value="${p.client?.lastName || ''}" placeholder="Шевченко" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-medium mb-1">Телефон</label>
-                        <input type="text" id="p-client-phone" value="${p.client?.phone || ''}" placeholder="+380..." class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium mb-1">Соцмережа / Лінк</label>
-                        <input type="text" id="p-client-social" value="${p.client?.social || ''}" placeholder="https://t.me/username" class="w-full border border-gray-700 bg-gray-800 rounded-lg px-3 py-1.5 text-sm">
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-3">
-                <div>
-                    <label class="block text-xs font-semibold mb-1">Площа, м²</label>
-                    <input type="number" step="0.01" id="p-area" value="${p.area}" oninput="calcTotal()" placeholder="75" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold mb-1">Ціна $/м²</label>
-                    <input type="number" step="0.01" id="p-price" value="${p.price}" oninput="calcTotal()" placeholder="25" class="w-full border border-gray-700 bg-gray-800 rounded-xl px-3 py-2 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold mb-1">Загалом $</label>
-                    <input type="number" step="0.01" id="p-total" value="${p.total}" readonly class="w-full border border-gray-700 bg-gray-900 rounded-xl px-3 py-2 text-sm font-bold font-mono">
-                </div>
-            </div>
-
-            <!-- АВАНСИ КЛІЄНТА -->
-            <div class="border-t border-gray-800 pt-3">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-bold">Оплата від клієнта (Аванси)</span>
-                    <button type="button" onclick="addClientAdvanceInput()" class="text-xs text-indigo-400 hover:underline">+ Додати платіж</button>
-                </div>
-                <div id="p-advances-container" class="space-y-2">
-                    ${(p.advances || []).map((a, i) => `
-                        <div class="flex gap-2 items-center">
-                            <input type="date" value="${a.date}" class="p-adv-date border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
-                            <input type="number" step="0.01" value="${a.amount}" placeholder="Сума $" class="p-adv-amount w-24 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
-                            <input type="text" value="${a.comment || ''}" placeholder="Коментар" class="p-adv-comment flex-1 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
-                            <button type="button" onclick="this.parentElement.remove()" class="text-red-400 text-xs px-1">✕</button>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-
-            <div class="flex justify-end gap-2 pt-4 border-t border-gray-800">
-                <button type="button" onclick="closeModal()" class="px-5 py-2 rounded-xl bg-gray-800 text-sm font-semibold">Скасувати</button>
-                <button type="submit" class="px-5 py-2 rounded-xl bg-indigo-600 text-white text-sm font-semibold">Зберегти</button>
-            </div>
-        </form>
-    `);
-}
-
-function calcTotal() {
-    const area = parseFloat(document.getElementById('p-area').value) || 0;
-    const price = parseFloat(document.getElementById('p-price').value) || 0;
-    document.getElementById('p-total').value = (area * price).toFixed(2);
-}
-
-function addClientAdvanceInput() {
-    const container = document.getElementById('p-advances-container');
-    const today = new Date().toISOString().split('T')[0];
-    const div = document.createElement('div');
-    div.className = 'flex gap-2 items-center';
-    div.innerHTML = `
-        <input type="date" value="${today}" class="p-adv-date border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
-        <input type="number" step="0.01" placeholder="Сума $" class="p-adv-amount w-24 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
-        <input type="text" placeholder="Коментар" class="p-adv-comment flex-1 border border-gray-700 rounded-lg text-xs p-1.5 bg-gray-800">
-        <button type="button" onclick="this.parentElement.remove()" class="text-red-400 text-xs px-1">✕</button>
-    `;
-    container.appendChild(div);
-}
-
-function saveProject(e, id) {
-    e.preventDefault();
-    let p = DB.projects.find(x => x.id === id);
-    const isNew = !p;
-    if (isNew) {
-        p = { id, team: [] };
-        DB.projects.push(p);
-    }
-
-    p.date = document.getElementById('p-date').value;
-    p.deadline = document.getElementById('p-deadline').value;
-    p.name = document.getElementById('p-name').value;
-    p.area = parseFloat(document.getElementById('p-area').value) || 0;
-    p.price = parseFloat(document.getElementById('p-price').value) || 0;
-    p.total = parseFloat(document.getElementById('p-total').value) || 0;
-
-    p.client = {
-        name: document.getElementById('p-client-name').value,
-        lastName: document.getElementById('p-client-lastname').value,
-        phone: document.getElementById('p-client-phone').value,
-        social: document.getElementById('p-client-social').value
-    };
-
-    // Збір авансів
-    const dates = document.querySelectorAll('.p-adv-date');
-    const amounts = document.querySelectorAll('.p-adv-amount');
-    const comments = document.querySelectorAll('.p-adv-comment');
-
-    p.advances = [];
-    dates.forEach((d, i) => {
-        const amt = parseFloat(amounts[i].value);
-        if (amt > 0) {
-            p.advances.push({
-                date: d.value,
-                amount: amt,
-                comment: comments[i].value
-            });
-        }
-    });
-
-    saveData();
-    closeModal();
-    renderProjects();
-    populateFilterYears();
-    showToast(isNew ? 'Проєкт створено' : 'Проєкт оновлено');
-}
-
-function archiveProject(id) {
-    showConfirm('Перемістити проєкт в архів?', () => {
-        const p = DB.projects.find(x => x.id === id);
-        if (p) { p.archived = true; saveData(); renderProjects(); showToast('Проєкт переміщено в архів'); }
-    });
-}
-
-function trashProject(id) {
-    showConfirm('Перемістити проєкт у кошик?', () => {
-        const p = DB.projects.find(x => x.id === id);
-        if (p) { p.deleted = true; saveData(); renderProjects(); showToast('Проєкт у кошику'); }
-    });
-}
-
 // ====================================================================
-// ДЕЛЕГУВАННЯ ТА ВИПЛАТИ КОМАНДІ
-// ====================================================================
-function openTeamModal(projectId) {
-    const p = DB.projects.find(x => x.id === projectId);
-    if (!p) return;
-
-    if (!p.team) p.team = [];
-
-    const totalCost = calcTeamTotalCost(p);
-    const totalPaid = calcTeamTotalPaid(p);
-    const totalRem = totalCost - totalPaid;
-
-    openModal(`
-        <div class="space-y-4">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h3 class="text-lg font-bold">Делегування: ${p.name}</h3>
-                    <p class="text-xs text-gray-400">Управління командою та витратами на проєкт</p>
-                </div>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-200">✕</button>
-            </div>
-
-            <!-- Сумарна інфо по команді -->
-            <div class="grid grid-cols-3 gap-2 p-3 bg-indigo-950/40 rounded-xl text-center text-xs border border-indigo-900/50">
-                <div>
-                    <span class="text-gray-400">Всього витрат</span>
-                    <p class="font-bold font-mono text-sm text-gray-100">$${fmt(totalCost)}</p>
-                </div>
-                <div>
-                    <span class="text-gray-400">Виплачено</span>
-                    <p class="font-bold font-mono text-sm text-green-400">$${fmt(totalPaid)}</p>
-                </div>
-                <div>
-                    <span class="text-gray-400">Залишок сплати</span>
-                    <p class="font-bold font-mono text-sm text-red-400">$${fmt(totalRem)}</p>
-                </div>
-            </div>
-
-            <div id="team-members-list" class="space-y-4 max-h-[50vh] overflow-y-auto pr-1">
-                ${p.team.length === 0 ? `<p class="text-center text-xs text-gray-400 py-6">Команду ще не додано. Натисніть кнопку нижче.</p>` : ''}
-                ${p.team.map((m, mIdx) => {
-                    const paid = calcMemberPaid(m);
-                    const rem = (m.cost || 0) - paid;
-                    return `
-                        <div class="p-3 border border-gray-800 rounded-xl space-y-2 bg-gray-900">
-                            <div class="flex gap-2 items-center flex-wrap sm:flex-nowrap">
-                                <input type="text" value="${m.role}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'role', this.value)" placeholder="Роль (напр. Візуалізатор)" class="w-full sm:w-1/3 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1.5 text-sm">
-                                <input type="text" value="${m.name}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'name', this.value)" placeholder="Ім'я виконавця" class="flex-1 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1.5 text-sm">
-                                <button onclick="deleteTeamMember('${p.id}', ${mIdx})" class="text-red-400 hover:text-red-300 text-xs px-2 shrink-0">Видалити</button>
-                            </div>
-
-                            <div class="flex gap-2 items-center text-sm flex-wrap">
-                                <span class="text-gray-400">Вартість:</span>
-                                <input type="number" step="0.01" value="${m.cost}" onchange="updateTeamMember('${p.id}', ${mIdx}, 'cost', parseFloat(this.value)||0)" class="w-24 border border-gray-700 bg-gray-800 rounded-lg px-2 py-1 font-mono font-bold text-sm">
-                                <span>$</span>
-                                <div class="ml-auto text-xs text-gray-400 flex gap-2">
-                                    <span>Сплачено: <b class="text-green-400 font-mono">$${fmt(paid)}</b></span>
-                                    <span>| Борг: <b class="text-red-400 font-mono">$${fmt(rem)}</b></span>
-                                </div>
-                            </div>
-
-                            <!-- Список авансів члена команди -->
-                            <div class="pl-3 border-l-2 border-indigo-900 space-y-1.5 pt-1">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xs font-semibold text-gray-400">Виплачені аванси:</span>
-                                    <button onclick="addTeamAdvance('${p.id}', ${mIdx})" class="text-xs text-indigo-400 hover:underline">+ Додати аванс</button>
-                                </div>
-                                ${(m.advances || []).map((a, aIdx) => `
-                                    <div class="flex gap-1.5 items-center">
-                                        <input type="date" value="${a.date}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'date', this.value)" class="text-xs border border-gray-700 rounded p-1 bg-gray-800">
-                                        <input type="number" step="0.01" value="${a.amount}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'amount', parseFloat(this.value)||0)" placeholder="Сума $" class="w-20 text-xs border border-gray-700 rounded p-1 font-mono bg-gray-800">
-                                        <input type="text" value="${a.comment || ''}" onchange="updateTeamAdvance('${p.id}', ${mIdx}, ${aIdx}, 'comment', this.value)" placeholder="Коментар" class="flex-1 text-xs border border-gray-700 rounded p-1 bg-gray-800">
-                                        <button onclick="deleteTeamAdvance('${p.id}', ${mIdx}, ${aIdx})" class="text-red-400 text-xs px-1">✕</button>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }).join('')}
-            </div>
-
-            <div class="flex justify-between pt-3 border-t border-gray-800">
-                <button onclick="addTeamMember('${p.id}')" class="px-4 py-2 bg-indigo-950 text-indigo-300 rounded-xl text-xs sm:text-sm font-semibold hover:bg-indigo-900 transition-colors">+ Додати фахівця</button>
-                <button onclick="closeModal(); renderProjects();" class="px-5 py-2 bg-indigo-600 text-white rounded-xl text-xs sm:text-sm font-semibold hover:bg-indigo-700 transition-colors">Готово</button>
-            </div>
-        </div>
-    `);
-}
-
-function addTeamMember(projectId) {
-    const p = DB.projects.find(x => x.id === projectId);
-    if (!p) return;
-    if (!p.team) p.team = [];
-    p.team.push({ id: uuid(), role: 'Візуалізатор', name: '', cost: 0, advances: [] });
-    saveData();
-    openTeamModal(projectId);
-}
-
-function updateTeamMember(projectId, mIdx, field, val) {
-    const p = DB.projects.find(x => x.id === projectId);
-    if (p && p.team[mIdx]) {
-        p.team[mIdx][field] = val;
-        saveData();
-    }
-}
-
-function deleteTeamMember(projectId, mIdx) {
-    const p = DB.projects.find(x => x.id === projectId);
-    if (p && p.team[mIdx]) {
-        p.team.splice(mIdx, 1);
-        saveData();
-        openTeamModal(projectId);
-    }
-}
-
-function addTeamAdvance(projectId, mIdx) {
-    const p = DB.projects.find(x => x.id === projectId);
-    if (p && p.team[mIdx]) {
-        if (!p.team[mIdx].advances) p.team[mIdx].advances = [];
-        p.team[mIdx].advances.push({
-            date: new Date().toISOString().split('T')[0],
-            amount: 0,
-            comment: ''
-        });
-        saveData();
-        openTeamModal(projectId);
-    }
-}
-
-function updateTeamAdvance(projectId, mIdx, aIdx, field, val) {
-    const p = DB.projects.find(x => x.id === projectId);
-    if (p && p.team[mIdx] && p.team[mIdx].advances[aIdx]) {
-        p.team[mIdx].advances[aIdx][field] = val;
-        saveData();
-    }
-}
-
-function deleteTeamAdvance(projectId, mIdx, aIdx) {
-    const p = DB.projects.find(x => x.id === projectId);
-    if (p && p.team[mIdx] && p.team[mIdx].advances[aIdx]) {
-        p.team[mIdx].advances.splice(aIdx, 1);
-        saveData();
-        openTeamModal(projectId);
-    }
-}
-
-// ====================================================================
-// ПОВНА КАРТКА ПРОЄКТУ
+// ПОВНА КАРТКА ПРОЄКТУ (M3 Detail Page)
 // ====================================================================
 function createProjectDraft() {
     return {
@@ -1500,13 +1470,13 @@ function renderProjectDetail() {
         ? project.advances.map((payment, index) => `
             <div class="project-transaction">
                 <div class="project-transaction-grid">
-                    <label><span class="project-field-label">Дата</span><input type="date" value="${escapeHtml(payment.date)}" onchange="updateClientPayment(${index}, 'date', this.value)" class="project-field"></label>
-                    <label><span class="project-field-label">Сума, $</span><input type="number" step="0.01" value="${payment.amount || ''}" onchange="updateClientPayment(${index}, 'amount', this.value)" class="project-field font-mono"></label>
-                    <label><span class="project-field-label">Коментар</span><input type="text" value="${escapeHtml(payment.comment)}" onchange="updateClientPayment(${index}, 'comment', this.value)" class="project-field"></label>
-                    <button type="button" onclick="removeClientPayment(${index})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                    <div class="m3-field-wrap"><label class="m3-label">Дата</label><input type="date" value="${escapeHtml(payment.date)}" onchange="updateClientPayment(${index}, 'date', this.value)" class="m3-input"></div>
+                    <div class="m3-field-wrap"><label class="m3-label">Сума, $</label><input type="number" step="0.01" value="${payment.amount || ''}" onchange="updateClientPayment(${index}, 'amount', this.value)" class="m3-input font-mono font-bold"></div>
+                    <div class="m3-field-wrap"><label class="m3-label">Коментар</label><input type="text" value="${escapeHtml(payment.comment)}" onchange="updateClientPayment(${index}, 'comment', this.value)" class="m3-input"></div>
+                    <button type="button" onclick="removeClientPayment(${index})" class="m3-btn m3-btn-danger text-xs py-2 px-3">Видалити</button>
                 </div>
             </div>`).join('')
-        : '<p class="text-sm text-gray-500 py-3">Платежів від клієнта ще немає.</p>';
+        : '<p class="text-xs py-3" style="color: var(--md-sys-color-on-surface-variant);">Платежів від клієнта ще немає.</p>';
 
     const teamMembers = project.team.length
         ? project.team.map((member, memberIndex) => {
@@ -1515,93 +1485,167 @@ function renderProjectDetail() {
             const payments = member.advances.length
                 ? member.advances.map((payment, paymentIndex) => `
                     <div class="project-transaction-grid mt-2">
-                        <label><span class="project-field-label">Дата виплати</span><input type="date" value="${escapeHtml(payment.date)}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'date', this.value)" class="project-field"></label>
-                        <label><span class="project-field-label">Сума, $</span><input type="number" step="0.01" value="${payment.amount || ''}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'amount', this.value)" class="project-field font-mono"></label>
-                        <label><span class="project-field-label">Коментар</span><input type="text" value="${escapeHtml(payment.comment)}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'comment', this.value)" class="project-field"></label>
-                        <button type="button" onclick="removeProjectTeamPayment(${memberIndex}, ${paymentIndex})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                        <div class="m3-field-wrap"><label class="m3-label">Дата виплати</label><input type="date" value="${escapeHtml(payment.date)}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'date', this.value)" class="m3-input"></div>
+                        <div class="m3-field-wrap"><label class="m3-label">Сума, $</label><input type="number" step="0.01" value="${payment.amount || ''}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'amount', this.value)" class="m3-input font-mono font-bold"></div>
+                        <div class="m3-field-wrap"><label class="m3-label">Коментар</label><input type="text" value="${escapeHtml(payment.comment)}" onchange="updateProjectTeamPayment(${memberIndex}, ${paymentIndex}, 'comment', this.value)" class="m3-input"></div>
+                        <button type="button" onclick="removeProjectTeamPayment(${memberIndex}, ${paymentIndex})" class="m3-btn m3-btn-danger text-xs py-2 px-3">Видалити</button>
                     </div>`).join('')
-                : '<p class="text-xs text-gray-500 mt-3">Виплат ще немає.</p>';
+                : '<p class="text-xs mt-3" style="color: var(--md-sys-color-on-surface-variant);">Виплат ще немає.</p>';
             return `
                 <div class="project-member">
                     <div class="project-member-header">
-                        <label><span class="project-field-label">Роль</span><input type="text" value="${escapeHtml(member.role)}" onchange="updateProjectTeamMember(${memberIndex}, 'role', this.value)" placeholder="Напр. візуалізатор" class="project-field"></label>
-                        <label><span class="project-field-label">Виконавець</span><input type="text" value="${escapeHtml(member.name)}" onchange="updateProjectTeamMember(${memberIndex}, 'name', this.value)" placeholder="Ім’я" class="project-field"></label>
-                        <label><span class="project-field-label">Вартість, $</span><input type="number" step="0.01" value="${member.cost || ''}" onchange="updateProjectTeamMember(${memberIndex}, 'cost', this.value)" class="project-field font-mono"></label>
-                        <button type="button" onclick="removeProjectTeamMember(${memberIndex})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                        <div class="m3-field-wrap"><label class="m3-label">Роль</label><input type="text" value="${escapeHtml(member.role)}" onchange="updateProjectTeamMember(${memberIndex}, 'role', this.value)" placeholder="Напр. візуалізатор" class="m3-input"></div>
+                        <div class="m3-field-wrap"><label class="m3-label">Виконавець</label><input type="text" value="${escapeHtml(member.name)}" onchange="updateProjectTeamMember(${memberIndex}, 'name', this.value)" placeholder="Ім’я" class="m3-input"></div>
+                        <div class="m3-field-wrap"><label class="m3-label">Вартість, $</label><input type="number" step="0.01" value="${member.cost || ''}" onchange="updateProjectTeamMember(${memberIndex}, 'cost', this.value)" class="m3-input font-mono font-bold"></div>
+                        <button type="button" onclick="removeProjectTeamMember(${memberIndex})" class="m3-btn m3-btn-danger text-xs py-2 px-3">Видалити</button>
                     </div>
-                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs mt-3 text-gray-400"><span>Виплачено: <b class="font-mono text-green-400">$${fmt(memberPaid)}</b></span><span>Залишок: <b class="font-mono ${memberDebt > 0 ? 'text-red-400' : 'text-green-400'}">$${fmt(memberDebt)}</b></span></div>
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs mt-3" style="color: var(--md-sys-color-on-surface-variant);">
+                        <span>Виплачено: <b class="font-mono" style="color: var(--md-sys-color-success);">$${fmt(memberPaid)}</b></span>
+                        <span>Залишок: <b class="font-mono" style="color: ${memberDebt > 0 ? 'var(--md-sys-color-error)' : 'var(--md-sys-color-success)'}">$${fmt(memberDebt)}</b></span>
+                    </div>
                     <div class="project-member-payments">
-                        <div class="flex justify-between gap-3 items-center"><span class="text-xs font-semibold text-gray-300">Виплати виконавцю</span><button type="button" onclick="addProjectTeamPayment(${memberIndex})" class="text-xs text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати виплату</button></div>
+                        <div class="flex justify-between gap-3 items-center">
+                            <span class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface);">Виплати виконавцю</span>
+                            <button type="button" onclick="addProjectTeamPayment(${memberIndex})" class="m3-btn m3-btn-outlined py-1 px-3 text-xs">+ Додати виплату</button>
+                        </div>
                         ${payments}
                     </div>
                 </div>`;
         }).join('')
-        : '<p class="text-sm text-gray-500 py-3">Команда ще не додана.</p>';
+        : '<p class="text-xs py-3" style="color: var(--md-sys-color-on-surface-variant);">Команда ще не додана.</p>';
 
     const expenses = project.expenses.length
         ? project.expenses.map((expense, index) => `
             <div class="project-expense">
                 <div class="project-expense-grid">
-                    <label><span class="project-field-label">Дата</span><input type="date" value="${escapeHtml(expense.date)}" onchange="updateProjectExpense(${index}, 'date', this.value)" class="project-field"></label>
-                    <label><span class="project-field-label">Стаття витрат</span><input type="text" value="${escapeHtml(expense.name)}" onchange="updateProjectExpense(${index}, 'name', this.value)" placeholder="Матеріали, виїзд…" class="project-field"></label>
-                    <label><span class="project-field-label">Сума, $</span><input type="number" step="0.01" value="${expense.amount || ''}" onchange="updateProjectExpense(${index}, 'amount', this.value)" class="project-field font-mono"></label>
-                    <button type="button" onclick="removeProjectExpense(${index})" class="project-remove-button border border-red-900/70 text-red-300 hover:bg-red-950/50 rounded-lg px-3 py-2 text-xs font-semibold">Видалити</button>
+                    <div class="m3-field-wrap"><label class="m3-label">Дата</label><input type="date" value="${escapeHtml(expense.date)}" onchange="updateProjectExpense(${index}, 'date', this.value)" class="m3-input"></div>
+                    <div class="m3-field-wrap"><label class="m3-label">Стаття витрат</label><input type="text" value="${escapeHtml(expense.name)}" onchange="updateProjectExpense(${index}, 'name', this.value)" placeholder="Матеріали, виїзд…" class="m3-input"></div>
+                    <div class="m3-field-wrap"><label class="m3-label">Сума, $</label><input type="number" step="0.01" value="${expense.amount || ''}" onchange="updateProjectExpense(${index}, 'amount', this.value)" class="m3-input font-mono font-bold"></div>
+                    <button type="button" onclick="removeProjectExpense(${index})" class="m3-btn m3-btn-danger text-xs py-2 px-3">Видалити</button>
                 </div>
-                <label class="block mt-2"><span class="project-field-label">Коментар</span><input type="text" value="${escapeHtml(expense.comment)}" onchange="updateProjectExpense(${index}, 'comment', this.value)" class="project-field"></label>
+                <div class="m3-field-wrap mt-2"><label class="m3-label">Коментар</label><input type="text" value="${escapeHtml(expense.comment)}" onchange="updateProjectExpense(${index}, 'comment', this.value)" class="m3-input"></div>
             </div>`).join('')
-        : '<p class="text-sm text-gray-500 py-3">Додаткових витрат ще немає.</p>';
+        : '<p class="text-xs py-3" style="color: var(--md-sys-color-on-surface-variant);">Додаткових витрат ще немає.</p>';
 
     container.innerHTML = `
         <form onsubmit="saveProjectPage(event)" class="project-detail-page">
             <div class="project-detail-header">
-                <div class="min-w-0"><button type="button" onclick="closeProjectPage()" class="text-sm text-indigo-300 hover:text-indigo-200 mb-2">← До всіх проєктів</button><div class="flex flex-wrap gap-3 items-center"><h2 class="text-2xl font-bold truncate">${isNew ? 'Новий проєкт' : escapeHtml(project.name || 'Без назви')}</h2><span class="badge ${statusClass}">${statusText}</span></div><p class="text-gray-400 text-sm mt-1">Усі дані, платежі, команда та витрати — на одній сторінці.</p></div>
-                <div class="project-inline-actions shrink-0"><button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-4 py-2.5 text-sm font-semibold">Зберегти</button>${isNew ? '' : `<button type="button" onclick="archiveProjectFromPage()" class="border border-gray-700 hover:bg-gray-800 rounded-xl px-4 py-2.5 text-sm font-semibold">В архів</button><button type="button" onclick="trashProjectFromPage()" class="project-danger-action border rounded-xl px-4 py-2.5 text-sm font-semibold">У кошик</button>`}</div>
+                <div class="min-w-0">
+                    <button type="button" onclick="closeProjectPage()" class="m3-btn m3-btn-outlined py-1 px-3 text-xs mb-3">← До всіх проєктів</button>
+                    <div class="flex flex-wrap gap-3 items-center">
+                        <h2 class="text-2xl font-extrabold tracking-tight truncate">${isNew ? 'Новий проєкт' : escapeHtml(project.name || 'Без назви')}</h2>
+                        <span class="m3-chip ${statusClass}">${statusText}</span>
+                    </div>
+                    <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Усі дані, платежі, команда та витрати — на одній сторінці.</p>
+                </div>
+                <div class="project-inline-actions shrink-0">
+                    <button type="submit" class="m3-btn m3-btn-filled">Зберегти</button>
+                    ${isNew ? '' : `
+                        <button type="button" onclick="archiveProjectFromPage()" class="m3-btn m3-btn-outlined">В архів</button>
+                        <button type="button" onclick="trashProjectFromPage()" class="m3-btn m3-btn-danger">У кошик</button>
+                    `}
+                </div>
             </div>
             <div class="project-detail-layout">
                 <div class="project-main-stack">
                     <section class="project-panel">
-                        <div class="project-panel-title"><h3>Основні дані</h3><span class="text-xs text-gray-500">* обов’язкове поле</span></div>
-                        <div class="project-form-grid">
-                            <label><span class="project-field-label">Дата початку</span><input id="project-date" type="date" value="${escapeHtml(project.date)}" required class="project-field"></label>
-                            <label><span class="project-field-label">Дедлайн</span><input id="project-deadline" type="date" value="${escapeHtml(project.deadline)}" class="project-field"></label>
+                        <div class="project-panel-title">
+                            <h3>Основні дані</h3>
+                            <span class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">* обов’язкове поле</span>
                         </div>
-                        <label class="block mt-3"><span class="project-field-label">Назва об’єкта *</span><input id="project-name" type="text" value="${escapeHtml(project.name)}" required placeholder="Назва проєкту" class="project-field"></label>
+                        <div class="project-form-grid">
+                            <div class="m3-field-wrap"><label class="m3-label">Дата початку</label><input id="project-date" type="date" value="${escapeHtml(project.date)}" required class="m3-input"></div>
+                            <div class="m3-field-wrap"><label class="m3-label">Дедлайн</label><input id="project-deadline" type="date" value="${escapeHtml(project.deadline)}" class="m3-input"></div>
+                        </div>
+                        <div class="m3-field-wrap mt-3"><label class="m3-label">Назва об’єкта *</label><input id="project-name" type="text" value="${escapeHtml(project.name)}" required placeholder="Назва проєкту" class="m3-input font-semibold"></div>
                         <div class="project-form-grid project-form-grid-3 mt-4">
-                            <label><span class="project-field-label">Площа, м²</span><input id="project-area" type="number" step="0.01" value="${project.area || ''}" oninput="updateProjectTotalFromPage()" class="project-field"></label>
-                            <label><span class="project-field-label">Ціна, $/м²</span><input id="project-price" type="number" step="0.01" value="${project.price || ''}" oninput="updateProjectTotalFromPage()" class="project-field"></label>
-                            <label><span class="project-field-label">Вартість проєкту, $</span><input id="project-total" type="number" value="${fmt(project.total)}" readonly class="project-field font-mono text-indigo-200 bg-gray-900"></label>
+                            <div class="m3-field-wrap"><label class="m3-label">Площа, м²</label><input id="project-area" type="number" step="0.01" value="${project.area || ''}" oninput="updateProjectTotalFromPage()" class="m3-input"></div>
+                            <div class="m3-field-wrap"><label class="m3-label">Ціна, $/м²</label><input id="project-price" type="number" step="0.01" value="${project.price || ''}" oninput="updateProjectTotalFromPage()" class="m3-input"></div>
+                            <div class="m3-field-wrap"><label class="m3-label">Вартість проєкту, $</label><input id="project-total" type="number" value="${fmt(project.total)}" readonly class="m3-input font-bold font-mono"></div>
                         </div>
                     </section>
                     <section class="project-panel">
                         <div class="project-panel-title"><h3>Клієнт</h3></div>
-                        <div class="project-form-grid"><label><span class="project-field-label">Ім’я</span><input id="project-client-name" type="text" value="${escapeHtml(project.client.name)}" class="project-field"></label><label><span class="project-field-label">Прізвище</span><input id="project-client-lastname" type="text" value="${escapeHtml(project.client.lastName)}" class="project-field"></label><label><span class="project-field-label">Телефон</span><input id="project-client-phone" type="tel" value="${escapeHtml(project.client.phone)}" class="project-field"></label><label><span class="project-field-label">Посилання / соцмережа</span><input id="project-client-social" type="url" value="${escapeHtml(project.client.social)}" class="project-field"></label></div>
+                        <div class="project-form-grid">
+                            <div class="m3-field-wrap"><label class="m3-label">Ім’я</label><input id="project-client-name" type="text" value="${escapeHtml(project.client.name)}" class="m3-input"></div>
+                            <div class="m3-field-wrap"><label class="m3-label">Прізвище</label><input id="project-client-lastname" type="text" value="${escapeHtml(project.client.lastName)}" class="m3-input"></div>
+                            <div class="m3-field-wrap"><label class="m3-label">Телефон</label><input id="project-client-phone" type="tel" value="${escapeHtml(project.client.phone)}" class="m3-input"></div>
+                            <div class="m3-field-wrap"><label class="m3-label">Посилання / соцмережа</label><input id="project-client-social" type="url" value="${escapeHtml(project.client.social)}" class="m3-input"></div>
+                        </div>
                     </section>
                     <section class="project-panel" id="project-payments">
-                        <div class="project-panel-title"><div><h3>Оплати від клієнта</h3><p class="text-xs text-gray-500 mt-1">Аванси та всі наступні платежі.</p></div><button type="button" onclick="addClientPayment()" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати платіж</button></div>
-                        <label class="block mb-4"><span class="project-field-label">Статус оплати</span><select id="project-payment-status" onchange="updateProjectPaymentStatus(this.value)" class="project-field"><option value="none" ${project.paymentStatus === 'none' ? 'selected' : ''}>Без оплати</option><option value="advance" ${project.paymentStatus === 'advance' ? 'selected' : ''}>Внесено аванс</option><option value="paid" ${project.paymentStatus === 'paid' ? 'selected' : ''}>Оплачено</option></select></label>
-                        <div class="project-finance-summary mb-4"><div><span class="text-xs text-gray-400">Отримано</span><b class="block font-mono text-green-400 mt-1">$${fmt(received)}</b></div><div><span class="text-xs text-gray-400">Борг клієнта</span><b class="block font-mono ${debt > 0 ? 'text-red-400' : 'text-green-400'} mt-1">$${fmt(debt)}</b></div><div><span class="text-xs text-gray-400">Статус</span><b class="block mt-1">${statusText}</b></div></div>
+                        <div class="project-panel-title">
+                            <div>
+                                <h3>Оплати від клієнта</h3>
+                                <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Аванси та всі наступні платежі.</p>
+                            </div>
+                            <button type="button" onclick="addClientPayment()" class="m3-btn m3-btn-outlined py-1.5 px-3 text-xs">+ Додати платіж</button>
+                        </div>
+                        <div class="m3-field-wrap mb-4">
+                            <label class="m3-label">Статус оплати</label>
+                            <select id="project-payment-status" onchange="updateProjectPaymentStatus(this.value)" class="m3-input">
+                                <option value="none" ${project.paymentStatus === 'none' ? 'selected' : ''}>Без оплати</option>
+                                <option value="advance" ${project.paymentStatus === 'advance' ? 'selected' : ''}>Внесено аванс</option>
+                                <option value="paid" ${project.paymentStatus === 'paid' ? 'selected' : ''}>Оплачено</option>
+                            </select>
+                        </div>
+                        <div class="project-finance-summary mb-4">
+                            <div><span class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">Отримано</span><b class="block font-mono text-base mt-1" style="color: var(--md-sys-color-success);">$${fmt(received)}</b></div>
+                            <div><span class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">Борг клієнта</span><b class="block font-mono text-base mt-1" style="color: ${debt > 0 ? 'var(--md-sys-color-error)' : 'var(--md-sys-color-success)'};">$${fmt(debt)}</b></div>
+                            <div><span class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">Статус</span><b class="block mt-1 text-sm">${statusText}</b></div>
+                        </div>
                         <div class="space-y-2">${clientPayments}</div>
                     </section>
                     <section class="project-panel" id="project-team">
-                        <div class="project-panel-title"><div><h3>Команда</h3><p class="text-xs text-gray-500 mt-1">Вартість робіт і виплати кожному виконавцю.</p></div><button type="button" onclick="addProjectTeamMember()" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати учасника</button></div>
+                        <div class="project-panel-title">
+                            <div>
+                                <h3>Команда</h3>
+                                <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Вартість робіт і виплати кожному виконавцю.</p>
+                            </div>
+                            <button type="button" onclick="addProjectTeamMember()" class="m3-btn m3-btn-outlined py-1.5 px-3 text-xs">+ Додати учасника</button>
+                        </div>
                         <div class="space-y-3">${teamMembers}</div>
                     </section>
                 </div>
                 <aside class="project-side-stack">
-                    <section class="project-panel"><div class="project-panel-title"><h3>Фінансова картина</h3></div><div class="space-y-3 text-sm"><div class="flex justify-between gap-3"><span class="text-gray-400">Вартість проєкту</span><b class="font-mono">$${fmt(project.total)}</b></div><div class="flex justify-between gap-3"><span class="text-gray-400">Витрати команди</span><b class="font-mono">$${fmt(teamCost)}</b></div><div class="flex justify-between gap-3"><span class="text-gray-400">Інші витрати</span><b class="font-mono">$${fmt(expenseCost)}</b></div><div class="flex justify-between gap-3"><span class="text-gray-400">Виплачено команді</span><b class="font-mono text-green-400">$${fmt(teamPaid)}</b></div><div class="flex justify-between gap-3 border-t border-gray-800 pt-3"><span class="font-semibold">Чистий прибуток</span><b class="font-mono text-emerald-400">$${fmt(calcNetProfit(project))}</b></div></div></section>
-                    <section class="project-panel" id="project-expenses"><div class="project-panel-title"><div><h3>Додаткові витрати</h3><p class="text-xs text-gray-500 mt-1">Витрати поза оплатою команди.</p></div><button type="button" onclick="addProjectExpense()" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">+ Додати</button></div><div class="space-y-2">${expenses}</div></section>
-                    <section class="project-panel"><div class="project-panel-title"><h3>Терміни</h3></div><div class="flex justify-between items-center gap-3 text-sm"><span class="text-gray-400">Дедлайн</span><span>${deadlineBadgeHtml(project)}</span></div><p class="text-xs text-gray-500 mt-3">${project.deadline ? escapeHtml(project.deadline) : 'Дедлайн не встановлено'}</p></section>
+                    <section class="project-panel">
+                        <div class="project-panel-title"><h3>Фінансова картина</h3></div>
+                        <div class="space-y-3 text-xs">
+                            <div class="flex justify-between gap-3"><span style="color: var(--md-sys-color-on-surface-variant);">Вартість проєкту</span><b class="font-mono text-sm">$${fmt(project.total)}</b></div>
+                            <div class="flex justify-between gap-3"><span style="color: var(--md-sys-color-on-surface-variant);">Витрати команди</span><b class="font-mono text-sm">$${fmt(teamCost)}</b></div>
+                            <div class="flex justify-between gap-3"><span style="color: var(--md-sys-color-on-surface-variant);">Інші витрати</span><b class="font-mono text-sm">$${fmt(expenseCost)}</b></div>
+                            <div class="flex justify-between gap-3"><span style="color: var(--md-sys-color-on-surface-variant);">Виплачено команді</span><b class="font-mono text-sm" style="color: var(--md-sys-color-success);">$${fmt(teamPaid)}</b></div>
+                            <div class="flex justify-between gap-3 border-t pt-3" style="border-color: var(--md-sys-color-outline-variant);">
+                                <span class="font-bold">Чистий прибуток</span>
+                                <b class="font-mono text-base" style="color: var(--md-sys-color-primary);">$${fmt(calcNetProfit(project))}</b>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-panel" id="project-expenses">
+                        <div class="project-panel-title">
+                            <div>
+                                <h3>Додаткові витрати</h3>
+                                <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">Витрати поза оплатою команди.</p>
+                            </div>
+                            <button type="button" onclick="addProjectExpense()" class="m3-btn m3-btn-outlined py-1.5 px-3 text-xs">+ Додати</button>
+                        </div>
+                        <div class="space-y-2">${expenses}</div>
+                    </section>
+                    <section class="project-panel">
+                        <div class="project-panel-title"><h3>Терміни</h3></div>
+                        <div class="flex justify-between items-center gap-3 text-xs">
+                            <span style="color: var(--md-sys-color-on-surface-variant);">Дедлайн</span>
+                            <span>${deadlineBadgeHtml(project)}</span>
+                        </div>
+                        <p class="text-xs mt-3" style="color: var(--md-sys-color-on-surface-variant);">${project.deadline ? escapeHtml(project.deadline) : 'Дедлайн не встановлено'}</p>
+                    </section>
                 </aside>
             </div>
         </form>`;
 }
 
-// Compatibility for older inline handlers: project actions always lead to the full page.
-function openProjectModal(id = null) { openProjectPage(id); }
-function openTeamModal(projectId) { openProjectPage(projectId, 'project-team'); }
-
 // ====================================================================
-// ІНШІ ДОХОДИ
+// ІНШІ ДОХОДИ (M3 Render)
 // ====================================================================
 function renderOtherIncomes() {
     const tbody = document.getElementById('other-tbody');
@@ -1619,25 +1663,25 @@ function renderOtherIncomes() {
     empty.classList.add('hidden');
 
     tbody.innerHTML = list.map(item => `
-        <tr class="hover:bg-gray-800/30">
-            <td class="px-4 py-3 text-xs text-gray-400">${item.date}</td>
-            <td class="px-4 py-3 font-semibold text-gray-200">${item.desc}</td>
-            <td class="px-4 py-3 text-right font-mono font-bold text-green-500">₴${fmt(item.amount)}</td>
-            <td class="px-4 py-3 text-center">
-                <button onclick="deleteOtherIncome('${item.id}')" class="text-red-400 hover:text-red-300 text-xs">Видалити</button>
+        <tr>
+            <td class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">${item.date}</td>
+            <td class="font-bold" style="color: var(--md-sys-color-on-surface);">${item.desc}</td>
+            <td class="text-right font-mono font-bold text-sm" style="color: var(--md-sys-color-success);">₴${fmt(item.amount)}</td>
+            <td class="text-center">
+                <button onclick="deleteOtherIncome('${item.id}')" class="m3-btn m3-btn-danger py-1 px-3 text-xs">Видалити</button>
             </td>
         </tr>
     `).join('');
 
     cards.innerHTML = list.map(item => `
-        <div class="proj-card flex justify-between items-center">
+        <div class="m3-card p-4 flex justify-between items-center">
             <div>
-                <p class="font-bold text-sm text-gray-200">${item.desc}</p>
-                <p class="text-xs text-gray-400">${item.date}</p>
+                <p class="font-bold text-sm" style="color: var(--md-sys-color-on-surface);">${item.desc}</p>
+                <p class="text-xs mt-1" style="color: var(--md-sys-color-on-surface-variant);">${item.date}</p>
             </div>
             <div class="text-right">
-                <p class="font-mono font-bold text-green-500 text-sm">₴${fmt(item.amount)}</p>
-                <button onclick="deleteOtherIncome('${item.id}')" class="text-red-400 text-xs">Видалити</button>
+                <p class="font-mono font-bold text-sm" style="color: var(--md-sys-color-success);">₴${fmt(item.amount)}</p>
+                <button onclick="deleteOtherIncome('${item.id}')" class="m3-btn m3-btn-danger py-1 px-2 text-[11px] mt-2">Видалити</button>
             </div>
         </div>
     `).join('');
@@ -1645,23 +1689,23 @@ function renderOtherIncomes() {
 
 function openOtherIncomeModal() {
     openModal(`
-        <h3 class="text-xl font-bold mb-4">Новий дохід</h3>
+        <h3 class="text-lg font-bold mb-4">Новий дохід</h3>
         <form onsubmit="saveOtherIncome(event)" class="space-y-4">
-            <div>
-                <label class="block text-xs font-semibold mb-1">Дата *</label>
-                <input type="date" id="o-date" value="${new Date().toISOString().split('T')[0]}" required class="w-full border border-gray-700 bg-gray-800 rounded-xl p-2 text-sm">
+            <div class="m3-field-wrap">
+                <label class="m3-label">Дата *</label>
+                <input type="date" id="o-date" value="${new Date().toISOString().split('T')[0]}" required class="m3-input">
             </div>
-            <div>
-                <label class="block text-xs font-semibold mb-1">Опис *</label>
-                <input type="text" id="o-desc" required placeholder="Консультація, авторський нагляд тощо" class="w-full border border-gray-700 bg-gray-800 rounded-xl p-2 text-sm">
+            <div class="m3-field-wrap">
+                <label class="m3-label">Опис *</label>
+                <input type="text" id="o-desc" required placeholder="Консультація, авторський нагляд тощо" class="m3-input">
             </div>
-            <div>
-                <label class="block text-xs font-semibold mb-1">Сума, ₴ *</label>
-                <input type="number" step="0.01" id="o-amount" required placeholder="5000" class="w-full border border-gray-700 bg-gray-800 rounded-xl p-2 text-sm">
+            <div class="m3-field-wrap">
+                <label class="m3-label">Сума, ₴ *</label>
+                <input type="number" step="0.01" id="o-amount" required placeholder="5000" class="m3-input font-mono font-bold">
             </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-800 rounded-xl text-xs font-semibold">Скасувати</button>
-                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold">Зберегти</button>
+            <div class="flex justify-end gap-3 pt-3">
+                <button type="button" onclick="closeModal()" class="m3-btn m3-btn-outlined">Скасувати</button>
+                <button type="submit" class="m3-btn m3-btn-filled">Зберегти</button>
             </div>
         </form>
     `);
@@ -1691,7 +1735,7 @@ function deleteOtherIncome(id) {
 }
 
 // ====================================================================
-// АРХІВ ТА КОШИК
+// АРХІВ ТА КОШИК (M3 Render)
 // ====================================================================
 function renderArchive() {
     const tbody = document.getElementById('archive-tbody');
@@ -1708,35 +1752,35 @@ function renderArchive() {
     empty.classList.add('hidden');
 
     tbody.innerHTML = list.map(p => `
-        <tr class="hover:bg-gray-800/30 text-xs">
-            <td class="px-4 py-3 text-gray-400">${p.date}</td>
-            <td class="px-4 py-3 font-semibold text-gray-200">${p.name}</td>
-            <td class="px-4 py-3 text-gray-300">${p.client?.name || '-'}</td>
-            <td class="px-4 py-3 text-right font-mono">${p.area}</td>
-            <td class="px-4 py-3 text-right font-mono font-bold text-indigo-300">$${fmt(p.total)}</td>
-            <td class="px-4 py-3 text-center space-x-2">
-                <button onclick="unarchiveProject('${p.id}')" class="text-indigo-400 hover:underline">Розархівувати</button>
-                <button onclick="trashProject('${p.id}')" class="text-red-400 hover:underline">У кошик</button>
+        <tr>
+            <td class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">${p.date}</td>
+            <td class="font-bold" style="color: var(--md-sys-color-on-surface);">${p.name}</td>
+            <td class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">${p.client?.name || '-'}</td>
+            <td class="text-right font-mono text-xs">${p.area}</td>
+            <td class="text-right font-mono font-bold text-sm" style="color: var(--md-sys-color-primary);">$${fmt(p.total)}</td>
+            <td class="text-center space-x-2">
+                <button onclick="unarchiveProject('${p.id}')" class="m3-btn m3-btn-outlined py-1 px-3 text-xs">Розархівувати</button>
+                <button onclick="trashProject('${p.id}')" class="m3-btn m3-btn-danger py-1 px-3 text-xs">У кошик</button>
             </td>
         </tr>
     `).join('');
 
     cards.innerHTML = list.map(p => `
-        <div class="proj-card">
+        <div class="m3-card p-4">
             <div class="flex justify-between items-start mb-2">
                 <div>
-                    <h3 class="font-bold text-base text-gray-200">${p.name}</h3>
-                    <p class="text-xs text-gray-400">Клієнт: ${p.client?.name || '-'}</p>
+                    <h3 class="font-bold text-base" style="color: var(--md-sys-color-on-surface);">${p.name}</h3>
+                    <p class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">Клієнт: ${p.client?.name || '-'}</p>
                 </div>
-                <span class="text-xs text-gray-500">${p.date}</span>
+                <span class="text-xs" style="color: var(--md-sys-color-outline);">${p.date}</span>
             </div>
-            <div class="flex justify-between items-center text-xs mb-3 bg-gray-800 p-2 rounded-lg border border-gray-700/50">
+            <div class="flex justify-between items-center text-xs my-3 p-3 rounded-lg border" style="background-color: var(--md-sys-color-surface-container-high); border-color: var(--md-sys-color-outline-variant);">
                 <span>Площа: <b>${p.area} м²</b></span>
-                <span>Сума: <b class="font-mono text-indigo-300">$${fmt(p.total)}</b></span>
+                <span>Сума: <b class="font-mono" style="color: var(--md-sys-color-primary);">$${fmt(p.total)}</b></span>
             </div>
-            <div class="flex justify-end gap-3 text-xs">
-                <button onclick="unarchiveProject('${p.id}')" class="text-indigo-400 font-medium">Розархівувати</button>
-                <button onclick="trashProject('${p.id}')" class="text-red-400">У кошик</button>
+            <div class="flex justify-end gap-2 text-xs">
+                <button onclick="unarchiveProject('${p.id}')" class="m3-btn m3-btn-outlined py-1 px-3 text-xs">Розархівувати</button>
+                <button onclick="trashProject('${p.id}')" class="m3-btn m3-btn-danger py-1 px-3 text-xs">У кошик</button>
             </div>
         </div>
     `).join('');
@@ -1763,13 +1807,13 @@ function renderTrash() {
     btnEmpty.classList.remove('hidden');
 
     tbody.innerHTML = list.map(p => `
-        <tr class="hover:bg-gray-800/30 text-xs">
-            <td class="px-4 py-3 text-gray-400">${p.date}</td>
-            <td class="px-4 py-3 font-semibold text-gray-200">${p.name}</td>
-            <td class="px-4 py-3 text-right font-mono">$${fmt(p.total)}</td>
-            <td class="px-4 py-3 text-center space-x-2">
-                <button onclick="restoreProject('${p.id}')" class="text-green-400 hover:underline">Відновити</button>
-                <button onclick="deletePermanently('${p.id}')" class="text-red-400 hover:underline">Видалити назавжди</button>
+        <tr>
+            <td class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">${p.date}</td>
+            <td class="font-bold" style="color: var(--md-sys-color-on-surface);">${p.name}</td>
+            <td class="text-right font-mono font-bold text-sm">$${fmt(p.total)}</td>
+            <td class="text-center space-x-2">
+                <button onclick="restoreProject('${p.id}')" class="m3-btn m3-btn-tonal py-1 px-3 text-xs">Відновити</button>
+                <button onclick="deletePermanently('${p.id}')" class="m3-btn m3-btn-danger py-1 px-3 text-xs">Видалити назавжди</button>
             </td>
         </tr>
     `).join('');
@@ -1799,14 +1843,16 @@ function emptyTrash() {
 }
 
 // ====================================================================
-// СТАТИСТИКА
+// СТАТИСТИКА (M3 Render)
 // ====================================================================
 function switchStatsTab(tab) {
-    document.getElementById('stats-tab-general').classList.toggle('active', tab === 'general');
-    document.getElementById('stats-tab-monthly').classList.toggle('active', tab === 'monthly');
-    document.getElementById('stats-general').classList.toggle('hidden', tab !== 'general');
-    document.getElementById('stats-monthly').classList.toggle('hidden', tab !== 'monthly');
-    if (tab === 'monthly') renderMonthlyDetails();
+    const isGen = tab === 'general';
+    document.getElementById('stats-tab-general').className = isGen ? 'm3-btn m3-btn-tonal rounded-b-none px-6 py-3' : 'm3-btn m3-btn-outlined rounded-b-none border-none px-6 py-3';
+    document.getElementById('stats-tab-monthly').className = !isGen ? 'm3-btn m3-btn-tonal rounded-b-none px-6 py-3' : 'm3-btn m3-btn-outlined rounded-b-none border-none px-6 py-3';
+    
+    document.getElementById('stats-general').classList.toggle('hidden', !isGen);
+    document.getElementById('stats-monthly').classList.toggle('hidden', isGen);
+    if (!isGen) renderMonthlyDetails();
 }
 
 function populateStatsYears() {
@@ -1828,21 +1874,21 @@ function renderStats() {
     const netProfit = totalIncome - totalTeamExpenses;
 
     document.getElementById('stats-cards').innerHTML = `
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Всього проєктів за рік</p>
-            <p class="text-2xl font-bold mt-1">${list.length}</p>
+        <div class="m3-card p-5">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Всього проєктів за рік</p>
+            <p class="text-3xl font-extrabold mt-2" style="color: var(--md-sys-color-on-surface);">${list.length}</p>
         </div>
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Отримано від клієнтів ($)</p>
-            <p class="text-2xl font-bold mt-1 font-mono text-green-500">$${fmt(totalIncome)}</p>
+        <div class="m3-card p-5">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Отримано від клієнтів ($)</p>
+            <p class="text-3xl font-extrabold mt-2 font-mono" style="color: var(--md-sys-color-success);">$${fmt(totalIncome)}</p>
         </div>
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Витрати на команду ($)</p>
-            <p class="text-2xl font-bold mt-1 font-mono text-red-400">$${fmt(totalTeamExpenses)}</p>
+        <div class="m3-card p-5">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Витрати на команду ($)</p>
+            <p class="text-3xl font-extrabold mt-2 font-mono" style="color: var(--md-sys-color-error);">$${fmt(totalTeamExpenses)}</p>
         </div>
-        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-            <p class="text-xs text-gray-400">Чистий прибуток ($)</p>
-            <p class="text-2xl font-bold mt-1 font-mono text-indigo-400">$${fmt(netProfit)}</p>
+        <div class="m3-card p-5">
+            <p class="text-xs font-semibold" style="color: var(--md-sys-color-on-surface-variant);">Чистий прибуток ($)</p>
+            <p class="text-3xl font-extrabold mt-2 font-mono" style="color: var(--md-sys-color-primary);">$${fmt(netProfit)}</p>
         </div>
     `;
 }
@@ -1855,21 +1901,21 @@ function renderMonthlyDetails() {
 
     const container = document.getElementById('monthly-details-content');
     if (!list.length) {
-        container.innerHTML = `<p class="text-gray-400 text-sm">За цей місяць проєктів не знайдено.</p>`;
+        container.innerHTML = `<p class="text-xs" style="color: var(--md-sys-color-on-surface-variant);">За цей місяць проєктів не знайдено.</p>`;
         return;
     }
 
     container.innerHTML = `
-        <div class="bg-gray-900 rounded-xl border border-gray-800 p-4">
-            <h4 class="font-bold mb-3 text-sm">Проєкти за ${MONTHS_UK[month]} ${year} року:</h4>
-            <div class="space-y-2">
+        <div class="m3-card p-5">
+            <h4 class="font-bold mb-4 text-sm" style="color: var(--md-sys-color-on-surface);">Проєкти за ${MONTHS_UK[month]} ${year} року:</h4>
+            <div class="space-y-3">
                 ${list.map(p => `
-                    <div class="flex justify-between items-center text-xs p-2 border-b border-gray-800 last:border-0">
+                    <div class="flex justify-between items-center text-xs p-3 rounded-lg border" style="background-color: var(--md-sys-color-surface-container-high); border-color: var(--md-sys-color-outline-variant);">
                         <div>
-                            <span class="font-bold text-gray-200">${p.name}</span>
-                            <span class="text-gray-400">(${p.client?.name || 'Без клієнта'})</span>
+                            <span class="font-bold text-sm" style="color: var(--md-sys-color-on-surface);">${p.name}</span>
+                            <span class="ml-2" style="color: var(--md-sys-color-on-surface-variant);">(${p.client?.name || 'Без клієнта'})</span>
                         </div>
-                        <div class="font-mono font-bold text-indigo-300">$${fmt(p.total)}</div>
+                        <div class="font-mono font-bold text-sm" style="color: var(--md-sys-color-primary);">$${fmt(p.total)}</div>
                     </div>
                 `).join('')}
             </div>
@@ -1877,7 +1923,9 @@ function renderMonthlyDetails() {
     `;
 }
 
+// ====================================================================
 // ЕКСПОРТ І ІМПОРТ
+// ====================================================================
 function exportData() {
     const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(DB, null, 2));
     const a = document.createElement('a');
